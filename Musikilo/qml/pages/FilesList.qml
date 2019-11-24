@@ -82,7 +82,7 @@ Item {
                     if(isDir) {
                         webdavmodel.getFilesList(path);
                     } else {
-                        webdavmodel.add(path)
+                        webdavmodel.play(path)
                     }
                 }
             }

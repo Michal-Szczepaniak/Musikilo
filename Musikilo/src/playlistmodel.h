@@ -20,9 +20,7 @@ public:
         Path
     };
 
-    void reset();
-    void addFile(QWebdavItem file);
-    void play(QMediaContent content);
+    Q_INVOKABLE void reset();
 
     int activeItem();
     void setActiveItem(int activeItem);
@@ -50,6 +48,9 @@ signals:
 public slots:
     void onRowsInserted(const QModelIndex &parent, int first, int last);
     void onStateChanged(QMediaPlayer::State state);
+
+    void play(QMediaContent content);
+    void addFile(QWebdavItem file);
 };
 
 #endif // PLAYLISTMODEL_H

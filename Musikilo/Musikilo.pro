@@ -42,6 +42,7 @@ CONFIG += sailfishapp_i18n
 # modify the localized app name in the the .desktop file.
 TRANSLATIONS += translations/Musikilo-de.ts
 
+DEFINES += QWEBDAVITEM_EXTENDED_PROPERTIES
 PRE_TARGETDEPS += $$OUT_PWD/../qwebdavlib/qwebdavlib/libqwebdav.a
 INCLUDEPATH += $$OUT_PWD/../qwebdavlib/qwebdavlib/
 LIBS += -L$$OUT_PWD/../qwebdavlib/qwebdavlib/ -lqwebdav

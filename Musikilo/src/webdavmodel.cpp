@@ -2,13 +2,13 @@
 
 WebDavModel::WebDavModel(QObject *parent) : QAbstractListModel(parent)
 {
-    connect(&p, &QWebdavDirParser::finished, this, WebDavModel::gotFilesList);
-    connect(&p, &QWebdavDirParser::finished, this, WebDavModel::addFilesToList);
-    connect(&p, &QWebdavDirParser::errorChanged, this, WebDavModel::printError);
-    connect(&w, &QWebdav::errorChanged, this, WebDavModel::printError);
+    connect(&p, &QWebdavDirParser::finished, this, &WebDavModel::gotFilesList);
+    connect(&p, &QWebdavDirParser::finished, this, &WebDavModel::addFilesToList);
+    connect(&p, &QWebdavDirParser::errorChanged, this, &WebDavModel::printError);
+    connect(&w, &QWebdav::errorChanged, this, &WebDavModel::printError);
 
-    connect(&playlistParser, &QWebdavDirParser::finished, this, SLOT(addFilesToPlaylist()));
-    connect(&playlistParser, &QWebdavDirParser::errorChanged, this, SIGNAL(printError(QString)));
+    connect(&playlistParser, &QWebdavDirParser::finished, this, &WebDavModel::addFilesToPlaylist);
+    connect(&playlistParser, &QWebdavDirParser::errorChanged, this, &WebDavModel::printError);
 
 }
 
@@ -19,33 +19,18 @@ void WebDavModel::getFilesList(QString path)
 
 void WebDavModel::play(QString path)
 {
-    addFile(path, true);
+    addFile(path);
 }
 
-void WebDavModel::add(QString path)
-{
-    addFile(path, false);
-}
-
-void WebDavModel::addFile(QString path, bool reset)
+void WebDavModel::addFile(QString path)
 {
     bool isDir = path.endsWith('/');
-
-    if (reset) {
-        playlistModel->reset();
-    }
 
     if(isDir) {
         playlistParser.listDirectory(&w, path);
     } else {
         playlistParser.listItem(&w, path);
     }
-}
-
-void WebDavModel::setPlaylistModel(PlaylistModel* playlistModel)
-{
-    this->playlistModel = playlistModel;
-    connect(playlistModel, SIGNAL(playFile(QString)), this, SLOT(playFile(QString)));
 }
 
 int WebDavModel::rowCount(const QModelIndex &parent) const
@@ -130,8 +115,9 @@ void WebDavModel::addFilesToPlaylist()
 
     QWebdavItem item;
     foreach(item, list) {
+        qDebug()<<item.mimeType();
         if (item.mimeType().startsWith("audio")) {
-            playlistModel->addFile(item);
+            emit gotAudioFile(item);
         }
     }
 }
@@ -143,14 +129,11 @@ void WebDavModel::replySkipRead()
         return;
 
     QByteArray ba = reply->readAll();
-
-    //    qDebug() << "QWebdav::replySkipRead()   skipped " << ba.size() << " reply->url() == " << reply->url().toString(QUrl::RemoveUserInfo);
 }
 
-void WebDavModel::playFile(QString path)
+void WebDavModel::getMediaContent(QString path)
 {
     QNetworkRequest r = w.getRequest(path);
     r.setRawHeader("Authorization", "Basic " + QString(w.username() + ":" + w.password()).toUtf8().toBase64()); // Headers aren't set by lib
-
-    playlistModel->play(r);
+    emit gotMediaContent(QMediaContent(r));
 }

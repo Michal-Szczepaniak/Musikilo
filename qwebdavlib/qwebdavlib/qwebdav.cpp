@@ -378,7 +378,7 @@ QNetworkReply* QWebdav::list(const QString& path, int depth)
     // e.g. "Example HTML resource"
     //props << "getcontentlanguage";    // http://www.webdav.org/specs/rfc4918.html#PROPERTY_getcontentlanguage
     // e.g. "en-US"
-    //props << "getcontenttype";        // http://www.webdav.org/specs/rfc4918.html#PROPERTY_getcontenttype
+    props << "getcontenttype";        // http://www.webdav.org/specs/rfc4918.html#PROPERTY_getcontenttype
     // e.g "text/html"
     //props << "getetag";               // http://www.webdav.org/specs/rfc4918.html#PROPERTY_getetag
     // e.g. "zzyzx"

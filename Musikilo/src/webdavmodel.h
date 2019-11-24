@@ -23,11 +23,8 @@ public:
     Q_INVOKABLE void getFilesList(QString path);
 
     Q_INVOKABLE void play(QString path);
-    Q_INVOKABLE void add(QString path);
 
-    void addFile(QString path, bool reset);
-
-    void setPlaylistModel(PlaylistModel* playlistModel);
+    void addFile(QString path);
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
 
@@ -40,7 +37,6 @@ protected:
 
 private:
     QList<QWebdavItem> mFilesList;
-    PlaylistModel* playlistModel;
 
     QWebdav w;
     QWebdavDirParser p;
@@ -50,13 +46,15 @@ private:
 
 signals:
     void gotFilesList();
+    void gotAudioFile(QWebdavItem item);
     void printError(QString errorMsg);
+    void gotMediaContent(QMediaContent content);
 
 public slots:
     void addFilesToList();
     void addFilesToPlaylist();
     void replySkipRead();
-    void playFile(QString path);
+    void getMediaContent(QString path);
 };
 
 #endif // WEBDAVMODEL_H

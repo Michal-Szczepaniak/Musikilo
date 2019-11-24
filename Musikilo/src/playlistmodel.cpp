@@ -3,7 +3,6 @@
 PlaylistModel::PlaylistModel(QObject *parent) : QAbstractListModel(parent)
 {
     connect(this, &PlaylistModel::rowsInserted, this, &PlaylistModel::onRowsInserted);
-    connect(mMediaPlayer, &PlaylistModel::stateChanged, this, &PlaylistModel::onStateChanged);
 }
 
 void PlaylistModel::reset()
@@ -27,9 +26,20 @@ void PlaylistModel::play(QMediaContent content)
     mMediaPlayer->play();
 }
 
+int PlaylistModel::activeItem()
+{
+    return mActiveItem;
+}
+
+void PlaylistModel::setActiveItem(int activeItem)
+{
+    mActiveItem = activeItem;
+}
+
 void PlaylistModel::setMediaPlayer(QObject *mediaPlayer)
 {
     mMediaPlayer = qvariant_cast<QMediaPlayer*>(mediaPlayer->property("mediaObject"));
+    connect(mMediaPlayer, &QMediaPlayer::stateChanged, this, &PlaylistModel::onStateChanged);
 }
 
 int PlaylistModel::rowCount(const QModelIndex &parent) const
@@ -71,7 +81,7 @@ void PlaylistModel::onRowsInserted(const QModelIndex &parent, int first, int las
     Q_UNUSED(last);
 
     if (mMediaPlayer->state() == QMediaPlayer::StoppedState) {
-        emit playFile(mEntries[mActiveItem].path());
+        emit playFile(mEntries[0].path());
     }
 }
 
