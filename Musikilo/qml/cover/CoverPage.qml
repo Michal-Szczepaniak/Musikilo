@@ -2,21 +2,40 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
-    Label {
-        id: label
-        anchors.centerIn: parent
-        text: qsTr("My Cover")
-    }
+    Column {
+        anchors.fill: parent
+        anchors.margins: Theme.paddingLarge*2
+        spacing: Theme.paddingLarge
 
-    CoverActionList {
-        id: coverAction
-
-        CoverAction {
-            iconSource: "image://theme/icon-cover-next"
+        Label {
+            id: label
+            text: "Musikilo"
+            font.pixelSize: Theme.fontSizeLarge
+            font.bold: Font.Bold
+            anchors.horizontalCenter: parent.horizontalCenter
         }
 
-        CoverAction {
-            iconSource: "image://theme/icon-cover-pause"
+        Label {
+            id: title
+            width: parent.width
+            text: mediaPlayer.metaData.title !== undefined ? mediaPlayer.metaData.title : ""
+            wrapMode: "WrapAtWordBoundaryOrAnywhere"
+            font.bold: Font.Bold
+            horizontalAlignment: Text.AlignHCenter
+        }
+
+        Label {
+            id: author
+            width: parent.width
+            text: mediaPlayer.metaData.author!== undefined ?
+                      mediaPlayer.metaData.author :
+                      mediaPlayer.metaData.albumArtist !== undefined ?
+                          mediaPlayer.metaData.albumArtist :
+                          mediaPlayer.metaData.contributingArtist !== undefined ?
+                              mediaPlayer.metaData.contributingArtist : ""
+            font.bold: Font.Bold
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: "WrapAtWordBoundaryOrAnywhere"
         }
     }
 }

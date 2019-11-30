@@ -21,61 +21,47 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 Item {
-    id: filesListPage
+    id: songsListPage
 
     implicitHeight: swipeView.height; implicitWidth: swipeView.width
 
     SilicaFlickable {
-        id: filesFlickable
+        id: songsFlickable
         anchors.fill: parent
         flickableDirection: Flickable.VerticalFlick
 
         PageHeader {
             id: header
-            title: qsTr("Files list")
+            title: qsTr("Playlist")
         }
 
         SilicaListView {
-            id: filesList
-            model: webdavmodel
+            id: songsList
+            model: playlistmodel
             currentIndex: -1
             anchors.top: header.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            header: SearchField {
-                id: searchField
-                width: parent.width
-                placeholderText: "Search"
-            }
             delegate: ListItem {
-                id: delegate
+                id: playlistDelegate
 
-                width: filesList.width
+                width: songsList.width
 
-                menu: contextMenuComponent
+                menu: playlistMenuComponent
 
                 Component {
-                    id: contextMenuComponent
+                    id: playlistMenuComponent
                     ContextMenu {
                         MenuItem {
-                            text: "Add file"
-                            onClicked: webdavmodel.play(path)
-                        }
-
-                        MenuItem {
-                            text: "Play file"
-                            onClicked: {
-                                mediaPlayer.operationsPending = true
-                                playlistmodel.reset()
-                                webdavmodel.play(path)
-                            }
+                            text: qsTr("Remove")
+                            onClicked: playlistmodel.remove(index)
                         }
                     }
                 }
 
                 Label {
-                    id: buddyName
+                    id: playlistSongName
                     x: Theme.horizontalPageMargin
                     text: name
                     anchors.leftMargin: Theme.paddingLarge
@@ -83,16 +69,13 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
+                    color: playlistmodel.activeItem == index ? Theme.highlightColor : Theme.primaryColor
                     elide: Text.ElideRight
                 }
 
                 onClicked: {
-                    if(isDir) {
-                        webdavmodel.getFilesList(path);
-                    } else {
-                        webdavmodel.play(path)
-                    }
+                    mediaPlayer.operationsPending = true
+                    playlistmodel.activeItem = index
                 }
             }
             VerticalScrollDecorator {}

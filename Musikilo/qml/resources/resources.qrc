@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/record.png</file>
+        <file>images/stylus.png</file>
+    </qresource>
+</RCC>

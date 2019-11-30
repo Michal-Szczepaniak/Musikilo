@@ -1,3 +1,22 @@
+/*
+    Copyright (C) 2019 Michał Szczepaniak
+
+    This file is part of Musikilo.
+
+    Musikilo is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Musikilo is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Musikilo. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "webdavmodel.h"
 
 WebDavModel::WebDavModel(QObject *parent) : QAbstractListModel(parent)
@@ -14,7 +33,7 @@ WebDavModel::WebDavModel(QObject *parent) : QAbstractListModel(parent)
 
 void WebDavModel::getFilesList(QString path)
 {
-    p.listDirectory(&w, path);
+    p.listDirectory(&w, path, 1);
 }
 
 void WebDavModel::play(QString path)
@@ -22,12 +41,19 @@ void WebDavModel::play(QString path)
     addFile(path);
 }
 
+void WebDavModel::setConnectionSettings(const int connectionType, const QString &hostname, const QString &rootPath, const QString &username, const QString &password, int port)
+{
+    w.setConnectionSettings(connectionType == 1 ? QWebdav::HTTPS : QWebdav::HTTP, hostname, rootPath, username, password, port);
+}
+
 void WebDavModel::addFile(QString path)
 {
     bool isDir = path.endsWith('/');
 
+    qDebug() << "file " << path << " isdir " << isDir;
+
     if(isDir) {
-        playlistParser.listDirectory(&w, path);
+        playlistParser.listDirectory(&w, path, 100);
     } else {
         playlistParser.listItem(&w, path);
     }
@@ -100,8 +126,9 @@ void WebDavModel::addFilesToList()
 
     QWebdavItem item;
     foreach(item, list) {
-        qDebug() << item.name();
-        mFilesList << item;
+        if (item.isDir() || item.mimeType().startsWith("audio")) {
+            mFilesList << item;
+        }
     }
     mFilesList<<backItem;
 
@@ -110,12 +137,11 @@ void WebDavModel::addFilesToList()
 
 void WebDavModel::addFilesToPlaylist()
 {
-    QList<QWebdavItem> list = p.getList();
+    QList<QWebdavItem> list = playlistParser.getList();
     if(list.size() == 0) return;
 
     QWebdavItem item;
     foreach(item, list) {
-        qDebug()<<item.mimeType();
         if (item.mimeType().startsWith("audio")) {
             emit gotAudioFile(item);
         }

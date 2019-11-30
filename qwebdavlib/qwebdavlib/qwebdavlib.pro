@@ -9,7 +9,7 @@ TARGET = qwebdav
 TEMPLATE = lib
 
 # Enable DEBUG output with qDebug()
-DEFINES += DEBUG_WEBDAV
+#DEFINES += DEBUG_WEBDAV
 
 # Enable extended WebDAV properties (see QWebDavItem.h/cpp)
 DEFINES += QWEBDAVITEM_EXTENDED_PROPERTIES

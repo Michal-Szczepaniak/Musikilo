@@ -1,7 +1,7 @@
 /*
     Copyright (C) 2018 Michał Szczepaniak
 
-    This file is part of Morsender.
+    This file is part of Musikilo.
 
     Morsender is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ Item {
     property int visibleHeight: flickable.contentY + height
 
     anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
-    height: mainPage.isPortrait ? Theme.itemSizeSmall: 0
+    height: Theme.itemSizeLarge
 
     SilicaFlickable {
         id: flickable
@@ -42,7 +42,6 @@ Item {
                 id: sectionRepeater
                 model: iconArray
                 delegate: BackgroundItem {
-                    visible: mainPage.isPortrait
                     width: tabPageHeader.width / sectionRepeater.count
                     height: tabPageHeader.height
 
@@ -93,8 +92,7 @@ Item {
 
                     }
 
-                    onClicked: listView.currentIndex === index ? listView.currentItem.positionAtTop()
-                                                                   : listView.currentIndex = index
+                    onClicked: listView.currentIndex = index
 
                 }
             }
