@@ -38,7 +38,6 @@ void PlaylistModel::addFile(QWebdavItem file)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     mEntries << file;
-    qDebug() << "PlaylistModel " << file.name();
     endInsertRows();
 }
 

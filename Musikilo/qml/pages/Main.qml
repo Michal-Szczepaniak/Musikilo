@@ -28,34 +28,39 @@ Page {
 
     allowedOrientations: Orientation.All
 
-    SilicaFlickable {
-        anchors.fill: parent
-        contentHeight: parent.height
+    SlideshowView {
+        id: swipeView
+        itemWidth: width
+        itemHeight: height
+        clip: true
+        interactive: false
 
-        SlideshowView {
-            id: swipeView
-            itemWidth: width
-            itemHeight: height
-            clip: true
-            interactive: false
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: parent.height - mainFlickable.height - mainFlickable.contentY
 
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: mainPageHeader.top
-
-            model: VisualItemModel {
-                FilesList { }
-                SongsList { }
-                SongDetails { }
-                Settings { }
-            }
+        model: VisualItemModel {
+            FilesList { }
+            SongsList { }
+            SongDetails { }
+            Settings { }
         }
+    }
+
+    SilicaFlickable {
+        id: mainFlickable
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: mainPageHeader.height
+        contentHeight: mainPageHeader.height
+        flickableDirection: Flickable.VerticalFlick
 
         TabHeader {
             id: mainPageHeader
             listView: swipeView
-            iconArray: [ "image://theme/icon-m-events", "image://theme/icon-m-events", "image://theme/icon-m-media-songs", "image://theme/icon-m-developer-mode", ]
+            iconArray: [ "image://theme/icon-m-events", "qrc:///images/icon-m-playlists.svg", "image://theme/icon-m-media-songs", "image://theme/icon-m-developer-mode", ]
         }
 
         PushUpMenu {
@@ -65,6 +70,7 @@ Page {
             }
         }
     }
+
 
     MprisPlayer {
         id: mprisPlayer

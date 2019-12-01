@@ -43,11 +43,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            header: SearchField {
-                id: searchField
-                width: parent.width
-                placeholderText: "Search"
-            }
+
             delegate: ListItem {
                 id: delegate
 

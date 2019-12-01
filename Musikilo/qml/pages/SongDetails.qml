@@ -29,6 +29,16 @@ Item {
     property int playlistElementsCount: 0
     property bool landscape: ( mainPage.orientation === Orientation.Landscape || mainPage.orientation === Orientation.LandscapeInverted )
 
+    onLandscapeChanged: {
+        record.anchors.horizontalCenter = !landscape ? settingsPage.horizontalCenter : undefined
+        record.x = landscape ? Screen.height/8 : 0
+    }
+
+    Component.onCompleted: {
+        record.x = landscape ? Screen.height/8 : 0
+        record.anchors.horizontalCenter = !landscape ? settingsPage.horizontalCenter : undefined
+    }
+
     Connections {
         target: playlistmodel
         onRowsInserted: playlistElementsCount = playlistmodel.rowCount()
@@ -42,6 +52,7 @@ Item {
             if (mediaPlayer.duration > 0) {
                 stylus.rotation = -8
                 stylusAnimation.from = -8
+                stylusAnimation.to = 15
                 stylusAnimation.duration = mediaPlayer.duration
                 stylusAnimation.restart()
             }
@@ -52,252 +63,266 @@ Item {
             progressSlider.value = mediaPlayer.position
         }
 
-        onPlaybackStateChanged: if (mediaPlayer.playbackState === MediaPlayer.StoppedState) stylus.rotation = -20
-    }
-
-    SilicaFlickable {
-        id: playlistFlickable
-        anchors.fill: parent
-        flickableDirection: Flickable.HorizontalFlick
-        boundsBehavior: Flickable.DragOverBounds
-        clip: true
-
-        onContentXChanged: {
-            if (contentX > Theme.itemSizeExtraLarge/2 && playlistmodel.activeItem + 1 < playlistElementsCount) {
-                nextBackground.visible = true
+        onPlaybackStateChanged: {
+            if (mediaPlayer.playbackState === MediaPlayer.StoppedState) {
+                stylus.rotation = -20
+            } else if (mediaPlayer.playbackState === MediaPlayer.PausedState) {
+                stylusAnimation.pause()
             } else {
-                nextBackground.visible = false
-            }
-
-            if (contentX < -(Theme.itemSizeExtraLarge/2) && contentX < 0 && playlistmodel.activeItem > 0) {
-                prevBackground.visible = true
-            } else {
-                prevBackground.visible = false
+                stylusAnimation.resume()
             }
         }
+    }
 
-        onDraggingChanged: {
-            console.log(contentX)
-            if (contentX > Theme.itemSizeExtraLarge/2 && playlistmodel.activeItem + 1 < playlistElementsCount) {
+    MouseArea {
+        id: mousearea
+        anchors.fill: parent
+        propagateComposedEvents: true
+
+        drag {
+            target: draggable;
+            minimumX: -Theme.itemSizeHuge;
+            maximumX: Theme.itemSizeHuge;
+            minimumY: 0;
+            maximumY: 0;
+            axis: Drag.XAxis;
+        }
+
+        onReleased: {
+            draggable.x = 0
+            if (draggable.x < -(Theme.itemSizeHuge/2) && playlistmodel.activeItem + 1 < playlistElementsCount) {
                 mediaPlayer.operationsPending = true
                 playlistmodel.activeItem++
             }
 
-            if (contentX < -(Theme.itemSizeExtraLarge/2) && contentX < 0 && playlistmodel.activeItem > 0) {
+            if (draggable.x > Theme.itemSizeHuge/2 && playlistmodel.activeItem > 0) {
                 mediaPlayer.operationsPending = true
                 playlistmodel.activeItem--
             }
         }
 
-        MouseArea {
-            id: mousearea
-            anchors.fill: parent
-            propagateComposedEvents: true
+        onClicked: mediaPlayer.playbackState === MediaPlayer.PlayingState ? playlistmodel.pause() : playlistmodel.resume()
 
-            onClicked: mediaPlayer.playbackState === MediaPlayer.PlayingState ? playlistmodel.pause() : playlistmodel.resume()
-        }
+        Item {
+            id: draggable
 
-        Image {
-            id: record
-            width: Screen.width/2
-            height: width
+            width: parent.width
+            height: parent.height
+            x: 0
 
-            x: landscape ? Screen.height/8 : 0
-            anchors.top: parent.top
-            anchors.horizontalCenter: !landscape ? parent.horizontalCenter : undefined
-            anchors.topMargin: !landscape ? Screen.height/8 : Theme.paddingLarge*2
+            Behavior on x { PropertyAnimation { } }
 
-            source: "qrc:///images/record.png"
+            Item {
+                id: draggableContainer
+                anchors.fill: parent
+            }
 
-            RotationAnimation on rotation {
-                loops: Animation.Infinite
-                from: record.rotation
-                to: record.rotation+360
-                running: mediaPlayer.playbackState === MediaPlayer.PlayingState && Qt.application.state === Qt.ApplicationActive
-                duration: 10000
+
+            Rectangle {
+                id: nextBackground
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.left: draggableContainer.right
+                width: Theme.itemSizeHuge
+                visible: draggable.x !== 0
+                color: draggable.x < -(Theme.itemSizeHuge / 2) ?
+                           Qt.rgba(Theme.highlightBackgroundColor.r, Theme.highlightBackgroundColor.g, Theme.highlightBackgroundColor.b, 0.85) :
+                           Qt.rgba(Theme.highlightDimmerColor.r, Theme.highlightDimmerColor.g, Theme.highlightDimmerColor.b, 0.85)
+
+                IconButton {
+                    id: nextButton
+                    icon.source: "image://theme/icon-m-next"
+                    anchors.centerIn: parent
+                }
+            }
+
+            OpacityRampEffect {
+                sourceItem: nextBackground
+                direction: OpacityRamp.RightToLeft
+                offset: 0.0
+                slope: parent.opacity * 0.8
+            }
+
+            Rectangle {
+                id: prevBackground
+                anchors.right: draggableContainer.left
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                width: Theme.itemSizeHuge
+                visible: draggable.x !== 0
+                color: draggable.x > (Theme.itemSizeHuge / 2) ?
+                           Qt.rgba(Theme.highlightBackgroundColor.r, Theme.highlightBackgroundColor.g, Theme.highlightBackgroundColor.b, 0.85) :
+                           Qt.rgba(Theme.highlightDimmerColor.r, Theme.highlightDimmerColor.g, Theme.highlightDimmerColor.b, 0.85)
+
+                IconButton {
+                    id: prevButton
+                    icon.source: "image://theme/icon-m-previous"
+                    anchors.centerIn: parent
+                }
+            }
+
+            OpacityRampEffect {
+                sourceItem: prevBackground
+                direction: OpacityRamp.LeftToRight
+                offset: 0.0
+                slope: parent.opacity * 0.8
             }
         }
+    }
 
-        Image {
-            id: stylus
-            width: record.width * 1.5
-            height: record.width * 1.5
-            rotation: 345
+    Image {
+        id: record
+        width: Screen.width/2
+        height: width
 
-            x: record.x + record.width/3
-            y: record.y - height/2.4
+        anchors.top: parent.top
+        x: Screen.height/8
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: !landscape ? Screen.height/8 : Theme.paddingLarge*2
 
-            RotationAnimation on rotation {
-                id: stylusAnimation
-                from: -8
-                to: 15
-                running: mediaPlayer.playbackState === MediaPlayer.PlayingState
-            }
+        source: "qrc:///images/record.png"
 
-            source: "qrc:///images/stylus.png"
+        RotationAnimation on rotation {
+            loops: Animation.Infinite
+            from: record.rotation
+            to: record.rotation+360
+            running: mediaPlayer.playbackState === MediaPlayer.PlayingState && Qt.application.state === Qt.ApplicationActive
+            duration: 10000
+        }
+    }
+
+    Image {
+        id: stylus
+        width: record.width * 1.5
+        height: record.width * 1.5
+        rotation: 345
+
+        x: record.x + record.width/3
+        y: record.y - height/2.4
+
+        RotationAnimation on rotation {
+            id: stylusAnimation
         }
 
-        Column {
-            anchors.top: landscape ? parent.top : record.bottom
-            anchors.topMargin: Theme.paddingLarge*2
-            x: !landscape ? 0 : Screen.height / 2
-            width: !landscape ? Screen.width : Screen.height / 2
-            spacing: Theme.paddingMedium
+        source: "qrc:///images/stylus.png"
+    }
 
-            Label {
-                id: title
-                width: parent.width
-                wrapMode: "WrapAtWordBoundaryOrAnywhere"
-                text: mediaPlayer.metaData.title !== undefined ? mediaPlayer.metaData.title : ""
-                font.pixelSize: Theme.fontSizeLarge
-                anchors.horizontalCenter: parent.horizontalCenter
-                horizontalAlignment: Text.AlignHCenter
-            }
-
-            Label {
-                id: author
-                width: parent.width
-                wrapMode: "WrapAtWordBoundaryOrAnywhere"
-                text: mediaPlayer.metaData.author!== undefined ?
-                          mediaPlayer.metaData.author :
-                          mediaPlayer.metaData.albumArtist !== undefined ?
-                              mediaPlayer.metaData.albumArtist :
-                              mediaPlayer.metaData.contributingArtist !== undefined ?
-                                  mediaPlayer.metaData.contributingArtist : ""
-                font.pixelSize: Theme.fontSizeLarge
-                anchors.horizontalCenter: parent.horizontalCenter
-                horizontalAlignment: Text.AlignHCenter
-            }
-
-            Item {}
-
-            Label {
-                id: album
-                width: parent.width
-                wrapMode: "WrapAtWordBoundaryOrAnywhere"
-                text: mediaPlayer.metaData.albumTitle !== undefined ?
-                          qsTr("Album: %1").arg(mediaPlayer.metaData.albumTitle) : ""
-                anchors.horizontalCenter: parent.horizontalCenter
-                horizontalAlignment: Text.AlignHCenter
-            }
-
-            Label {
-                id: year
-                text: mediaPlayer.metaData.year !== undefined ?
-                          qsTr("Year: %1").arg(mediaPlayer.metaData.year) : ""
-                visible: mediaPlayer.metaData.year !== undefined
-                anchors.horizontalCenter: parent.horizontalCenter
-                horizontalAlignment: Text.AlignHCenter
-            }
-
-            Label {
-                id: trackNumber
-                text: mediaPlayer.metaData.trackNumber !== undefined ?
-                          qsTr("Track No.: %1").arg(mediaPlayer.metaData.trackNumber) : ""
-                visible: mediaPlayer.metaData.trackNumber !== undefined
-                anchors.horizontalCenter: parent.horizontalCenter
-                horizontalAlignment: Text.AlignHCenter
-            }
-
-            Label {
-                id: bitrate
-                text: mediaPlayer.metaData.audioBitRate !== undefined ?
-                          qsTr("Bit rate: %1 kb/s").arg(Math.round(mediaPlayer.metaData.audioBitRate / 1000)) : ""
-                visible: mediaPlayer.metaData.audioBitRate !== undefined
-                anchors.horizontalCenter: parent.horizontalCenter
-                horizontalAlignment: Text.AlignHCenter
-            }
-        }
+    Column {
+        anchors.top: landscape ? parent.top : record.bottom
+        anchors.topMargin: Theme.paddingLarge*2
+        x: !landscape ? 0 : Screen.height / 2
+        width: !landscape ? Screen.width : Screen.height / 2
+        spacing: Theme.paddingMedium
 
         Label {
-            id: progress
-            anchors.left: parent.left
-            anchors.bottom: progressSlider.bottom
-            anchors.margins: Theme.paddingLarge
-            text: Format.formatDuration(Math.round(mediaPlayer.position/1000), ((mediaPlayer.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))
-        }
-
-        Label {
-            id: duration
-            anchors.right: parent.right
-            anchors.bottom: progressSlider.bottom
-            anchors.margins: Theme.paddingLarge
-            text: Format.formatDuration(Math.round(mediaPlayer.duration/1000), ((mediaPlayer.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))
-        }
-
-        Slider {
-            id: progressSlider
-            value: mediaPlayer.position
-            valueText: down ? Format.formatDuration(Math.round(value/1000), ((value/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort)) : ""
-            minimumValue: 0
-            maximumValue: mediaPlayer.duration !== 0 ? mediaPlayer.duration : 1
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: playlistTracks.top
-            anchors.leftMargin: Theme.paddingLarge
-            anchors.rightMargin: Theme.paddingLarge
-
-            onReleased: {
-                stylusAnimation.stop()
-                stylusAnimation.from = ((progressSlider.value/progressSlider.maximumValue) * 23) - 8
-                stylusAnimation.duration = progressSlider.maximumValue - progressSlider.value
-                stylusAnimation.to = 15
-                stylusAnimation.start()
-                mediaPlayer.seek(progressSlider.value)
-            }
-        }
-
-        Label {
-            id: playlistTracks
-            text: qsTr("Song %1/%2").arg(playlistmodel.activeItem + 1).arg(playlistElementsCount)
-            visible: playlistElementsCount > 0
+            id: title
+            width: parent.width
+            wrapMode: "WrapAtWordBoundaryOrAnywhere"
+            text: mediaPlayer.metaData.title !== undefined ? mediaPlayer.metaData.title : ""
+            font.pixelSize: Theme.fontSizeLarge
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: Theme.paddingLarge
+            horizontalAlignment: Text.AlignHCenter
         }
 
-        Rectangle {
-            id: nextBackground
-            anchors.left: parent.right
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            width: Theme.itemSizeLarge
-            color: Qt.rgba(Theme.highlightDimmerColor.r, Theme.highlightDimmerColor.g, Theme.highlightDimmerColor.b, 0.85)
-
-            IconButton {
-                id: nextButton
-                icon.source: "image://theme/icon-m-previous"
-                anchors.centerIn: parent
-            }
+        Label {
+            id: author
+            width: parent.width
+            wrapMode: "WrapAtWordBoundaryOrAnywhere"
+            text: mediaPlayer.metaData.author!== undefined ?
+                      mediaPlayer.metaData.author :
+                      mediaPlayer.metaData.albumArtist !== undefined ?
+                          mediaPlayer.metaData.albumArtist :
+                          mediaPlayer.metaData.contributingArtist !== undefined ?
+                              mediaPlayer.metaData.contributingArtist : ""
+            font.pixelSize: Theme.fontSizeLarge
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Text.AlignHCenter
         }
 
-        OpacityRampEffect {
-            sourceItem: nextBackground
-            direction: OpacityRamp.RightToLeft
-            offset: 0.0
-            slope: parent.opacity * 0.8
+        Item {}
+
+        Label {
+            id: album
+            width: parent.width
+            wrapMode: "WrapAtWordBoundaryOrAnywhere"
+            text: mediaPlayer.metaData.albumTitle !== undefined ?
+                      qsTr("Album: %1").arg(mediaPlayer.metaData.albumTitle) : ""
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Text.AlignHCenter
         }
 
-        Rectangle {
-            id: prevBackground
-            anchors.right: parent.left
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            width: Theme.itemSizeLarge
-            color: Qt.rgba(Theme.highlightDimmerColor.r, Theme.highlightDimmerColor.g, Theme.highlightDimmerColor.b, 0.85)
-
-            IconButton {
-                id: prevButton
-                icon.source: "image://theme/icon-m-next"
-                anchors.centerIn: parent
-            }
+        Label {
+            id: year
+            text: mediaPlayer.metaData.year !== undefined ?
+                      qsTr("Year: %1").arg(mediaPlayer.metaData.year) : ""
+            visible: mediaPlayer.metaData.year !== undefined
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Text.AlignHCenter
         }
 
-        OpacityRampEffect {
-            sourceItem: prevBackground
-            direction: OpacityRamp.LeftToRight
-            offset: 0.0
-            slope: parent.opacity * 0.8
+        Label {
+            id: trackNumber
+            text: mediaPlayer.metaData.trackNumber !== undefined ?
+                      qsTr("Track No.: %1").arg(mediaPlayer.metaData.trackNumber) : ""
+            visible: mediaPlayer.metaData.trackNumber !== undefined
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Text.AlignHCenter
         }
+
+        Label {
+            id: bitrate
+            text: mediaPlayer.metaData.audioBitRate !== undefined ?
+                      qsTr("Bit rate: %1 kb/s").arg(Math.round(mediaPlayer.metaData.audioBitRate / 1000)) : ""
+            visible: mediaPlayer.metaData.audioBitRate !== undefined
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Text.AlignHCenter
+        }
+    }
+
+    Label {
+        id: progress
+        anchors.left: parent.left
+        anchors.bottom: progressSlider.bottom
+        anchors.margins: Theme.paddingLarge
+        text: Format.formatDuration(Math.round(mediaPlayer.position/1000), ((mediaPlayer.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))
+    }
+
+    Label {
+        id: duration
+        anchors.right: parent.right
+        anchors.bottom: progressSlider.bottom
+        anchors.margins: Theme.paddingLarge
+        text: Format.formatDuration(Math.round(mediaPlayer.duration/1000), ((mediaPlayer.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))
+    }
+
+    Slider {
+        id: progressSlider
+        value: mediaPlayer.position
+        valueText: down ? Format.formatDuration(Math.round(value/1000), ((value/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort)) : ""
+        minimumValue: 0
+        maximumValue: mediaPlayer.duration !== 0 ? mediaPlayer.duration : 1
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: playlistTracks.top
+        anchors.leftMargin: Theme.paddingLarge
+        anchors.rightMargin: Theme.paddingLarge
+
+        onReleased: {
+            stylusAnimation.stop()
+            stylusAnimation.from = ((progressSlider.value/progressSlider.maximumValue) * 23) - 8
+            stylusAnimation.duration = progressSlider.maximumValue - progressSlider.value
+            stylusAnimation.to = 15
+            stylusAnimation.start()
+            mediaPlayer.seek(progressSlider.value)
+        }
+    }
+
+    Label {
+        id: playlistTracks
+        text: qsTr("Song %1/%2").arg(playlistmodel.activeItem + 1).arg(playlistElementsCount)
+        visible: playlistElementsCount > 0
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Theme.paddingLarge
     }
 }
