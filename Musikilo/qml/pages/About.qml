@@ -126,6 +126,12 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
+            Label {
+                text: qsTr("dashinfantry for Chinese translation.")
+                font.pixelSize: Theme.fontSizeSmall
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
             Separator {
                 width: parent.width
                 color: Theme.primaryColor
