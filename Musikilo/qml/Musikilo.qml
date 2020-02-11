@@ -33,6 +33,37 @@ ApplicationWindow
         playlistmodel.setMediaPlayer(mediaPlayer);
     }
 
+    Connections {
+        target: webdavmodel
+        onPrintError: pageStack.push(errorDialog,  { error: errorMsg })
+    }
+
+    Dialog {
+        id: errorDialog
+        property string error
+        canAccept: false
+
+        Column {
+            width: parent.width
+
+            DialogHeader {
+                title: qsTr("Error")
+                cancelText: qsTr("Okay")
+            }
+
+            Label {
+                id: nameField
+                text: errorDialog.error
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: Theme.pad
+                anchors.rightMargin: Theme.paddingLargedingLarge
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+            }
+        }
+    }
+
     Audio {
         id: mediaPlayer
         onPlaybackStateChanged: {
@@ -42,6 +73,8 @@ ApplicationWindow
                 playlistmodel.activeItem++
             }
         }
+
+        onErrorStringChanged: pageStack.push(errorDialog,  { error: errorString })
 
         property bool operationsPending: false
     }

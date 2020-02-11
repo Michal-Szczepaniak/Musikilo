@@ -31,6 +31,10 @@
         <source>Donate</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>dashinfantry for Chinese translation.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FilesList</name>
@@ -43,6 +47,17 @@
     <name>Main</name>
     <message>
         <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Musikilo</name>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Okay</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -17,9 +17,7 @@
     along with Musikilo. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifdef QT_QML_DEBUG
 #include <QtQuick>
-#endif
 
 #include <sailfishapp.h>
 #include "webdavmodel.h"

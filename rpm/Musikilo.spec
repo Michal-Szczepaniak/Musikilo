@@ -4,11 +4,11 @@ Name:       Musikilo
 # << macros
 
 Summary:    WebDav music player
-Version:    1.0
+Version:    1.1
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3
-URL:        http://example.org/
+URL:        http://verdanditeam.com/
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
@@ -18,7 +18,7 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  desktop-file-utils
 
 %description
-Short description of my Sailfish OS Application
+WebDav music player
 
 
 %prep
