@@ -1,7 +1,10 @@
- TEMPLATE = subdirs
+TEMPLATE = subdirs
+
+Musikilo.depends = qtmpris/src qwebdavlib/qwebdavlib
 
 SUBDIRS += \
     qwebdavlib/qwebdavlib \
-    Musikilo
+    Musikilo \
+    qtmpris/src
 
 OTHER_FILES += rpm/Musikilo.spec

@@ -1,4 +1,4 @@
-Name:       Musikilo
+Name:       harbour-musikilo
 
 # >> macros
 # << macros

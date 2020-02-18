@@ -1,6 +1,10 @@
-TARGET = Musikilo
+TARGET = harbour-musikilo
 
-QT += core network xml multimedia
+QT += core network xml multimedia dbus
+
+INCLUDEPATH += ../qtmpris/src
+
+LIBS += -L../qtmpris/src -lmpris-qt5
 
 CONFIG += sailfishapp
 
@@ -18,9 +22,8 @@ DISTFILES += qml/Musikilo.qml \
     qml/pages/Settings.qml \
     qml/pages/SongsList.qml \
     qml/pages/About.qml \
-    rpm/Musikilo.spec \
     translations/*.ts \
-    Musikilo.desktop
+    harbour-musikilo.desktop
 
 RESOURCES += \
     qml/resources/resources.qrc
@@ -31,8 +34,13 @@ SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 # following CONFIG line
 CONFIG += sailfishapp_i18n
 
-TRANSLATIONS += translations/Musikilo-de.ts \
-    translations/Musikilo-zh_CN.ts
+TRANSLATIONS += translations/harbour-musikilo-de.ts \
+    translations/harbour-musikilo-zh_CN.ts
+
+LIBS +=  -ldbusextended-qt5
+
+INCLUDEPATH += /usr/include/qofonoext/
+LIBS += -lqofonoext
 
 DEFINES += QWEBDAVITEM_EXTENDED_PROPERTIES
 PRE_TARGETDEPS += $$OUT_PWD/../qwebdavlib/qwebdavlib/libqwebdav.a
