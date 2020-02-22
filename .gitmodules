@@ -1,3 +1,6 @@
 [submodule "qwebdavlib"]
 	path = qwebdavlib
 	url = https://github.com/Michal-Szczepaniak/qwebdavlib
+[submodule "libqofonoext"]
+	path = libqofonoext
+	url = git@github.com:Michal-Szczepaniak/libqofonoext.git
