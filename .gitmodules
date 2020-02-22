@@ -4,3 +4,6 @@
 [submodule "libqofonoext"]
 	path = libqofonoext
 	url = git@github.com:Michal-Szczepaniak/libqofonoext.git
+[submodule "qtmpris"]
+	path = qtmpris
+	url = git@github.com:Michal-Szczepaniak/qtmpris.git
