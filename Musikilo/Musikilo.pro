@@ -39,8 +39,9 @@ TRANSLATIONS += translations/harbour-musikilo-de.ts \
 
 LIBS +=  -ldbusextended-qt5
 
-INCLUDEPATH += /usr/include/qofonoext/
-LIBS += -lqofonoext
+PRE_TARGETDEPS += $$OUT_PWD/../libqofonoext/src/libqofonoext.a
+INCLUDEPATH += ../libqofonoext/src/
+LIBS += -L$$OUT_PWD/../libqofonoext/src/ -lqofonoext
 
 DEFINES += QWEBDAVITEM_EXTENDED_PROPERTIES
 PRE_TARGETDEPS += $$OUT_PWD/../qwebdavlib/qwebdavlib/libqwebdav.a
