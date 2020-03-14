@@ -7,3 +7,6 @@
 [submodule "qtmpris"]
 	path = qtmpris
 	url = git@github.com:Michal-Szczepaniak/qtmpris.git
+[submodule "qtdbusextended"]
+	path = qtdbusextended
+	url = git@github.com:nemomobile/qtdbusextended.git

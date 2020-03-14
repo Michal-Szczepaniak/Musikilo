@@ -37,12 +37,12 @@ CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/harbour-musikilo-de.ts \
     translations/harbour-musikilo-zh_CN.ts
 
-LIBS +=  -ldbusextended-qt5
-
+# libqofonoext
 PRE_TARGETDEPS += $$OUT_PWD/../libqofonoext/src/libqofonoext.a
 INCLUDEPATH += ../libqofonoext/src/
 LIBS += -L$$OUT_PWD/../libqofonoext/src/ -lqofonoext
 
+# qwebdavlib
 DEFINES += QWEBDAVITEM_EXTENDED_PROPERTIES
 PRE_TARGETDEPS += $$OUT_PWD/../qwebdavlib/qwebdavlib/libqwebdav.a
 INCLUDEPATH += ../qwebdavlib/qwebdavlib/
