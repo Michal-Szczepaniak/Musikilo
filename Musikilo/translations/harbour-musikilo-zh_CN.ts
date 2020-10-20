@@ -91,6 +91,10 @@
         <source>Connect</source>
         <translation>连接</translation>
     </message>
+    <message>
+        <source>Connected!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SongDetails</name>

@@ -27,7 +27,6 @@ Item {
 
     implicitHeight: swipeView.height; implicitWidth: swipeView.width
 
-
     OfonoModemManager { id: modemManager }
 
     function tryLogIn() {
@@ -42,9 +41,23 @@ Item {
         onReadyChanged: {
             var key = modemManager.imeiCodes.join("");
             simpleCrypt.key = key;
-
             tryLogIn();
         }
+    }
+
+    Connections {
+        target: webdavmodel
+        onGotFilesList: {
+            connectedMessage.visible = true
+            hideConnected.start()
+        }
+    }
+
+    Timer {
+        id: hideConnected
+        interval: 3000;
+        repeat: false
+        onTriggered: connectedMessage.visible = false
     }
 
     ConfigurationGroup {
@@ -85,7 +98,10 @@ Item {
                    MenuItem { text: "HTTPS" }
                }
 
-               onCurrentItemChanged: settings.connectionType = themes.currentIndex
+               onCurrentItemChanged: {
+                   settings.connectionType = themes.currentIndex
+                   hostnameValue.focus = true
+               }
             }
 
             TextField {
@@ -95,7 +111,10 @@ Item {
                 labelVisible: true
                 placeholderText: label
                 width: parent.width
-                EnterKey.onClicked: settings.hostname = hostnameValue.text
+                EnterKey.onClicked: {
+                    settings.hostname = hostnameValue.text
+                    rootPathValue.focus = true
+                }
                 onFocusChanged: settings.hostname = hostnameValue.text
             }
 
@@ -106,7 +125,10 @@ Item {
                 labelVisible: true
                 placeholderText: label
                 width: parent.width
-                EnterKey.onClicked: settings.rootPath = rootPathValue.text
+                EnterKey.onClicked: {
+                    settings.rootPath = rootPathValue.text
+                    usernameValue.focus = true
+                }
                 onFocusChanged: settings.rootPath = rootPathValue.text
             }
 
@@ -117,7 +139,10 @@ Item {
                 labelVisible: true
                 placeholderText: label
                 width: parent.width
-                EnterKey.onClicked: settings.username = usernameValue.text
+                EnterKey.onClicked: {
+                    settings.username = usernameValue.text
+                    passwordValue.focus = true
+                }
                 onFocusChanged: settings.username = usernameValue.text
             }
 
@@ -127,7 +152,11 @@ Item {
                 label: qsTr("Password")
                 labelVisible: true
                 placeholderText: label
-                EnterKey.onClicked: settings.password = simpleCrypt.encryptToString(passwordValue.text)
+                EnterKey.onClicked: {
+                    settings.password = simpleCrypt.encryptToString(passwordValue.text)
+                    portValue.focus = true
+                }
+                onFocusChanged: settings.password = simpleCrypt.encryptToString(passwordValue.text)
             }
 
             TextField {
@@ -146,6 +175,15 @@ Item {
                 text: qsTr("Connect")
                 onClicked: tryLogIn();
                 anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Label {
+                id: connectedMessage
+                visible: false
+                text: qsTr("Connected!")
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: Theme.secondaryColor
+                font.pixelSize: Theme.fontSizeSmall
             }
 
         }

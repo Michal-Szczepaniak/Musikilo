@@ -151,13 +151,13 @@ Page {
         id: coverAction
 
         CoverAction {
-            iconSource: "image://theme/icon-cover-next"
-            onTriggered: if (playlistmodel.activeItem + 1 < playlistmodel.rowCount()) playlistmodel.activeItem++
+            iconSource: mediaPlayer.playbackState == MediaPlayer.PlayingState ? "image://theme/icon-cover-pause" : "image://theme/icon-cover-play"
+            onTriggered: mediaPlayer.playbackState == MediaPlayer.PlayingState ? playlistmodel.pause() : playlistmodel.resume()
         }
 
         CoverAction {
-            iconSource: mediaPlayer.playbackState == MediaPlayer.PlayingState ? "image://theme/icon-cover-pause" : "image://theme/icon-cover-play"
-            onTriggered: mediaPlayer.playbackState == MediaPlayer.PlayingState ? playlistmodel.pause() : playlistmodel.resume()
+            iconSource: "image://theme/icon-cover-next-song"
+            onTriggered: if (playlistmodel.activeItem + 1 < playlistmodel.rowCount()) playlistmodel.activeItem++
         }
     }
 }

@@ -4,7 +4,7 @@ Name:       harbour-musikilo
 # << macros
 
 Summary:    WebDav music player
-Version:    1.1
+Version:    1.1.1
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3
@@ -43,7 +43,7 @@ rm -rf %{buildroot}
 # >> install pre
 # << install pre
 %qmake5_install
-
+rm -rf %{buildroot}/usr/include/ %{buildroot}/usr/lib/ %{buildroot}/usr/share/qt5/
 # >> install post
 # << install post
 
