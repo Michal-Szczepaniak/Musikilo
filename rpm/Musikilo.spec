@@ -1,10 +1,7 @@
 Name:       harbour-musikilo
 
-# >> macros
-# << macros
-
 Summary:    WebDav music player
-Version:    1.1.1
+Version:    1.1.2
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3
@@ -20,32 +17,18 @@ BuildRequires:  desktop-file-utils
 %description
 WebDav music player
 
-
 %prep
 %setup -q -n %{name}-%{version}
 
-# >> setup
-# << setup
-
 %build
-# >> build pre
-# << build pre
-
 %qmake5 
 
 make %{?_smp_mflags}
 
-# >> build post
-# << build post
-
 %install
 rm -rf %{buildroot}
-# >> install pre
-# << install pre
 %qmake5_install
 rm -rf %{buildroot}/usr/include/ %{buildroot}/usr/lib/ %{buildroot}/usr/share/qt5/
-# >> install post
-# << install post
 
 desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
@@ -53,9 +36,7 @@ desktop-file-install --delete-original       \
 
 %files
 %defattr(-,root,root,-)
-%{_bindir}
+%{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
-# >> files
-# << files

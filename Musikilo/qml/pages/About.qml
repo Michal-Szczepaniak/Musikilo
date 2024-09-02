@@ -23,7 +23,6 @@ import Sailfish.Silica 1.0
 Page {
     id: aboutPage
 
-    // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
 
     SilicaFlickable {
@@ -51,7 +50,7 @@ Page {
             }
 
             Label {
-                text: "Musikilo 1.1.1"
+                text: "Musikilo 1.1.2"
                 font.pixelSize: Theme.fontSizeExtraLarge
                 anchors.horizontalCenter: parent.horizontalCenter
                 wrapMode: Text.WordWrap
