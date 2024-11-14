@@ -23,10 +23,6 @@
 #include "webdavmodel.h"
 #include "playlistmodel.h"
 #include "simplecrypt.h"
-#include <Mpris>
-#include <MprisPlayer>
-#include <MprisManager>
-#include <qofonoextmodemmanager.h>
 
 int main(int argc, char *argv[])
 {
@@ -36,11 +32,6 @@ int main(int argc, char *argv[])
     WebDavModel webdavmodel;
     PlaylistModel playlistmodel;
     SimpleCrypt simpleCrypt;
-
-    qmlRegisterType<QOfonoExtModemManager>("com.verdanditeam.ofono", 1, 0, "OfonoModemManager");
-    qmlRegisterSingletonType<Mpris>("com.verdanditeam.mpris", 1, 0, "Mpris", Mpris::api_factory);
-    qmlRegisterType<MprisPlayer>("com.verdanditeam.mpris", 1, 0, "MprisPlayer");
-    qmlRegisterType<MprisManager>("com.verdanditeam.mpris", 1, 0, "MprisManager");
 
     QObject::connect(&webdavmodel, &WebDavModel::gotMediaContent, &playlistmodel, &PlaylistModel::play);
     QObject::connect(&webdavmodel, &WebDavModel::gotAudioFile, &playlistmodel, &PlaylistModel::addFile);

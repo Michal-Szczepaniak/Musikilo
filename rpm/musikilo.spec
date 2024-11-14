@@ -1,4 +1,4 @@
-Name:       harbour-musikilo
+Name:       musikilo
 
 Summary:    WebDav music player
 Version:    1.1.2
@@ -8,11 +8,13 @@ License:    GPLv3
 URL:        http://verdanditeam.com/
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   sailfishsilica-qt5 >= 0.10.9
-BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
-BuildRequires:  pkgconfig(Qt5Core)
-BuildRequires:  pkgconfig(Qt5Qml)
-BuildRequires:  pkgconfig(Qt5Quick)
-BuildRequires:  desktop-file-utils
+Requires:   libqofonoext-declarative
+BuildRequires: pkgconfig(sailfishapp) >= 1.0.2
+BuildRequires: pkgconfig(Qt5Core)
+BuildRequires: pkgconfig(Qt5Qml)
+BuildRequires: pkgconfig(Qt5Quick)
+BuildRequires: pkgconfig(qofonoext)
+BuildRequires: desktop-file-utils
 
 %description
 WebDav music player
@@ -28,7 +30,7 @@ make %{?_smp_mflags}
 %install
 rm -rf %{buildroot}
 %qmake5_install
-rm -rf %{buildroot}/usr/include/ %{buildroot}/usr/lib/ %{buildroot}/usr/share/qt5/
+rm -rf %{buildroot}/usr/include/ %{buildroot}/usr/lib/ %{buildroot}/usr/lib64/ %{buildroot}/usr/share/qt5/
 
 desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \

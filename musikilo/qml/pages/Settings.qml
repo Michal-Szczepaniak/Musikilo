@@ -20,7 +20,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import org.nemomobile.configuration 1.0
-import com.verdanditeam.ofono 1.0
+import org.nemomobile.ofono 1.0
 
 Item {
     id: settingsPage
