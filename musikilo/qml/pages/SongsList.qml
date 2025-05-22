@@ -19,11 +19,22 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import QtMultimedia 5.6
 
 Item {
     id: songsListPage
 
     implicitHeight: swipeView.height; implicitWidth: swipeView.width
+
+    Connections {
+        target: player
+
+        onStateChanged: {
+            if (player.position === player.duration-1 && playlistModel.currentIndex+1 < playlistModel.rowCount()) {
+                playlistModel.currentIndex++
+            }
+        }
+    }
 
     SilicaFlickable {
         id: songsFlickable
@@ -37,8 +48,7 @@ Item {
 
         SilicaListView {
             id: songsList
-            model: playlistmodel
-            currentIndex: -1
+            model: playlistModel
             anchors.top: header.bottom
             anchors.left: parent.left
             anchors.right: parent.right
@@ -55,7 +65,7 @@ Item {
                     ContextMenu {
                         MenuItem {
                             text: qsTr("Remove")
-                            onClicked: playlistmodel.remove(index)
+                            onClicked: playlistModel.remove(index)
                         }
                     }
                 }
@@ -69,13 +79,12 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    color: playlistmodel.activeItem == index ? Theme.highlightColor : Theme.primaryColor
+                    color: playlistModel.currentIndex === index ? Theme.highlightColor : Theme.primaryColor
                     elide: Text.ElideRight
                 }
 
                 onClicked: {
-                    mediaPlayer.operationsPending = true
-                    playlistmodel.activeItem = index
+                    playlistModel.currentIndex = index
                 }
             }
             VerticalScrollDecorator {}

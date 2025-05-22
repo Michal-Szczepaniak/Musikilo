@@ -20,8 +20,10 @@
 #include <QtQuick>
 
 #include <sailfishapp.h>
-#include "webdavmodel.h"
+#include "filemodel.h"
+#include "player.h"
 #include "playlistmodel.h"
+#include "settingsmanager.h"
 #include "simplecrypt.h"
 
 int main(int argc, char *argv[])
@@ -29,16 +31,16 @@ int main(int argc, char *argv[])
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QSharedPointer<QQuickView> view(SailfishApp::createView());
 
-    WebDavModel webdavmodel;
-    PlaylistModel playlistmodel;
+    SettingsManager settingsManager;
+    FileModel fileModel(&settingsManager);
+    Player player(&settingsManager);
+    PlaylistModel playlistModel(&settingsManager, &player);
     SimpleCrypt simpleCrypt;
 
-    QObject::connect(&webdavmodel, &WebDavModel::gotMediaContent, &playlistmodel, &PlaylistModel::play);
-    QObject::connect(&webdavmodel, &WebDavModel::gotAudioFile, &playlistmodel, &PlaylistModel::addFile);
-    QObject::connect(&playlistmodel, &PlaylistModel::playFile, &webdavmodel, &WebDavModel::getMediaContent);
-
-    view->rootContext()->setContextProperty("webdavmodel", &webdavmodel);
-    view->rootContext()->setContextProperty("playlistmodel", &playlistmodel);
+    view->rootContext()->setContextProperty("settingsManager", &settingsManager);
+    view->rootContext()->setContextProperty("fileModel", &fileModel);
+    view->rootContext()->setContextProperty("playlistModel", &playlistModel);
+    view->rootContext()->setContextProperty("player", &player);
     view->rootContext()->setContextProperty("simpleCrypt", &simpleCrypt);
 
     view->setSource(SailfishApp::pathTo("qml/Musikilo.qml"));

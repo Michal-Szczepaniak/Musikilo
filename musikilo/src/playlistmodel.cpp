@@ -19,102 +19,93 @@
 
 #include "playlistmodel.h"
 
-PlaylistModel::PlaylistModel(QObject *parent) : QAbstractListModel(parent)
+PlaylistModel::PlaylistModel(SettingsManager *settingsManager, Player *player, QObject *parent) : QAbstractListModel(parent), _settingsManager(settingsManager), _player(player)
 {
-    connect(this, &PlaylistModel::rowsInserted, this, &PlaylistModel::onRowsInserted);
-}
-
-void PlaylistModel::reset()
-{
-    mMediaPlayer->stop();
-    mMediaPlayer->setMedia(nullptr);
-    beginResetModel();
-    mEntries.clear();
-    endResetModel();
-    setActiveItem(0);
-}
-
-void PlaylistModel::addFile(QWebdavItem file)
-{
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    mEntries << file;
-    endInsertRows();
-}
-
-void PlaylistModel::play(QMediaContent content)
-{
-    mMediaPlayer->setMedia(content);
-    mMediaPlayer->play();
-}
-
-int PlaylistModel::activeItem()
-{
-    return mActiveItem;
-}
-
-void PlaylistModel::setActiveItem(int activeItem)
-{
-    mActiveItem = activeItem;
-
-    if (rowCount() > 0 && activeItem < rowCount() && activeItem >= 0) {
-        mMediaPlayer->stop();
-
-        emit playFile(mEntries[mActiveItem].path());
-    }
-
-    emit activeItemChanged(mActiveItem);
-}
-
-void PlaylistModel::resume()
-{
-    mMediaPlayer->play();
-}
-
-void PlaylistModel::pause()
-{
-    mMediaPlayer->pause();
-}
-
-void PlaylistModel::remove(int position)
-{
-    if (position == mActiveItem)
-        mMediaPlayer->stop();
-    setActiveItem(-1);
-    beginRemoveRows(QModelIndex(), position, position);
-    mEntries.removeAt(position);
-    endRemoveRows();
-
-    if (rowCount() == 0)
-        mMediaPlayer->setMedia(nullptr);
-}
-
-void PlaylistModel::setMediaPlayer(QObject *mediaPlayer)
-{
-    mMediaPlayer = qvariant_cast<QMediaPlayer*>(mediaPlayer->property("mediaObject"));
+    connect(settingsManager, &SettingsManager::currentPluginChanged, this, &PlaylistModel::onPluginChange);
+    connect(this, &QAbstractListModel::rowsInserted, this, &PlaylistModel::onRowsInserted);
 }
 
 int PlaylistModel::rowCount(const QModelIndex &parent) const
 {
-    Q_UNUSED(parent);
-    return mEntries.length();
+    Q_UNUSED(parent)
+
+    if (_playlistModel == nullptr) return 0;
+
+    return _playlistModel->rowCount();
 }
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 {
-    if (index.row() < 0 || index.row() >= rowCount())
+    if (index.row() < 0 || index.row() >= rowCount() || _playlistModel == nullptr) {
         return QVariant();
+    }
 
-    const QWebdavItem &file = mEntries[index.row()];
-    if (role == Name)
-        return file.name();
-    else if (role == Path)
-        return file.path();
-
-    return QVariant();
+    return _playlistModel->data(index, role);
 }
 
-Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const {
-    return QAbstractListModel::flags(index) | Qt::ItemIsEditable;
+int PlaylistModel::getCurrentIndex() const
+{
+    return _currentIndex;
+}
+
+void PlaylistModel::setCurrentIndex(int currentIndex)
+{
+    _currentIndex = currentIndex;
+
+    emit currentIndexChanged(currentIndex);
+
+    if (_playlistModel == nullptr) return;
+
+    _playlistModel->play(currentIndex);
+}
+
+void PlaylistModel::reset()
+{
+    if (_playlistModel == nullptr) return;
+
+    beginResetModel();
+    _player->stop();
+    _playlistModel->reset();
+    setCurrentIndex(-1);
+    endResetModel();
+}
+
+void PlaylistModel::addSong(QString path)
+{
+    _playlistModel->addSong(path);
+}
+
+void PlaylistModel::onPluginChange()
+{
+    auto plugin = _settingsManager->getCurrentPlugin();
+    if (plugin != nullptr) {
+        beginResetModel();
+        if (_playlistModel != nullptr) {
+            disconnect(_modelResetSigal);
+            disconnect(_errorOccuredSignal);
+        }
+
+        _playlistModel = plugin->getPlaylistModel();
+        _modelResetSigal = connect(_playlistModel, &PlaylistModelInterface::modelReset, this, &PlaylistModel::onModelReset);
+        connect(_playlistModel, &PlaylistModelInterface::rowsInserted, this, &PlaylistModel::rowsInserted);
+        _errorOccuredSignal = connect(_playlistModel, &PlaylistModelInterface::errorOccured, this, &PlaylistModel::errorOccured);
+        endResetModel();
+    }
+}
+
+void PlaylistModel::onModelReset()
+{
+    beginResetModel();
+    endResetModel();
+}
+
+void PlaylistModel::onRowsInserted()
+{
+    if (_player->getState() == QMediaPlayer::StoppedState && rowCount() > 0) {
+        setCurrentIndex(0);
+
+        _playlistModel->play(0);
+    }
 }
 
 QHash<int, QByteArray> PlaylistModel::roleNames() const
@@ -123,11 +114,4 @@ QHash<int, QByteArray> PlaylistModel::roleNames() const
     roles[Name] = "name";
     roles[Path] = "path";
     return roles;
-}
-
-void PlaylistModel::onRowsInserted()
-{
-    if (mMediaPlayer->state() == QMediaPlayer::StoppedState && rowCount() > 0) {
-        emit playFile(mEntries[0].path());
-    }
 }

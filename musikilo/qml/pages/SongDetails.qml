@@ -40,33 +40,33 @@ Item {
     }
 
     Connections {
-        target: playlistmodel
-        onRowsInserted: playlistElementsCount = playlistmodel.rowCount()
-        onRowsRemoved: playlistElementsCount = playlistmodel.rowCount()
-        onModelReset: playlistElementsCount = playlistmodel.rowCount()
+        target: playlistModel
+        onRowsInserted: playlistElementsCount = playlistModel.rowCount()
+        onRowsRemoved: playlistElementsCount = playlistModel.rowCount()
+        onModelReset: playlistElementsCount = playlistModel.rowCount()
     }
 
     Connections {
-        target: mediaPlayer
+        target: player
         onDurationChanged: {
-            if (mediaPlayer.duration > 0) {
+            if (player.duration > 0) {
                 stylus.rotation = -8
                 stylusAnimation.from = -8
                 stylusAnimation.to = 15
-                stylusAnimation.duration = mediaPlayer.duration
+                stylusAnimation.duration = player.duration
                 stylusAnimation.restart()
             }
         }
 
         onPositionChanged: {
-            progressSlider.maximumValue = mediaPlayer.duration
-            progressSlider.value = mediaPlayer.position
+            progressSlider.maximumValue = player.duration
+            progressSlider.value = player.position
         }
 
-        onPlaybackStateChanged: {
-            if (mediaPlayer.playbackState === MediaPlayer.StoppedState) {
+        onStateChanged: {
+            if (player.state === MediaPlayer.StoppedState) {
                 stylus.rotation = -20
-            } else if (mediaPlayer.playbackState === MediaPlayer.PausedState) {
+            } else if (player.state === MediaPlayer.PausedState) {
                 stylusAnimation.pause()
             } else {
                 stylusAnimation.resume()
@@ -90,18 +90,16 @@ Item {
 
         onReleased: {
             draggable.x = 0
-            if (draggable.x < -(Theme.itemSizeHuge/2) && playlistmodel.activeItem + 1 < playlistElementsCount) {
-                mediaPlayer.operationsPending = true
-                playlistmodel.activeItem++
+            if (draggable.x < -(Theme.itemSizeHuge/2) && playlistModel.currentIndex + 1 < playlistElementsCount) {
+                playlistModel.currentIndex++
             }
 
-            if (draggable.x > Theme.itemSizeHuge/2 && playlistmodel.activeItem > 0) {
-                mediaPlayer.operationsPending = true
-                playlistmodel.activeItem--
+            if (draggable.x > Theme.itemSizeHuge/2 && playlistModel.currentIndex > 0) {
+                playlistModel.currentIndex--
             }
         }
 
-        onClicked: mediaPlayer.playbackState === MediaPlayer.PlayingState ? playlistmodel.pause() : playlistmodel.resume()
+        onClicked: player.state === MediaPlayer.PlayingState ? player.pause() : player.play()
 
         Item {
             id: draggable
@@ -186,7 +184,7 @@ Item {
             loops: Animation.Infinite
             from: record.rotation
             to: record.rotation+360
-            running: mediaPlayer.playbackState === MediaPlayer.PlayingState && Qt.application.state === Qt.ApplicationActive
+            running: player.state === MediaPlayer.PlayingState && Qt.application.state === Qt.ApplicationActive
             duration: 10000
         }
     }
@@ -218,7 +216,7 @@ Item {
             id: title
             width: parent.width
             wrapMode: "WrapAtWordBoundaryOrAnywhere"
-            text: mediaPlayer.metaData.title !== undefined ? mediaPlayer.metaData.title : ""
+            text: player.metaData.title !== undefined ? player.metaData.title : ""
             font.pixelSize: Theme.fontSizeLarge
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
@@ -228,12 +226,12 @@ Item {
             id: author
             width: parent.width
             wrapMode: "WrapAtWordBoundaryOrAnywhere"
-            text: mediaPlayer.metaData.author!== undefined ?
-                      mediaPlayer.metaData.author :
-                      mediaPlayer.metaData.albumArtist !== undefined ?
-                          mediaPlayer.metaData.albumArtist :
-                          mediaPlayer.metaData.contributingArtist !== undefined ?
-                              mediaPlayer.metaData.contributingArtist : ""
+            text: player.metaData.author!== undefined ?
+                      player.metaData.author :
+                      player.metaData.albumArtist !== undefined ?
+                          player.metaData.albumArtist :
+                          player.metaData.contributingArtist !== undefined ?
+                              player.metaData.contributingArtist : ""
             font.pixelSize: Theme.fontSizeLarge
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
@@ -245,35 +243,35 @@ Item {
             id: album
             width: parent.width
             wrapMode: "WrapAtWordBoundaryOrAnywhere"
-            text: mediaPlayer.metaData.albumTitle !== undefined ?
-                      qsTr("Album: %1").arg(mediaPlayer.metaData.albumTitle) : ""
+            text: player.metaData.albumTitle !== undefined ?
+                      qsTr("Album: %1").arg(player.metaData.albumTitle) : ""
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
         }
 
         Label {
             id: year
-            text: mediaPlayer.metaData.year !== undefined ?
-                      qsTr("Year: %1").arg(mediaPlayer.metaData.year) : ""
-            visible: mediaPlayer.metaData.year !== undefined
+            text: player.metaData.year !== undefined ?
+                      qsTr("Year: %1").arg(player.metaData.year) : ""
+            visible: player.metaData.year !== undefined
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
         }
 
         Label {
             id: trackNumber
-            text: mediaPlayer.metaData.trackNumber !== undefined ?
-                      qsTr("Track No.: %1").arg(mediaPlayer.metaData.trackNumber) : ""
-            visible: mediaPlayer.metaData.trackNumber !== undefined
+            text: player.metaData.trackNumber !== undefined ?
+                      qsTr("Track No.: %1").arg(player.metaData.trackNumber) : ""
+            visible: player.metaData.trackNumber !== undefined
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
         }
 
         Label {
             id: bitrate
-            text: mediaPlayer.metaData.audioBitRate !== undefined ?
-                      qsTr("Bit rate: %1 kb/s").arg(Math.round(mediaPlayer.metaData.audioBitRate / 1000)) : ""
-            visible: mediaPlayer.metaData.audioBitRate !== undefined
+            text: player.metaData.audioBitRate !== undefined ?
+                      qsTr("Bit rate: %1 kb/s").arg(Math.round(player.metaData.audioBitRate / 1000)) : ""
+            visible: player.metaData.audioBitRate !== undefined
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
         }
@@ -284,7 +282,7 @@ Item {
         anchors.left: parent.left
         anchors.bottom: progressSlider.bottom
         anchors.margins: Theme.paddingLarge
-        text: Format.formatDuration(Math.round(mediaPlayer.position/1000), ((mediaPlayer.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))
+        text: Format.formatDuration(Math.round(player.position/1000), ((player.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))
     }
 
     Label {
@@ -292,15 +290,15 @@ Item {
         anchors.right: parent.right
         anchors.bottom: progressSlider.bottom
         anchors.margins: Theme.paddingLarge
-        text: Format.formatDuration(Math.round(mediaPlayer.duration/1000), ((mediaPlayer.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))
+        text: Format.formatDuration(Math.round(player.duration/1000), ((player.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))
     }
 
     Slider {
         id: progressSlider
-        value: mediaPlayer.position
+        value: player.position
         valueText: down ? Format.formatDuration(Math.round(value/1000), ((value/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort)) : ""
         minimumValue: 0
-        maximumValue: mediaPlayer.duration !== 0 ? mediaPlayer.duration : 1
+        maximumValue: player.duration !== 0 ? player.duration : 1
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: playlistTracks.top
@@ -313,13 +311,13 @@ Item {
             stylusAnimation.duration = progressSlider.maximumValue - progressSlider.value
             stylusAnimation.to = 15
             stylusAnimation.start()
-            mediaPlayer.seek(progressSlider.value)
+            player.position = progressSlider.value
         }
     }
 
     Label {
         id: playlistTracks
-        text: qsTr("Song %1/%2").arg(playlistmodel.activeItem + 1).arg(playlistElementsCount)
+        text: qsTr("Song %1/%2").arg(playlistModel.currentIndex + 1).arg(playlistElementsCount)
         visible: playlistElementsCount > 0
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom

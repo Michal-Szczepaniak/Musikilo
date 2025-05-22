@@ -20,6 +20,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtMultimedia 5.6
+import Nemo.Notifications 1.0
 import "pages"
 
 ApplicationWindow
@@ -29,13 +30,57 @@ ApplicationWindow
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: defaultAllowedOrientations
 
-    Component.onCompleted: {
-        playlistmodel.setMediaPlayer(mediaPlayer);
+    Notification {
+         id: testNotification
+
+         summary: qsTr("Musikilo")
+         replacesId: 1
     }
 
     Connections {
-        target: webdavmodel
-        onPrintError: pageStack.push(errorDialog,  { error: errorMsg })
+        target: fileModel
+        onErrorOccured: {
+            testNotification.body = qsTr("Error occured: %1").arg(error);
+            testNotification.publish();
+            pageStack.push(errorDialog,  { error: error })
+        }
+    }
+
+    Connections {
+        target: playlistModel
+        onErrorOccured: {
+            testNotification.body = qsTr("Error occured: %1").arg(error);
+            testNotification.publish();
+            pageStack.push(errorDialog,  { error: error })
+        }
+    }
+
+    Connections {
+        target: settingsManager
+        onTestSucceeded: {
+            testNotification.body = qsTr("Test successful");
+            testNotification.publish();
+        }
+
+        onTestFailed: {
+            testNotification.body = qsTr("Test failed: %1").arg(message);
+            testNotification.publish();
+        }
+    }
+
+    Connections {
+        target: player
+        onErrorOccured: {
+            testNotification.body = qsTr("Error occured: %1").arg(error);
+            testNotification.publish();
+            pageStack.push(errorDialog,  { error: error })
+        }
+
+        onStateChanged: {
+            if (state === MediaPlayer.StoppedState && playlistModel.currentIndex + 1 < playlistModel.rowCount()) {
+                playlistmodel.currentIndex++
+            }
+        }
     }
 
     Dialog {
@@ -62,20 +107,5 @@ ApplicationWindow
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             }
         }
-    }
-
-    Audio {
-        id: mediaPlayer
-        onPlaybackStateChanged: {
-            if (playbackState === MediaPlayer.PlayingState) {
-                mediaPlayer.operationsPending = false
-            } else if (playbackState === MediaPlayer.StoppedState && !mediaPlayer.operationsPending && playlistmodel.activeItem + 1 < playlistmodel.rowCount() && mediaPlayer.operationsPending === false) {
-                playlistmodel.activeItem++
-            }
-        }
-
-        onErrorStringChanged: pageStack.push(errorDialog,  { error: errorString })
-
-        property bool operationsPending: false
     }
 }

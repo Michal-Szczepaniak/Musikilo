@@ -60,6 +60,68 @@
         <source>Okay</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Musikilo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test successful</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error occured: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NewPluginDialog</name>
+    <message>
+        <source>Nextcloud</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spotify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SqueezeBox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MPD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NextcloudSettingsDialog</name>
+    <message>
+        <source>Hostname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Root path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>
@@ -68,31 +130,23 @@
         <translation>设置</translation>
     </message>
     <message>
-        <source>Hostname</source>
-        <translation>主机名</translation>
+        <source>Add new plugin</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Root path</source>
-        <translation>Root 路径</translation>
+        <source>Nextcloud</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>用户名</translation>
+        <source>Spotify</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Port</source>
-        <translation>端口</translation>
+        <source>SqueezeBox</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Password</source>
-        <translation>密码</translation>
-    </message>
-    <message>
-        <source>Connect</source>
-        <translation>连接</translation>
-    </message>
-    <message>
-        <source>Connected!</source>
+        <source>MPD</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

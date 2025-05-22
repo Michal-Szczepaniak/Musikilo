@@ -17,58 +17,50 @@
     along with Musikilo. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PLAYLISTMODEL_H
-#define PLAYLISTMODEL_H
+#ifndef FILEMODEL_H
+#define FILEMODEL_H
 
 #include <QObject>
-#include <QMediaPlayer>
-#include <qwebdav.h>
-#include <qwebdavitem.h>
-#include <src/playlistmodelinterface.h>
-#include <src/settingsmanager.h>
-#include <src/player.h>
+#include "playlistmodel.h"
 
-class PlaylistModel : public QAbstractListModel
+#include <qwebdav.h>
+#include <qwebdavdirparser.h>
+#include <qwebdavitem.h>
+
+class FileModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(int currentIndex READ getCurrentIndex WRITE setCurrentIndex NOTIFY currentIndexChanged)
 public:
-    enum PlaylistRoles {
-        Name = Qt::UserRole + 1,
-        Path
-    };
+    explicit FileModel(SettingsManager *settingsManager, QObject *parent = nullptr);
 
-    explicit PlaylistModel(SettingsManager *settingsManager, Player *player, QObject *parent = nullptr);
+    enum FilesListRoles {
+        Name = Qt::UserRole + 1,
+        Path,
+        IsDir
+    };
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
 
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
 
-    int getCurrentIndex() const;
-    void setCurrentIndex(int currentIndex);
-
-    Q_INVOKABLE void reset();
-    Q_INVOKABLE void addSong(QString path);
-
-protected:
-    QHash<int, QByteArray> roleNames() const;
+    Q_INVOKABLE void getFilesList(QString path);
 
 signals:
     void errorOccured(QString error);
-    void currentIndexChanged(int currentIndex);
+    void pluginChanged();
 
 public slots:
     void onPluginChange();
     void onModelReset();
-    void onRowsInserted();
+
+protected:
+    QHash<int, QByteArray> roleNames() const;
 
 private:
     SettingsManager *_settingsManager;
-    PlaylistModelInterface *_playlistModel = nullptr;
-    Player *_player = nullptr;
+    FileModelInterface *_fileModel = nullptr;
     QMetaObject::Connection _modelResetSigal;
     QMetaObject::Connection _errorOccuredSignal;
-    int _currentIndex = -1;
 };
 
-#endif // PLAYLISTMODEL_H
+#endif // FILEMODEL_H

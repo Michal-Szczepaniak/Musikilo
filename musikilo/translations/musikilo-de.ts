@@ -60,13 +60,48 @@
         <source>Okay</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>Settings</name>
     <message>
-        <source>Settings</source>
+        <source>Musikilo</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Test successful</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error occured: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NewPluginDialog</name>
+    <message>
+        <source>Nextcloud</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spotify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SqueezeBox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MPD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NextcloudSettingsDialog</name>
     <message>
         <source>Hostname</source>
         <translation type="unfinished"></translation>
@@ -80,19 +115,38 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Port</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Connect</source>
+        <source>Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Settings</name>
+    <message>
+        <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Connected!</source>
+        <source>Add new plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nextcloud</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spotify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SqueezeBox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MPD</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -6,12 +6,38 @@ CONFIG += link_pkgconfig sailfishapp
 
 PKGCONFIG += qofonoext
 
-SOURCES += src/Musikilo.cpp \
+SOURCES += \
+    src/filemodel.cpp \
+    src/filemodelinterface.cpp \
+    src/musikilo.cpp \
+    src/player.cpp \
+    src/playerinterface.cpp \
     src/playlistmodel.cpp \
-    src/simplecrypt.cpp \
-    src/webdavmodel.cpp
+    src/playlistmodelinterface.cpp \
+    src/plugins/webdav/webdavfilemodel.cpp \
+    src/plugins/webdav/webdavplayer.cpp \
+    src/plugins/webdav/webdavplaylistmodel.cpp \
+    src/plugins/webdav/webdavplugin.cpp \
+    src/settingsmanager.cpp \
+    src/simplecrypt.cpp
 
-DISTFILES += qml/Musikilo.qml \
+HEADERS += \
+    src/filemodel.h \
+    src/filemodelinterface.h \
+    src/player.h \
+    src/playerinterface.h \
+    src/playlistmodel.h \
+    src/playlistmodelinterface.h \
+    src/plugininterface.h \
+    src/plugins/webdav/webdavfilemodel.h \
+    src/plugins/webdav/webdavplayer.h \
+    src/plugins/webdav/webdavplaylistmodel.h \
+    src/plugins/webdav/webdavplugin.h \
+    src/settingsmanager.h \
+    src/simplecrypt.h
+
+DISTFILES += \
+    qml/Musikilo.qml \
     musikilo.desktop \
     qml/components/TabHeader.qml \
     qml/cover/CoverPage.qml \
@@ -21,6 +47,9 @@ DISTFILES += qml/Musikilo.qml \
     qml/pages/Settings.qml \
     qml/pages/SongsList.qml \
     qml/pages/About.qml \
+    qml/pages/NewPluginDialog.qml \
+    qml/pages/EditPluginDialog.qml \
+    qml/dialogs/NextcloudSettingsDialog.qml \
     translations/*.ts
 
 RESOURCES += \
@@ -40,8 +69,3 @@ DEFINES += QWEBDAVITEM_EXTENDED_PROPERTIES
 PRE_TARGETDEPS += $$OUT_PWD/../qwebdavlib/qwebdavlib/libqwebdav.a
 INCLUDEPATH += ../qwebdavlib/qwebdavlib/
 LIBS += -L$$OUT_PWD/../qwebdavlib/qwebdavlib/ -lqwebdav
-
-HEADERS += \
-    src/playlistmodel.h \
-    src/simplecrypt.h \
-    src/webdavmodel.h

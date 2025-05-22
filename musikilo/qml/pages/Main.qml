@@ -76,14 +76,14 @@ Page {
         id: mprisPlayer
 
         serviceName: "musikilo"
-        property string artist: mediaPlayer.metaData.author!== undefined ?
-                                    mediaPlayer.metaData.author :
-                                    mediaPlayer.metaData.albumArtist !== undefined ?
-                                        mediaPlayer.metaData.albumArtist :
-                                        mediaPlayer.metaData.contributingArtist !== undefined ?
-                                            mediaPlayer.metaData.contributingArtist : ""
-        property string song: mediaPlayer.metaData.title !== undefined ?
-                                  mediaPlayer.metaData.title : ""
+        property string artist: player.metaData.author!== undefined ?
+                                    player.metaData.author :
+                                    player.metaData.albumArtist !== undefined ?
+                                        player.metaData.albumArtist :
+                                        player.metaData.contributingArtist !== undefined ?
+                                            player.metaData.contributingArtist : ""
+        property string song: player.metaData.title !== undefined ?
+                                  player.metaData.title : ""
 
         onArtistChanged: {
             var metadata = mprisPlayer.metadata
@@ -111,8 +111,8 @@ Page {
         canPlay: true
         canSeek: false
 
-        playbackStatus: mediaPlayer.playbackState === MediaPlayer.PlayingState ?
-                            Mpris.Playing : mediaPlayer.playbackState === MediaPlayer.PausedState ?
+        playbackStatus: player.playbackState === MediaPlayer.PlayingState ?
+                            Mpris.Playing : player.playbackState === MediaPlayer.PausedState ?
                                 Mpris.Paused : Mpris.Stopped
 
         loopStatus: Mpris.None
@@ -128,7 +128,7 @@ Page {
         }
 
         onPlayPauseRequested: {
-            mediaPlayer.playbackState == MediaPlayer.PlayingState ? playlistmodel.pause() : playlistmodel.resume()
+            player.playbackState == MediaPlayer.PlayingState ? playlistmodel.pause() : playlistmodel.resume()
         }
 
         onStopRequested: {
@@ -136,11 +136,11 @@ Page {
         }
 
         onNextRequested: {
-            if (playlistmodel.activeItem + 1 < playlistmodel.rowCount()) playlistmodel.activeItem++
+            if (playlistmodel.currentIndex + 1 < playlistmodel.rowCount()) playlistmodel.currentIndex++
         }
 
         onPreviousRequested: {
-            if (playlistmodel.activeItem > 0) playlistmodel.activeItem--
+            if (playlistmodel.currentIndex > 0) playlistmodel.currentIndex--
         }
 
         onSeekRequested: {
@@ -151,13 +151,13 @@ Page {
         id: coverAction
 
         CoverAction {
-            iconSource: mediaPlayer.playbackState == MediaPlayer.PlayingState ? "image://theme/icon-cover-pause" : "image://theme/icon-cover-play"
-            onTriggered: mediaPlayer.playbackState == MediaPlayer.PlayingState ? playlistmodel.pause() : playlistmodel.resume()
+            iconSource: player.playbackState == MediaPlayer.PlayingState ? "image://theme/icon-cover-pause" : "image://theme/icon-cover-play"
+            onTriggered: player.playbackState == MediaPlayer.PlayingState ? playlistmodel.pause() : playlistmodel.resume()
         }
 
         CoverAction {
             iconSource: "image://theme/icon-cover-next-song"
-            onTriggered: if (playlistmodel.activeItem + 1 < playlistmodel.rowCount()) playlistmodel.activeItem++
+            onTriggered: if (playlistmodel.currentIndex + 1 < playlistmodel.rowCount()) playlistmodel.currentIndex++
         }
     }
 }

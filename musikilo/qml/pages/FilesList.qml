@@ -25,6 +25,14 @@ Item {
 
     implicitHeight: swipeView.height; implicitWidth: swipeView.width
 
+    Connections {
+        target: fileModel
+
+        onPluginChanged: {
+            fileModel.getFilesList('/');
+        }
+    }
+
     SilicaFlickable {
         id: filesFlickable
         anchors.fill: parent
@@ -37,8 +45,7 @@ Item {
 
         SilicaListView {
             id: filesList
-            model: webdavmodel
-            currentIndex: -1
+            model: fileModel
             anchors.top: header.bottom
             anchors.left: parent.left
             anchors.right: parent.right
@@ -56,15 +63,14 @@ Item {
                     ContextMenu {
                         MenuItem {
                             text: "Add file"
-                            onClicked: webdavmodel.play(path)
+                            onClicked: playlistModel.addSong(path)
                         }
 
                         MenuItem {
                             text: "Play file"
                             onClicked: {
-                                mediaPlayer.operationsPending = true
-                                playlistmodel.reset()
-                                webdavmodel.play(path)
+                                playlistModel.reset()
+                                playlistModel.addSong(path)
                             }
                         }
                     }
@@ -85,9 +91,8 @@ Item {
 
                 onClicked: {
                     if(isDir) {
-                        webdavmodel.getFilesList(path);
+                        fileModel.getFilesList(path);
                     } else {
-                        webdavmodel.play(path)
                     }
                 }
             }

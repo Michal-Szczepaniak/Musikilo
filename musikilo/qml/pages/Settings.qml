@@ -19,7 +19,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import org.nemomobile.configuration 1.0
+import Nemo.Configuration 1.0
 import org.nemomobile.ofono 1.0
 
 Item {
@@ -29,164 +29,115 @@ Item {
 
     OfonoModemManager { id: modemManager }
 
-    function tryLogIn() {
-        if(settings.hostname !== "" && settings.rootPath !== "" && settings.username !== "" && settings.password !== "" && settings.port !== "") {
-            webdavmodel.setConnectionSettings(settings.connectionType, settings.hostname, settings.rootPath, settings.username, simpleCrypt.decryptToString(settings.password), settings.port)
-            webdavmodel.getFilesList("/");
-        }
-    }
-
     Connections {
         target: modemManager
         onReadyChanged: {
             var key = modemManager.imeiCodes.join("");
             simpleCrypt.key = key;
-            tryLogIn();
         }
-    }
-
-    Connections {
-        target: webdavmodel
-        onGotFilesList: {
-            connectedMessage.visible = true
-            hideConnected.start()
-        }
-    }
-
-    Timer {
-        id: hideConnected
-        interval: 3000;
-        repeat: false
-        onTriggered: connectedMessage.visible = false
-    }
-
-    ConfigurationGroup {
-        id: settings
-        path: "/apps/musikilo"
-
-        property int connectionType: 1
-        property string hostname: ""
-        property string rootPath: "/"
-        property string username: ""
-        property string password: ""
-        property int port: 443
     }
 
     SilicaFlickable {
         anchors.fill: parent
         flickableDirection: Flickable.VerticalFlick
-        contentHeight: column.height + header.height - mainPageHeader.height
 
         PageHeader {
             id: header
             title: qsTr("Settings")
         }
 
-        Column {
-            id: column
-            spacing: Theme.paddingLarge
-            anchors.topMargin: header.height
-            anchors.fill: parent
-            ComboBox {
-               id: themes
-               width: parent.width
-               label: "Connection Type"
-               currentIndex: settings.connectionType
-
-               menu: ContextMenu {
-                   MenuItem { text: "HTTP" }
-                   MenuItem { text: "HTTPS" }
-               }
-
-               onCurrentItemChanged: {
-                   settings.connectionType = themes.currentIndex
-                   hostnameValue.focus = true
-               }
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("Add new plugin")
+                onClicked: pageStack.push(newPluginDialog)
             }
-
-            TextField {
-                id: hostnameValue
-                text: settings.hostname
-                label: qsTr("Hostname")
-                labelVisible: true
-                placeholderText: label
-                width: parent.width
-                EnterKey.onClicked: {
-                    settings.hostname = hostnameValue.text
-                    rootPathValue.focus = true
-                }
-                onFocusChanged: settings.hostname = hostnameValue.text
-            }
-
-            TextField {
-                id: rootPathValue
-                text: settings.rootPath
-                label: qsTr("Root path")
-                labelVisible: true
-                placeholderText: label
-                width: parent.width
-                EnterKey.onClicked: {
-                    settings.rootPath = rootPathValue.text
-                    usernameValue.focus = true
-                }
-                onFocusChanged: settings.rootPath = rootPathValue.text
-            }
-
-            TextField {
-                id: usernameValue
-                text: settings.username
-                label: qsTr("Username")
-                labelVisible: true
-                placeholderText: label
-                width: parent.width
-                EnterKey.onClicked: {
-                    settings.username = usernameValue.text
-                    passwordValue.focus = true
-                }
-                onFocusChanged: settings.username = usernameValue.text
-            }
-
-            PasswordField {
-                id: passwordValue
-                width: parent.width
-                label: qsTr("Password")
-                labelVisible: true
-                placeholderText: label
-                EnterKey.onClicked: {
-                    settings.password = simpleCrypt.encryptToString(passwordValue.text)
-                    portValue.focus = true
-                }
-                onFocusChanged: settings.password = simpleCrypt.encryptToString(passwordValue.text)
-            }
-
-            TextField {
-                id: portValue
-                text: settings.port
-                inputMethodHints: Qt.ImhFormattedNumbersOnly
-                label: qsTr("Port")
-                labelVisible: true
-                placeholderText: label
-                width: parent.width
-                EnterKey.onClicked: settings.port = parseInt(portValue.text)
-                onFocusChanged: settings.port = parseInt(portValue.text)
-            }
-
-            Button {
-                text: qsTr("Connect")
-                onClicked: tryLogIn();
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-
-            Label {
-                id: connectedMessage
-                visible: false
-                text: qsTr("Connected!")
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: Theme.secondaryColor
-                font.pixelSize: Theme.fontSizeSmall
-            }
-
         }
-        VerticalScrollDecorator {}
+
+        SilicaListView {
+            id: pluginList
+            model: settingsManager.plugins
+            anchors.top: header.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+
+            delegate: ListItem {
+                id: listItem
+                width: pluginList.width
+                property var data: settingsManager.getPluginSettings(modelData)
+
+                menu: contextMenuComponent
+
+                Component {
+                    id: contextMenuComponent
+
+                    ContextMenu {
+                        MenuItem {
+                            text: "Edit"
+                            onClicked: pageStack.push(editPluginDialog, {pluginCode: modelData, pluginData: settingsManager.getPluginSettings(modelData)})
+                        }
+
+                        MenuItem {
+                            text: "Test"
+                            onClicked: settingsManager.testPlugin(modelData)
+                        }
+
+                        MenuItem {
+                            text: "Remove"
+                            onClicked: remorseAction("Deleting", function() { settingsManager.removePlugin(modelData) })
+                        }
+                    }
+                }
+
+                Row {
+                    width: parent.width
+                    height: parent.height
+
+                    Icon {
+                        width: Theme.iconSizeExtraSmall
+                        height: Theme.iconSizeExtraSmall
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: "qrc:/icons/" + listItem.data.plugin + ".png"
+                    }
+
+                    DetailItem {
+                        label: listItem.data.name
+                        anchors.verticalCenter: parent.verticalCenter
+                        value: getPrettyName(listItem.data.plugin)
+                        palette.secondaryHighlightColor: settingsManager.currentPlugin === modelData ? Theme.secondaryHighlightColor : Theme.secondaryColor
+                        palette.highlightColor: settingsManager.currentPlugin === modelData ? Theme.highlightColor : Theme.primaryColor
+
+                        function getPrettyName(name) {
+                            switch (name) {
+                            case "nextcloud":
+                                return qsTr("Nextcloud");
+                            case "spotify":
+                                return qsTr("Spotify");
+                            case "squeezebox":
+                                return qsTr("SqueezeBox");
+                            case "mpd":
+                                return qsTr("MPD");
+                            }
+                        }
+                    }
+                }
+
+                onClicked: settingsManager.currentPlugin = modelData
+            }
+
+            VerticalScrollDecorator {}
+        }
+    }
+
+    Component {
+        id: newPluginDialog
+
+        NewPluginDialog {}
+    }
+
+    Component {
+        id: editPluginDialog
+
+        EditPluginDialog {}
     }
 }

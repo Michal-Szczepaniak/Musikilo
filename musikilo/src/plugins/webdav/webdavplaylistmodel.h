@@ -17,58 +17,54 @@
     along with Musikilo. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PLAYLISTMODEL_H
-#define PLAYLISTMODEL_H
+#ifndef WEBDAVPLAYLISTMODEL_H
+#define WEBDAVPLAYLISTMODEL_H
+
+#include "webdavplayer.h"
 
 #include <QObject>
-#include <QMediaPlayer>
-#include <qwebdav.h>
-#include <qwebdavitem.h>
-#include <src/playlistmodelinterface.h>
-#include <src/settingsmanager.h>
-#include <src/player.h>
 
-class PlaylistModel : public QAbstractListModel
+#include <qwebdav.h>
+#include <qwebdavdirparser.h>
+#include <qwebdavitem.h>
+
+#include <src/playlistmodel.h>
+#include <src/playlistmodelinterface.h>
+
+class WebDavPlaylistModel : public PlaylistModelInterface
 {
     Q_OBJECT
-    Q_PROPERTY(int currentIndex READ getCurrentIndex WRITE setCurrentIndex NOTIFY currentIndexChanged)
 public:
-    enum PlaylistRoles {
-        Name = Qt::UserRole + 1,
-        Path
-    };
 
-    explicit PlaylistModel(SettingsManager *settingsManager, Player *player, QObject *parent = nullptr);
+    explicit WebDavPlaylistModel(QWebdav *webdav, WebDavPlayer *player, QObject *parent = nullptr);
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
 
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
 
-    int getCurrentIndex() const;
-    void setCurrentIndex(int currentIndex);
+    Qt::ItemFlags flags(const QModelIndex &index) const;
 
-    Q_INVOKABLE void reset();
-    Q_INVOKABLE void addSong(QString path);
+    void reset();
+    void play(int index);
+    void addSong(QString song);
 
 protected:
     QHash<int, QByteArray> roleNames() const;
 
 signals:
-    void errorOccured(QString error);
-    void currentIndexChanged(int currentIndex);
+    void songChanged(QString path);
 
 public slots:
-    void onPluginChange();
-    void onModelReset();
-    void onRowsInserted();
+    void addFilesToPlaylist();
 
 private:
-    SettingsManager *_settingsManager;
-    PlaylistModelInterface *_playlistModel = nullptr;
-    Player *_player = nullptr;
-    QMetaObject::Connection _modelResetSigal;
-    QMetaObject::Connection _errorOccuredSignal;
-    int _currentIndex = -1;
+    QWebdav* _webdav;
+    WebDavPlayer *_player;
+    QList<QWebdavItem> _entries;
+    QWebdavDirParser _parser;
+
+public slots:
+//    void onRowsInserted();
 };
 
-#endif // PLAYLISTMODEL_H
+#endif // WEBDAVPLAYLISTMODEL_H

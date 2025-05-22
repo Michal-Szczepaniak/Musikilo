@@ -17,40 +17,22 @@
     along with Musikilo. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef WEBDAVMODEL_H
-#define WEBDAVMODEL_H
+#ifndef WEBDAVFILEMODEL_H
+#define WEBDAVFILEMODEL_H
 
 #include <QObject>
-#include "playlistmodel.h"
 
+#include <QMediaContent>
 #include <qwebdav.h>
 #include <qwebdavdirparser.h>
 #include <qwebdavitem.h>
+#include <src/filemodelinterface.h>
 
-class WebDavModel : public QAbstractListModel
+class WebDavFileModel : public FileModelInterface
 {
     Q_OBJECT
 public:
-    explicit WebDavModel(QObject *parent = nullptr);
-
-    enum FilesListRoles {
-        Name = Qt::UserRole + 1,
-        Path,
-        isDir
-    };
-
-    Q_INVOKABLE void getFilesList(QString path);
-
-    Q_INVOKABLE void play(QString path);
-
-    Q_INVOKABLE void setConnectionSettings( const int connectionType,
-                                                 const QString &hostname,
-                                                 const QString &rootPath = "/",
-                                                 const QString &username = "",
-                                                 const QString &password = "",
-                                                 int port = 0);
-
-    void addFile(QString path);
+    explicit WebDavFileModel(QWebdav *webdav, QObject *parent = nullptr);
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
 
@@ -58,22 +40,14 @@ public:
 
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
+    void getFilesList(QString path);
+
 protected:
     QHash<int, QByteArray> roleNames() const;
-
-private:
-    QList<QWebdavItem> mFilesList;
-
-    QWebdav w;
-    QWebdavDirParser p;
-    QWebdavDirParser playlistParser;
-
-    QString getPreviousPath(QWebdavItem item);
 
 signals:
     void gotFilesList();
     void gotAudioFile(QWebdavItem item);
-    void printError(QString errorMsg);
     void gotMediaContent(QMediaContent content);
 
 public slots:
@@ -81,6 +55,14 @@ public slots:
     void addFilesToPlaylist();
     void replySkipRead();
     void getMediaContent(QString path);
+
+private:
+    QList<QWebdavItem> _filesList;
+
+    QWebdav* _webdav;
+    QWebdavDirParser _parser;
+
+    QString getPreviousPath(QWebdavItem item);
 };
 
-#endif // WEBDAVMODEL_H
+#endif // WEBDAVFILEMODEL_H

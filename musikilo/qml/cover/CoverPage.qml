@@ -18,7 +18,7 @@ CoverBackground {
         Label {
             id: title
             width: parent.width
-            text: mediaPlayer.metaData.title !== undefined ? mediaPlayer.metaData.title : ""
+            text: player.metaData.title !== undefined ? player.metaData.title : ""
             wrapMode: "WrapAtWordBoundaryOrAnywhere"
             font.bold: Font.Bold
             horizontalAlignment: Text.AlignHCenter
@@ -27,12 +27,12 @@ CoverBackground {
         Label {
             id: author
             width: parent.width
-            text: mediaPlayer.metaData.author!== undefined ?
-                      mediaPlayer.metaData.author :
-                      mediaPlayer.metaData.albumArtist !== undefined ?
-                          mediaPlayer.metaData.albumArtist :
-                          mediaPlayer.metaData.contributingArtist !== undefined ?
-                              mediaPlayer.metaData.contributingArtist : ""
+            text: player.metaData.author!== undefined ?
+                      player.metaData.author :
+                      player.metaData.albumArtist !== undefined ?
+                          player.metaData.albumArtist :
+                          player.metaData.contributingArtist !== undefined ?
+                              player.metaData.contributingArtist : ""
             font.bold: Font.Bold
             horizontalAlignment: Text.AlignHCenter
             wrapMode: "WrapAtWordBoundaryOrAnywhere"
