@@ -216,7 +216,7 @@ Item {
             id: title
             width: parent.width
             wrapMode: "WrapAtWordBoundaryOrAnywhere"
-            text: player.metaData.title !== undefined ? player.metaData.title : ""
+            text: player.title
             font.pixelSize: Theme.fontSizeLarge
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
@@ -226,12 +226,7 @@ Item {
             id: author
             width: parent.width
             wrapMode: "WrapAtWordBoundaryOrAnywhere"
-            text: player.metaData.author!== undefined ?
-                      player.metaData.author :
-                      player.metaData.albumArtist !== undefined ?
-                          player.metaData.albumArtist :
-                          player.metaData.contributingArtist !== undefined ?
-                              player.metaData.contributingArtist : ""
+            text: player.artist
             font.pixelSize: Theme.fontSizeLarge
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
@@ -243,35 +238,15 @@ Item {
             id: album
             width: parent.width
             wrapMode: "WrapAtWordBoundaryOrAnywhere"
-            text: player.metaData.albumTitle !== undefined ?
-                      qsTr("Album: %1").arg(player.metaData.albumTitle) : ""
-            anchors.horizontalCenter: parent.horizontalCenter
-            horizontalAlignment: Text.AlignHCenter
-        }
-
-        Label {
-            id: year
-            text: player.metaData.year !== undefined ?
-                      qsTr("Year: %1").arg(player.metaData.year) : ""
-            visible: player.metaData.year !== undefined
-            anchors.horizontalCenter: parent.horizontalCenter
-            horizontalAlignment: Text.AlignHCenter
-        }
-
-        Label {
-            id: trackNumber
-            text: player.metaData.trackNumber !== undefined ?
-                      qsTr("Track No.: %1").arg(player.metaData.trackNumber) : ""
-            visible: player.metaData.trackNumber !== undefined
+            text: qsTr("Album: %1").arg(player.album)
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
         }
 
         Label {
             id: bitrate
-            text: player.metaData.audioBitRate !== undefined ?
-                      qsTr("Bit rate: %1 kb/s").arg(Math.round(player.metaData.audioBitRate / 1000)) : ""
-            visible: player.metaData.audioBitRate !== undefined
+            text: qsTr("Bit rate: %1 kb/s").arg(player.bitrate)
+            visible: player.bitrate !== ""
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
         }

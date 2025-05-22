@@ -21,6 +21,11 @@ public:
     virtual qint64 getPosition() const = 0;
     virtual void setPosition(qint64 position) = 0;
 
+    virtual QString getTitle() = 0;
+    virtual QString getArtist() = 0;
+    virtual QString getAlbum() = 0;
+    virtual QString getBitrate() = 0;
+
     using QObject::parent;
 
 signals:
@@ -28,6 +33,7 @@ signals:
     void stateChanged();
     void positionChanged();
     void durationChanged();
+    void metadataChanged();
 };
 
 #endif // PLAYERINTERFACE_H

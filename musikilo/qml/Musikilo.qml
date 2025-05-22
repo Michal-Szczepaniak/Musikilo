@@ -83,28 +83,31 @@ ApplicationWindow
         }
     }
 
-    Dialog {
+    Component {
         id: errorDialog
-        property string error
-        canAccept: false
 
-        Column {
-            width: parent.width
+        Dialog {
+            property string error
+            canAccept: false
 
-            DialogHeader {
-                title: qsTr("Error")
-                cancelText: qsTr("Okay")
-            }
+            Column {
+                width: parent.width
 
-            Label {
-                id: nameField
-                text: errorDialog.error
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: Theme.pad
-                anchors.rightMargin: Theme.paddingLargedingLarge
-                horizontalAlignment: Text.AlignHCenter
-                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                DialogHeader {
+                    title: qsTr("Error")
+                    cancelText: qsTr("Okay")
+                }
+
+                Label {
+                    id: nameField
+                    text: errorDialog.error
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.leftMargin: Theme.pad
+                    anchors.rightMargin: Theme.paddingLargedingLarge
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                }
             }
         }
     }

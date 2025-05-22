@@ -13,6 +13,10 @@ class Player : public QObject
     Q_PROPERTY(QMediaPlayer::State state READ getState NOTIFY stateChanged)
     Q_PROPERTY(qint64 duration READ getDuration NOTIFY durationChanged)
     Q_PROPERTY(qint64 position READ getPosition WRITE setPosition NOTIFY positionChanged)
+    Q_PROPERTY(QString title READ getTitle NOTIFY metadataChanged)
+    Q_PROPERTY(QString artist READ getArtist NOTIFY metadataChanged)
+    Q_PROPERTY(QString album READ getAlbum NOTIFY metadataChanged)
+    Q_PROPERTY(QString bitrate READ getBitrate NOTIFY metadataChanged)
 public:
     explicit Player(SettingsManager *settingsManager, QObject *parent = nullptr);
 
@@ -26,12 +30,18 @@ public:
     qint64 getPosition() const;
     void setPosition(qint64 position);
 
+    QString getTitle();
+    QString getArtist();
+    QString getAlbum();
+    QString getBitrate();
+
 signals:
     void errorOccured(QString error);
     void pluginChanged();
     void stateChanged();
     void durationChanged();
     void positionChanged();
+    void metadataChanged();
 
 public slots:
     void onPluginChange();
@@ -43,6 +53,7 @@ private:
     QMetaObject::Connection _stateSignal;
     QMetaObject::Connection _durationSignal;
     QMetaObject::Connection _positionSignal;
+    QMetaObject::Connection _metadataSignal;
 };
 
 #endif // PLAYER_H

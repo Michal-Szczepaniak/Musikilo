@@ -157,14 +157,6 @@
         <translation>专辑: %1</translation>
     </message>
     <message>
-        <source>Year: %1</source>
-        <translation>年份: %1</translation>
-    </message>
-    <message>
-        <source>Track No.: %1</source>
-        <translation>音乐编号: %1</translation>
-    </message>
-    <message>
         <source>Bit rate: %1 kb/s</source>
         <translation>比特率:%1 kb/s</translation>
     </message>

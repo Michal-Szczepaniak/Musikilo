@@ -23,6 +23,11 @@ public:
     qint64 getPosition() const;
     void setPosition(qint64 position);
 
+    QString getTitle();
+    QString getArtist();
+    QString getAlbum();
+    QString getBitrate();
+
 private:
     QWebdav *_webdav;
     QMediaPlayer _mediaPlayer;

@@ -1,6 +1,6 @@
 #include "webdavplugin.h"
 
-WebDavPlugin::WebDavPlugin(QObject *parent) : QObject(parent)
+WebDavPlugin::WebDavPlugin(QObject *parent) : PluginInterface(parent)
 {
 }
 

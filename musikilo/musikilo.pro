@@ -4,8 +4,6 @@ QT += core network xml multimedia dbus
 
 CONFIG += link_pkgconfig sailfishapp
 
-PKGCONFIG += qofonoext
-
 SOURCES += \
     src/filemodel.cpp \
     src/filemodelinterface.cpp \

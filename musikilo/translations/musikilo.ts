@@ -157,14 +157,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Year: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Track No.: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Bit rate: %1 kb/s</source>
         <translation type="unfinished"></translation>
     </message>

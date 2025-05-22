@@ -76,14 +76,8 @@ Page {
         id: mprisPlayer
 
         serviceName: "musikilo"
-        property string artist: player.metaData.author!== undefined ?
-                                    player.metaData.author :
-                                    player.metaData.albumArtist !== undefined ?
-                                        player.metaData.albumArtist :
-                                        player.metaData.contributingArtist !== undefined ?
-                                            player.metaData.contributingArtist : ""
-        property string song: player.metaData.title !== undefined ?
-                                  player.metaData.title : ""
+        property string artist: player.artist
+        property string song: player.title
 
         onArtistChanged: {
             var metadata = mprisPlayer.metadata
@@ -111,8 +105,8 @@ Page {
         canPlay: true
         canSeek: false
 
-        playbackStatus: player.playbackState === MediaPlayer.PlayingState ?
-                            Mpris.Playing : player.playbackState === MediaPlayer.PausedState ?
+        playbackStatus: player.state === MediaPlayer.PlayingState ?
+                            Mpris.Playing : player.state === MediaPlayer.PausedState ?
                                 Mpris.Paused : Mpris.Stopped
 
         loopStatus: Mpris.None
@@ -120,27 +114,27 @@ Page {
         volume: 1
 
         onPauseRequested: {
-            playlistmodel.pause()
+            player.pause()
         }
 
         onPlayRequested: {
-            playlistmodel.resume()
+            player.play()
         }
 
         onPlayPauseRequested: {
-            player.playbackState == MediaPlayer.PlayingState ? playlistmodel.pause() : playlistmodel.resume()
+            player.state === MediaPlayer.PlayingState ? player.pause() : player.play()
         }
 
         onStopRequested: {
-            playlistmodel.pause()
+            playlistModel.pause()
         }
 
         onNextRequested: {
-            if (playlistmodel.currentIndex + 1 < playlistmodel.rowCount()) playlistmodel.currentIndex++
+            if (playlistModel.currentIndex + 1 < playlistModel.rowCount()) playlistModel.currentIndex++
         }
 
         onPreviousRequested: {
-            if (playlistmodel.currentIndex > 0) playlistmodel.currentIndex--
+            if (playlistModel.currentIndex > 0) playlistModel.currentIndex--
         }
 
         onSeekRequested: {
@@ -151,13 +145,13 @@ Page {
         id: coverAction
 
         CoverAction {
-            iconSource: player.playbackState == MediaPlayer.PlayingState ? "image://theme/icon-cover-pause" : "image://theme/icon-cover-play"
-            onTriggered: player.playbackState == MediaPlayer.PlayingState ? playlistmodel.pause() : playlistmodel.resume()
+            iconSource: player.state === MediaPlayer.PlayingState ? "image://theme/icon-cover-pause" : "image://theme/icon-cover-play"
+            onTriggered: player.state === MediaPlayer.PlayingState ? player.pause() : player.play()
         }
 
         CoverAction {
             iconSource: "image://theme/icon-cover-next-song"
-            onTriggered: if (playlistmodel.currentIndex + 1 < playlistmodel.rowCount()) playlistmodel.currentIndex++
+            onTriggered: if (playlistModel.currentIndex + 1 < playlistModel.rowCount()) playlistModel.currentIndex++
         }
     }
 }

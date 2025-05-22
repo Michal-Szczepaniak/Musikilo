@@ -18,7 +18,7 @@ CoverBackground {
         Label {
             id: title
             width: parent.width
-            text: player.metaData.title !== undefined ? player.metaData.title : ""
+            text: player.title
             wrapMode: "WrapAtWordBoundaryOrAnywhere"
             font.bold: Font.Bold
             horizontalAlignment: Text.AlignHCenter
@@ -27,12 +27,7 @@ CoverBackground {
         Label {
             id: author
             width: parent.width
-            text: player.metaData.author!== undefined ?
-                      player.metaData.author :
-                      player.metaData.albumArtist !== undefined ?
-                          player.metaData.albumArtist :
-                          player.metaData.contributingArtist !== undefined ?
-                              player.metaData.contributingArtist : ""
+            text: player.artist
             font.bold: Font.Bold
             horizontalAlignment: Text.AlignHCenter
             wrapMode: "WrapAtWordBoundaryOrAnywhere"

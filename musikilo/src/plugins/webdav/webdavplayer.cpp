@@ -5,6 +5,7 @@ WebDavPlayer::WebDavPlayer(QWebdav *webdav, QObject *parent) : _webdav(webdav)
     connect(&_mediaPlayer, &QMediaPlayer::stateChanged, this, &PlayerInterface::stateChanged);
     connect(&_mediaPlayer, &QMediaPlayer::durationChanged, this, &PlayerInterface::durationChanged);
     connect(&_mediaPlayer, &QMediaPlayer::positionChanged, this, &PlayerInterface::positionChanged);
+    connect(&_mediaPlayer, static_cast<void (QMediaPlayer::*)()>(&QMediaPlayer::metaDataChanged), this, &PlayerInterface::metadataChanged);
 }
 
 QMediaPlayer::State WebDavPlayer::getState()
@@ -50,4 +51,24 @@ qint64 WebDavPlayer::getPosition() const
 void WebDavPlayer::setPosition(qint64 position)
 {
     _mediaPlayer.setPosition(position);
+}
+
+QString WebDavPlayer::getTitle()
+{
+    return _mediaPlayer.metaData("Title").toString();
+}
+
+QString WebDavPlayer::getArtist()
+{
+    return _mediaPlayer.metaData("AlbumArtist").toString();
+}
+
+QString WebDavPlayer::getAlbum()
+{
+    return _mediaPlayer.metaData("AlbumTitle").toString();
+}
+
+QString WebDavPlayer::getBitrate()
+{
+    return QString::number(_mediaPlayer.metaData("AudioBitRate").toInt() / 1000);
 }

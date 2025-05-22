@@ -10,7 +10,7 @@
 #include <qwebdav.h>
 #include <src/plugininterface.h>
 
-class WebDavPlugin : public QObject, public PluginInterface
+class WebDavPlugin : public PluginInterface
 {
     Q_OBJECT
 public:
@@ -22,10 +22,6 @@ public:
     FileModelInterface* getFileModel();
     PlayerInterface* getPlayer();
     void testConfig();
-
-signals:
-    void testSucceeded();
-    void testFailed(QString message);
 
 private slots:
     void checkFinished();

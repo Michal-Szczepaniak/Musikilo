@@ -1,7 +1,7 @@
 Name:       musikilo
 
 Summary:    WebDav music player
-Version:    1.1.2
+Version:    2.0.0
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3
@@ -13,7 +13,6 @@ BuildRequires: pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Qml)
 BuildRequires: pkgconfig(Qt5Quick)
-BuildRequires: pkgconfig(qofonoext)
 BuildRequires: desktop-file-utils
 
 %description
