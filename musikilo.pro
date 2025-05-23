@@ -5,6 +5,7 @@ musikilo.depends = qwebdavlib/qwebdavlib smpc
 SUBDIRS += \
     musikilo \
     qwebdavlib/qwebdavlib \
-    smpc
+    smpc \
+    QJsonRPC
 
 OTHER_FILES += rpm/musikilo.spec
