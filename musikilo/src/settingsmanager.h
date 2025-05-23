@@ -11,6 +11,7 @@ class SettingsManager : public QObject
     Q_OBJECT
     Q_PROPERTY(QStringList plugins READ getPlugins NOTIFY pluginsChanged)
     Q_PROPERTY(QString currentPlugin READ getCurrentPluginName WRITE setCurrentPlugin NOTIFY currentPluginChanged)
+    Q_PROPERTY(QString currentPluginType READ getCurrentPluginType NOTIFY currentPluginChanged)
 public:
     explicit SettingsManager(QObject *parent = nullptr);
     ~SettingsManager();
@@ -23,7 +24,9 @@ public:
     Q_INVOKABLE void testPlugin(QString pluginCode);
     Q_INVOKABLE void removePlugin(QString pluginCode);
     QString getCurrentPluginName();
+    QString getCurrentPluginType();
     void setCurrentPlugin(QString pluginCode);
+    bool getCurrentPluginControlsAvailable() const;
 
     PluginInterface* getCurrentPlugin();
 
@@ -32,6 +35,7 @@ signals:
     void currentPluginChanged();
     void testSucceeded();
     void testFailed(QString message);
+    void pluginReady();
 
 private:
     void createPlugins();

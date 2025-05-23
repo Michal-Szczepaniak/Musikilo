@@ -19,10 +19,13 @@
 
 #include "webdavplaylistmodel.h"
 
-WebDavPlaylistModel::WebDavPlaylistModel(QWebdav *webdav, WebDavPlayer *player, QObject *parent) : _webdav(webdav), _player(player)
+WebDavPlaylistModel::WebDavPlaylistModel(QWebdav *webdav, WebDavPlayer *player, QObject *parent) : PlaylistModelInterface(parent), _webdav(webdav), _player(player)
 {
     connect(&_parser, &QWebdavDirParser::finished, this, &WebDavPlaylistModel::addFilesToPlaylist);
     connect(&_parser, &QWebdavDirParser::errorChanged, this, &WebDavPlaylistModel::errorOccured);
+    connect(&_playParser, &QWebdavDirParser::finished, this, &WebDavPlaylistModel::playFiles);
+    connect(&_playParser, &QWebdavDirParser::errorChanged, this, &WebDavPlaylistModel::errorOccured);
+    connect(_player, &WebDavPlayer::stateChanged, this, &WebDavPlaylistModel::onStateChanged);
 }
 
 void WebDavPlaylistModel::reset()
@@ -39,18 +42,31 @@ void WebDavPlaylistModel::play(int index)
     QString path = _entries.at(index).path();
 
     _player->play(path);
+
+    _lastIndex = index;
+
+    emit currentIndexChanged(index);
 }
 
 void WebDavPlaylistModel::addSong(QString song)
 {
     bool isDir = song.endsWith('/');
 
-    qDebug() << "file " << song << " isdir " << isDir;
-
     if(isDir) {
         _parser.listDirectory(_webdav, song, 100);
     } else {
         _parser.listItem(_webdav, song);
+    }
+}
+
+void WebDavPlaylistModel::playSong(QString song)
+{
+    bool isDir = song.endsWith('/');
+
+    if(isDir) {
+        _playParser.listDirectory(_webdav, song, 100);
+    } else {
+        _playParser.listItem(_webdav, song);
     }
 }
 
@@ -72,10 +88,6 @@ QVariant WebDavPlaylistModel::data(const QModelIndex &index, int role) const
         return file.path();
 
     return QVariant();
-}
-
-Qt::ItemFlags WebDavPlaylistModel::flags(const QModelIndex &index) const {
-    return QAbstractListModel::flags(index) | Qt::ItemIsEditable;
 }
 
 QHash<int, QByteArray> WebDavPlaylistModel::roleNames() const
@@ -102,4 +114,57 @@ void WebDavPlaylistModel::addFilesToPlaylist()
     _entries.append(playlistFiles);
     endInsertRows();
 
+}
+
+void WebDavPlaylistModel::playFiles()
+{
+    QList<QWebdavItem> list = _playParser.getList();
+    QList<QWebdavItem> playlistFiles{};
+
+    QWebdavItem item;
+    foreach(item, list) {
+        if (item.mimeType().startsWith("audio")) {
+            playlistFiles << item;
+        }
+    }
+
+    beginInsertRows(QModelIndex(), rowCount(), rowCount()+playlistFiles.count()-1);
+    _entries.append(playlistFiles);
+    endInsertRows();
+
+    _lastIndex = 0;
+    emit currentIndexChanged(0);
+
+    _player->play(_entries.first().path());
+}
+
+void WebDavPlaylistModel::onStateChanged()
+{
+    if ((_player->getState() == QMediaPlayer::StoppedState) && (_player->getPosition() >= _player->getDuration()-10) && (_player->getDuration() > 0)) {
+        qDebug() << "Hi " << _player->getSingle();
+        if (_player->getConsume()) {
+            qDebug() << "consume";
+            beginRemoveRows(QModelIndex(), _lastIndex, _lastIndex);
+            _entries.removeAt(_lastIndex);
+            endRemoveRows();
+        } else if (_player->getSingle()) {
+            qDebug() << "play";
+            _player->play();
+            return;
+        }
+
+        if (_player->getShuffle()) {
+            qDebug() << "shuffle";
+            play(qrand() % rowCount());
+        } else if (_player->getConsume() && _lastIndex < rowCount()) {
+            qDebug() << "consume play";
+            play(_lastIndex);
+        } else if (_lastIndex+1 < rowCount()) {
+            qDebug() << "next";
+            play(_lastIndex+1);
+        } else if (_player->getRepeat()) {
+            qDebug() << "repeat";
+            play(0);
+        }
+    }
 }

@@ -26,9 +26,9 @@ Item {
     implicitHeight: swipeView.height; implicitWidth: swipeView.width
 
     Connections {
-        target: fileModel
+        target: settingsManager
 
-        onPluginChanged: {
+        onPluginReady: {
             fileModel.getFilesList('/');
         }
     }
@@ -69,24 +69,33 @@ Item {
                         MenuItem {
                             text: "Play file"
                             onClicked: {
-                                playlistModel.reset()
-                                playlistModel.addSong(path)
+                                playlistModel.playSong(path)
                             }
                         }
                     }
                 }
 
+                Icon {
+                    id: icon
+                    width: Theme.iconSizeMedium
+                    height: width
+                    anchors.leftMargin: Theme.paddingLarge
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: isDir ? "image://theme/icon-m-file-folder" : "image://theme/icon-m-media-songs"
+                }
+
                 Label {
                     id: buddyName
-                    x: Theme.horizontalPageMargin
                     text: name
-                    anchors.leftMargin: Theme.paddingLarge
+                    anchors.leftMargin: Theme.paddingMedium
                     anchors.rightMargin: Theme.paddingLarge
-                    anchors.left: parent.left
+                    anchors.left: icon.right
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
                     elide: Text.ElideRight
+                    truncationMode: TruncationMode.Fade
                 }
 
                 onClicked: {

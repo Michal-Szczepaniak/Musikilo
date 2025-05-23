@@ -10,3 +10,9 @@
 [submodule "qtdbusextended"]
 	path = qtdbusextended
 	url = git@github.com:Michal-Szczepaniak/qtdbusextended.git
+[submodule "smpc"]
+	path = smpc
+	url = https://github.com/Michal-Szczepaniak/smpc
+[submodule "QJsonRPC"]
+	path = QJsonRPC
+	url = https://github.com/Targoman/QJsonRPC

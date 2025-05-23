@@ -31,6 +31,8 @@ int main(int argc, char *argv[])
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QSharedPointer<QQuickView> view(SailfishApp::createView());
 
+    qsrand(QDateTime::currentMSecsSinceEpoch() / 1000);
+
     SettingsManager settingsManager;
     FileModel fileModel(&settingsManager);
     Player player(&settingsManager);

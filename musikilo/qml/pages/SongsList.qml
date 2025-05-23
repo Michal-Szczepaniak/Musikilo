@@ -26,16 +26,6 @@ Item {
 
     implicitHeight: swipeView.height; implicitWidth: swipeView.width
 
-    Connections {
-        target: player
-
-        onStateChanged: {
-            if (player.position === player.duration-1 && playlistModel.currentIndex+1 < playlistModel.rowCount()) {
-                playlistModel.currentIndex++
-            }
-        }
-    }
-
     SilicaFlickable {
         id: songsFlickable
         anchors.fill: parent
@@ -44,6 +34,68 @@ Item {
         PageHeader {
             id: header
             title: qsTr("Playlist")
+        }
+
+        Row {
+            width: parent.width
+            height: Theme.itemSizeLarge
+            anchors.verticalCenter: header.verticalCenter
+
+            BackgroundItem  {
+                width: parent.height
+                height: width
+                contentItem.color: player.repeat ? Theme.rgba(Theme.secondaryHighlightColor, Theme.highlightBackgroundOpacity) : "transparent"
+                onClicked: player.repeat = !player.repeat
+
+                Icon {
+                    anchors.centerIn: parent
+                    width: Theme.iconSizeMedium
+                    height: width
+                    source: "image://theme/icon-m-repeat"
+                }
+            }
+
+            BackgroundItem {
+                width: parent.height
+                height: width
+                contentItem.color: player.single ? Theme.rgba(Theme.secondaryHighlightColor, Theme.highlightBackgroundOpacity) : "transparent"
+                onClicked: player.single = !player.single
+
+                Icon {
+                    anchors.centerIn: parent
+                    width: Theme.iconSizeMedium
+                    height: width
+                    source: "image://theme/icon-m-repeat-single"
+                }
+            }
+
+            BackgroundItem {
+                width: parent.height
+                height: width
+                contentItem.color: player.shuffle ? Theme.rgba(Theme.secondaryHighlightColor, Theme.highlightBackgroundOpacity) : "transparent"
+                onClicked: player.shuffle = !player.shuffle
+
+                Icon {
+                    anchors.centerIn: parent
+                    width: Theme.iconSizeMedium
+                    height: width
+                    source: "image://theme/icon-m-shuffle"
+                }
+            }
+
+            BackgroundItem {
+                width: parent.height
+                height: width
+                contentItem.color: player.consume ? Theme.rgba(Theme.secondaryHighlightColor, Theme.highlightBackgroundOpacity) : "transparent"
+                onClicked: player.consume = !player.consume
+
+                Icon {
+                    anchors.centerIn: parent
+                    width: Theme.iconSizeMedium
+                    height: width
+                    source: "image://theme/icon-m-remove"
+                }
+            }
         }
 
         SilicaListView {

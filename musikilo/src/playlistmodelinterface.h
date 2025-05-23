@@ -12,15 +12,17 @@ public:
         Path
     };
 
-    PlaylistModelInterface(){};
+    PlaylistModelInterface(QObject *parent = nullptr) : QAbstractListModel(parent) {};
     virtual ~PlaylistModelInterface(){};
 
     virtual void reset() = 0;
     virtual void play(int index) = 0;
     virtual void addSong(QString song) = 0;
+    virtual void playSong(QString song) = 0;
 
 signals:
     void errorOccured(QString error);
+    void currentIndexChanged(int currentIndex);
 };
 
 #endif // PLAYLISTMODELINTERFACE_H

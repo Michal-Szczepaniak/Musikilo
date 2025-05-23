@@ -22,6 +22,7 @@ import Sailfish.Silica 1.0
 import QtMultimedia 5.6
 import org.nemomobile.mpris 1.0
 import "../components"
+import "plugins"
 
 Page {
     id: mainPage
@@ -43,6 +44,18 @@ Page {
         model: VisualItemModel {
             FilesList { }
             SongsList { }
+            Loader {
+                active: true
+                sourceComponent: {
+                    console.log(settingsManager.currentPluginType)
+                    switch (settingsManager.currentPluginType) {
+                    case "mpd":
+                        return mpdControls;
+                    default:
+                        return noControls;
+                    }
+                }
+            }
             SongDetails { }
             Settings { }
         }
@@ -60,7 +73,7 @@ Page {
         TabHeader {
             id: mainPageHeader
             listView: swipeView
-            iconArray: [ "image://theme/icon-m-events", "qrc:///images/icon-m-playlists.svg", "image://theme/icon-m-media-songs", "image://theme/icon-m-developer-mode", ]
+            iconArray: [ "image://theme/icon-m-events", "qrc:///images/icon-m-playlists.svg", "image://theme/icon-m-menu", "image://theme/icon-m-media-songs", "image://theme/icon-m-developer-mode", ]
         }
 
         PushUpMenu {
@@ -152,6 +165,35 @@ Page {
         CoverAction {
             iconSource: "image://theme/icon-cover-next-song"
             onTriggered: if (playlistModel.currentIndex + 1 < playlistModel.rowCount()) playlistModel.currentIndex++
+        }
+    }
+
+    Component {
+        id: mpdControls
+
+        MPDControls {}
+    }
+
+    Component {
+        id: noControls
+
+        Item {
+            implicitHeight: swipeView.height; implicitWidth: swipeView.width
+
+            SilicaFlickable {
+                anchors.fill: parent
+
+                PageHeader {
+                    title: qsTr("Plugin controls")
+                }
+
+                Label {
+                    text: 'No controls available for this plugin'
+                    anchors.centerIn: parent
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    color: Theme.secondaryHighlightColor
+                }
+            }
         }
     }
 }

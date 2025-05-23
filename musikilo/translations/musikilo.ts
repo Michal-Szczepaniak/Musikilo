@@ -44,9 +44,47 @@
     </message>
 </context>
 <context>
+    <name>MPDControls</name>
+    <message>
+        <source>MPD controls</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume: %1%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MPDSettingsDialog</name>
+    <message>
+        <source>Hostname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
         <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Plugin controls</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -149,19 +187,23 @@
         <source>MPD</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Add plugin from pull-down menu</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SongDetails</name>
+    <message>
+        <source>Song %1/%2</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Album: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Bit rate: %1 kb/s</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Song %1/%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -19,7 +19,7 @@
 
 #include "webdavfilemodel.h"
 
-WebDavFileModel::WebDavFileModel(QWebdav *webdav, QObject *parent) : _webdav(webdav)
+WebDavFileModel::WebDavFileModel(QWebdav *webdav, QObject *parent) : FileModelInterface(parent), _webdav(webdav)
 {
     connect(&_parser, &QWebdavDirParser::finished, this, &WebDavFileModel::gotFilesList);
     connect(&_parser, &QWebdavDirParser::finished, this, &WebDavFileModel::addFilesToList);
@@ -53,10 +53,6 @@ QVariant WebDavFileModel::data(const QModelIndex &index, int role) const
         return file.isDir();
 
     return QVariant();
-}
-
-Qt::ItemFlags WebDavFileModel::flags(const QModelIndex &index) const {
-    return QAbstractListModel::flags(index) | Qt::ItemIsEditable;
 }
 
 QHash<int, QByteArray> WebDavFileModel::roleNames() const
@@ -99,26 +95,20 @@ void WebDavFileModel::addFilesToList()
 
     QWebdavItem item;
     foreach(item, list) {
-        if (item.isDir() || item.mimeType().startsWith("audio")) {
+        if (item.isDir()) {
             _filesList << item;
         }
     }
+
+    foreach(item, list) {
+        if (item.mimeType().startsWith("audio")) {
+            _filesList << item;
+        }
+    }
+
     _filesList<<backItem;
 
     endResetModel();
-}
-
-void WebDavFileModel::addFilesToPlaylist()
-{
-/*    QList<QWebdavItem> list = _playlistParser.getList();
-    if(list.size() == 0) return;
-
-    QWebdavItem item;
-    foreach(item, list) {
-        if (item.mimeType().startsWith("audio")) {
-            emit gotAudioFile(item);
-        }
-    }*/
 }
 
 void WebDavFileModel::replySkipRead()

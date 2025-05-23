@@ -13,7 +13,7 @@ public:
         isDir
     };
 
-    FileModelInterface(){};
+    FileModelInterface(QObject *parent = nullptr) : QAbstractListModel(parent) {};
     virtual ~FileModelInterface(){};
 
     virtual void getFilesList(QString path) = 0;

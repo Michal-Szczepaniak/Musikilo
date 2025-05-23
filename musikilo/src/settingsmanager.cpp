@@ -1,5 +1,6 @@
 #include "settingsmanager.h"
 #include <QDebug>
+#include <src/plugins/mpd/mpdplugin.h>
 #include <src/plugins/webdav/webdavplugin.h>
 
 SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
@@ -49,6 +50,8 @@ void SettingsManager::setPluginSettings(QString pluginCode, QVariantMap settings
     if (pluginCode == _currentPlugin) {
         emit currentPluginChanged();
     }
+
+    emit pluginsChanged();
 }
 
 bool SettingsManager::hasPlugin(QString pluginCode)
@@ -82,11 +85,23 @@ QString SettingsManager::getCurrentPluginName()
     return _currentPlugin;
 }
 
+QString SettingsManager::getCurrentPluginType()
+{
+    if (!hasPlugin(_currentPlugin)) return QString();
+
+    return getPluginSettings(_currentPlugin)["plugin"].toString();
+}
+
 void SettingsManager::setCurrentPlugin(QString pluginCode)
 {
     if (!_plugins.contains(pluginCode)) return;
+    if (_currentPlugin != "") {
+        getPlugin(_currentPlugin)->deactivate();
+    }
 
     _currentPlugin = pluginCode;
+
+    getPlugin(_currentPlugin)->activate();
 
     emit currentPluginChanged();
 }
@@ -117,15 +132,19 @@ void SettingsManager::createPlugin(QString code)
     PluginInterface* plugin = nullptr;
     if (type == "nextcloud") {
         plugin = new WebDavPlugin;
-        connect((WebDavPlugin*)plugin, &WebDavPlugin::testSucceeded, this, &SettingsManager::testSucceeded);
-        connect((WebDavPlugin*)plugin, &WebDavPlugin::testFailed, this, &SettingsManager::testFailed);
     } else if (type == "spotify") {
 
+    } else if (type == "mpd") {
+        plugin = new MPDPlugin;
     }
 
     if (plugin == nullptr) {
         return;
     }
+
+    connect(plugin, &PluginInterface::testSucceeded, this, &SettingsManager::testSucceeded);
+    connect(plugin, &PluginInterface::testFailed, this, &SettingsManager::testFailed);
+    connect(plugin, &PluginInterface::pluginReady, this, &SettingsManager::pluginReady);
 
     plugin->initialize(settings);
 

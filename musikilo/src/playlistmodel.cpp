@@ -22,7 +22,6 @@
 PlaylistModel::PlaylistModel(SettingsManager *settingsManager, Player *player, QObject *parent) : QAbstractListModel(parent), _settingsManager(settingsManager), _player(player)
 {
     connect(settingsManager, &SettingsManager::currentPluginChanged, this, &PlaylistModel::onPluginChange);
-    connect(this, &QAbstractListModel::rowsInserted, this, &PlaylistModel::onRowsInserted);
 }
 
 int PlaylistModel::rowCount(const QModelIndex &parent) const
@@ -72,7 +71,18 @@ void PlaylistModel::reset()
 
 void PlaylistModel::addSong(QString path)
 {
+    if (_playlistModel == nullptr) return;
+
     _playlistModel->addSong(path);
+}
+
+void PlaylistModel::playSong(QString path)
+{
+    if (_playlistModel == nullptr) return;
+
+    reset();
+
+    _playlistModel->playSong(path);
 }
 
 void PlaylistModel::onPluginChange()
@@ -83,29 +93,24 @@ void PlaylistModel::onPluginChange()
         if (_playlistModel != nullptr) {
             disconnect(_modelResetSigal);
             disconnect(_errorOccuredSignal);
+            disconnect(_currentIndexChangedSignal);
         }
 
         _playlistModel = plugin->getPlaylistModel();
-        _modelResetSigal = connect(_playlistModel, &PlaylistModelInterface::modelReset, this, &PlaylistModel::onModelReset);
-        connect(_playlistModel, &PlaylistModelInterface::rowsInserted, this, &PlaylistModel::rowsInserted);
+        _modelResetSigal = connect(_playlistModel, &PlaylistModelInterface::modelReset, this, &PlaylistModel::modelReset);
+        _rowsInsertedSigal = connect(_playlistModel, &PlaylistModelInterface::rowsInserted, this, &PlaylistModel::rowsInserted);
+        _rowsRemovedSigal = connect(_playlistModel, &PlaylistModelInterface::rowsRemoved, this, &PlaylistModel::rowsRemoved);
         _errorOccuredSignal = connect(_playlistModel, &PlaylistModelInterface::errorOccured, this, &PlaylistModel::errorOccured);
+        _currentIndexChangedSignal = connect(_playlistModel, &PlaylistModelInterface::currentIndexChanged, this, &PlaylistModel::onCurrentIndexChanged);
         endResetModel();
     }
 }
 
-void PlaylistModel::onModelReset()
+void PlaylistModel::onCurrentIndexChanged(int index)
 {
-    beginResetModel();
-    endResetModel();
-}
+    _currentIndex = index;
 
-void PlaylistModel::onRowsInserted()
-{
-    if (_player->getState() == QMediaPlayer::StoppedState && rowCount() > 0) {
-        setCurrentIndex(0);
-
-        _playlistModel->play(0);
-    }
+    emit currentIndexChanged(index);
 }
 
 QHash<int, QByteArray> PlaylistModel::roleNames() const

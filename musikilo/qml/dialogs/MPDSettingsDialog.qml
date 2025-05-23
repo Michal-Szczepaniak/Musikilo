@@ -24,38 +24,17 @@ Column {
     width: parent.width
 
     function setData(data) {
-        connectionType.currentIndex = data.connectionType;
         hostnameValue.text = data.hostname;
-        rootPathValue.text = data.rootPath;
-        usernameValue.text = data.username;
         passwordValue.text = data.password;
         portValue.text = data.port;
     }
 
     function collectSettings() {
         return {
-            plugin: "nextcloud",
-            connectionType: connectionType.currentIndex,
+            plugin: "mpd",
             hostname: hostnameValue.text,
-            rootPath: rootPathValue.text,
-            username: usernameValue.text,
             password: passwordValue.text,
             port: portValue.text
-        }
-    }
-
-    ComboBox {
-        id: connectionType
-        width: parent.width
-        label: "Connection Type"
-
-        menu: ContextMenu {
-            MenuItem { text: "HTTP" }
-            MenuItem { text: "HTTPS" }
-        }
-
-        onCurrentItemChanged: {
-            hostnameValue.focus = true
         }
     }
 
@@ -68,18 +47,11 @@ Column {
     }
 
     TextField {
-       id: rootPathValue
-       label: qsTr("Root path")
+       id: portValue
+       inputMethodHints: Qt.ImhFormattedNumbersOnly
+       label: qsTr("Port")
        labelVisible: true
-       placeholderText: label
-       width: parent.width
-    }
-
-    TextField {
-       id: usernameValue
-       label: qsTr("Username")
-       labelVisible: true
-       placeholderText: label
+       placeholderText: "6600"
        width: parent.width
     }
 
@@ -89,14 +61,5 @@ Column {
        label: qsTr("Password")
        labelVisible: true
        placeholderText: label
-    }
-
-    TextField {
-       id: portValue
-       inputMethodHints: Qt.ImhFormattedNumbersOnly
-       label: qsTr("Port")
-       labelVisible: true
-       placeholderText: label
-       width: parent.width
     }
 }

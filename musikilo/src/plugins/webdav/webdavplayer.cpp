@@ -1,6 +1,6 @@
 #include "webdavplayer.h"
 
-WebDavPlayer::WebDavPlayer(QWebdav *webdav, QObject *parent) : _webdav(webdav)
+WebDavPlayer::WebDavPlayer(QWebdav *webdav, QObject *parent) : PlayerInterface(parent), _webdav(webdav)
 {
     connect(&_mediaPlayer, &QMediaPlayer::stateChanged, this, &PlayerInterface::stateChanged);
     connect(&_mediaPlayer, &QMediaPlayer::durationChanged, this, &PlayerInterface::durationChanged);
@@ -71,4 +71,62 @@ QString WebDavPlayer::getAlbum()
 QString WebDavPlayer::getBitrate()
 {
     return QString::number(_mediaPlayer.metaData("AudioBitRate").toInt() / 1000);
+}
+
+bool WebDavPlayer::getRepeat() const
+{
+    return _settings.value("nc-repeat", false).toBool();
+}
+
+void WebDavPlayer::setRepeat(bool repeat)
+{
+    _settings.setValue("nc-repeat", repeat);
+
+    emit repeatChanged();
+}
+
+bool WebDavPlayer::getSingle() const
+{
+    return _settings.value("nc-single", false).toBool();
+}
+
+void WebDavPlayer::setSingle(bool single)
+{
+    _settings.setValue("nc-single", single);
+
+    emit singleChanged();
+}
+
+bool WebDavPlayer::getShuffle() const
+{
+    return _settings.value("nc-shuffle", false).toBool();
+}
+
+void WebDavPlayer::setShuffle(bool shuffle)
+{
+    _settings.setValue("nc-shuffle", shuffle);
+
+    emit shuffleChanged();
+}
+
+bool WebDavPlayer::getConsume() const
+{
+    return _settings.value("nc-consume", false).toBool();
+}
+
+void WebDavPlayer::setConsume(bool consume)
+{
+    _settings.setValue("nc-consume", consume);
+
+    emit consumeChanged();
+}
+
+QVariantMap WebDavPlayer::getControls()
+{
+    return QVariantMap();
+}
+
+void WebDavPlayer::setControls(QVariantMap controls)
+{
+    Q_UNUSED(controls)
 }

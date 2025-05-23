@@ -23,6 +23,9 @@ public:
     PlayerInterface* getPlayer();
     void testConfig();
 
+    void activate();
+    void deactivate();
+
 private slots:
     void checkFinished();
 
@@ -31,6 +34,7 @@ private:
     std::unique_ptr<WebDavPlaylistModel> _playlistModel;
     std::unique_ptr<WebDavPlayer> _player;
     QWebdav _webdav;
+    QTimer _readyTimer;
 };
 
 #endif // WEBDAVPLUGIN_H

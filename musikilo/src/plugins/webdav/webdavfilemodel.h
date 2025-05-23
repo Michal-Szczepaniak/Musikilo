@@ -38,8 +38,6 @@ public:
 
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
 
-    Qt::ItemFlags flags(const QModelIndex &index) const;
-
     void getFilesList(QString path);
 
 protected:
@@ -52,7 +50,6 @@ signals:
 
 public slots:
     void addFilesToList();
-    void addFilesToPlaylist();
     void replySkipRead();
     void getMediaContent(QString path);
 

@@ -64,8 +64,6 @@ void FileModel::onPluginChange()
         _errorOccuredSignal = connect(_fileModel, &FileModelInterface::errorOccured, this, &FileModel::errorOccured);
         endResetModel();
     }
-
-    emit pluginChanged();
 }
 
 void FileModel::onModelReset()

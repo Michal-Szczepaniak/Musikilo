@@ -53,6 +53,13 @@ Item {
             }
         }
 
+        Label {
+            anchors.centerIn: parent
+            visible: settingsManager.plugins.length === 0
+            text: qsTr("Add plugin from pull-down menu")
+            color: Theme.secondaryHighlightColor
+        }
+
         SilicaListView {
             id: pluginList
             model: settingsManager.plugins

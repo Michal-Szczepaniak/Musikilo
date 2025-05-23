@@ -82,6 +82,76 @@ QString Player::getBitrate()
     return _player->getBitrate();
 }
 
+bool Player::getRepeat() const
+{
+    if (_player == nullptr) return false;
+
+    return _player->getRepeat();
+}
+
+void Player::setRepeat(bool repeat)
+{
+    if (_player == nullptr) return;
+
+    return _player->setRepeat(repeat);
+}
+
+bool Player::getSingle() const
+{
+    if (_player == nullptr) return false;
+
+    return _player->getSingle();
+}
+
+void Player::setSingle(bool single)
+{
+    if (_player == nullptr) return;
+
+    return _player->setSingle(single);
+}
+
+bool Player::getShuffle() const
+{
+    if (_player == nullptr) return false;
+
+    return _player->getShuffle();
+}
+
+void Player::setShuffle(bool shuffle)
+{
+    if (_player == nullptr) return;
+
+    return _player->setShuffle(shuffle);
+}
+
+bool Player::getConsume() const
+{
+    if (_player == nullptr) return false;
+
+    return _player->getConsume();
+}
+
+void Player::setConsume(bool consume)
+{
+    if (_player == nullptr) return;
+
+    return _player->setConsume(consume);
+}
+
+QVariantMap Player::getPluginControls() const
+{
+    if (_player == nullptr) return QVariantMap();
+
+    return _player->getControls();
+}
+
+void Player::setPluginControls(QVariantMap controls)
+{
+    if (_player == nullptr) return;
+
+    _player->setControls(controls);
+}
+
 void Player::onPluginChange()
 {
     auto plugin = _settingsManager->getCurrentPlugin();
@@ -92,6 +162,11 @@ void Player::onPluginChange()
             disconnect(_durationSignal);
             disconnect(_positionSignal);
             disconnect(_metadataSignal);
+            disconnect(_controlsSignal);
+            disconnect(_repeatSignal);
+            disconnect(_singleSignal);
+            disconnect(_shuffleSignal);
+            disconnect(_consumeSignal);
         }
 
         _player = plugin->getPlayer();
@@ -100,6 +175,11 @@ void Player::onPluginChange()
         _durationSignal = connect(_player, &PlayerInterface::durationChanged, this, &Player::durationChanged);
         _positionSignal = connect(_player, &PlayerInterface::positionChanged, this, &Player::positionChanged);
         _metadataSignal = connect(_player, &PlayerInterface::metadataChanged, this, &Player::metadataChanged);
+        _controlsSignal = connect(_player, &PlayerInterface::controlsChanged, this, &Player::pluginControlsChanged);
+        _repeatSignal = connect(_player, &PlayerInterface::repeatChanged, this, &Player::repeatChanged);
+        _singleSignal = connect(_player, &PlayerInterface::singleChanged, this, &Player::singleChanged);
+        _shuffleSignal = connect(_player, &PlayerInterface::shuffleChanged, this, &Player::shuffleChanged);
+        _consumeSignal = connect(_player, &PlayerInterface::consumeChanged, this, &Player::consumeChanged);
     }
 
     emit pluginChanged();
@@ -107,4 +187,9 @@ void Player::onPluginChange()
     emit durationChanged();
     emit positionChanged();
     emit metadataChanged();
+    emit pluginControlsChanged();
+    emit repeatChanged();
+    emit singleChanged();
+    emit shuffleChanged();
+    emit consumeChanged();
 }

@@ -47,8 +47,8 @@ public:
     int getCurrentIndex() const;
     void setCurrentIndex(int currentIndex);
 
-    Q_INVOKABLE void reset();
     Q_INVOKABLE void addSong(QString path);
+    Q_INVOKABLE void playSong(QString path);
 
 protected:
     QHash<int, QByteArray> roleNames() const;
@@ -59,16 +59,20 @@ signals:
 
 public slots:
     void onPluginChange();
-    void onModelReset();
-    void onRowsInserted();
+    void onCurrentIndexChanged(int index);
 
 private:
     SettingsManager *_settingsManager;
     PlaylistModelInterface *_playlistModel = nullptr;
     Player *_player = nullptr;
     QMetaObject::Connection _modelResetSigal;
+    QMetaObject::Connection _rowsInsertedSigal;
+    QMetaObject::Connection _rowsRemovedSigal;
     QMetaObject::Connection _errorOccuredSignal;
+    QMetaObject::Connection _currentIndexChangedSignal;
     int _currentIndex = -1;
+
+    void reset();
 };
 
 #endif // PLAYLISTMODEL_H

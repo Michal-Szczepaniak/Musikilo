@@ -12,6 +12,10 @@ SOURCES += \
     src/playerinterface.cpp \
     src/playlistmodel.cpp \
     src/playlistmodelinterface.cpp \
+    src/plugins/mpd/mpdfilemodel.cpp \
+    src/plugins/mpd/mpdplayer.cpp \
+    src/plugins/mpd/mpdplaylistmodel.cpp \
+    src/plugins/mpd/mpdplugin.cpp \
     src/plugins/webdav/webdavfilemodel.cpp \
     src/plugins/webdav/webdavplayer.cpp \
     src/plugins/webdav/webdavplaylistmodel.cpp \
@@ -27,6 +31,10 @@ HEADERS += \
     src/playlistmodel.h \
     src/playlistmodelinterface.h \
     src/plugininterface.h \
+    src/plugins/mpd/mpdfilemodel.h \
+    src/plugins/mpd/mpdplayer.h \
+    src/plugins/mpd/mpdplaylistmodel.h \
+    src/plugins/mpd/mpdplugin.h \
     src/plugins/webdav/webdavfilemodel.h \
     src/plugins/webdav/webdavplayer.h \
     src/plugins/webdav/webdavplaylistmodel.h \
@@ -47,7 +55,9 @@ DISTFILES += \
     qml/pages/About.qml \
     qml/pages/NewPluginDialog.qml \
     qml/pages/EditPluginDialog.qml \
+    qml/pages/plugins/MPDControls.qml \
     qml/dialogs/NextcloudSettingsDialog.qml \
+    qml/dialogs/MPDSettingsDialog.qml \
     translations/*.ts
 
 RESOURCES += \
@@ -67,3 +77,8 @@ DEFINES += QWEBDAVITEM_EXTENDED_PROPERTIES
 PRE_TARGETDEPS += $$OUT_PWD/../qwebdavlib/qwebdavlib/libqwebdav.a
 INCLUDEPATH += ../qwebdavlib/qwebdavlib/
 LIBS += -L$$OUT_PWD/../qwebdavlib/qwebdavlib/ -lqwebdav
+
+# smpc
+PRE_TARGETDEPS += $$OUT_PWD/../smpc/libsmpc.a
+INCLUDEPATH += ../smpc/src
+LIBS += -L$$OUT_PWD/../smpc/ -lsmpc

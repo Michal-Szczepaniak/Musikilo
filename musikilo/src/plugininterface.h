@@ -19,9 +19,13 @@ public:
     virtual PlayerInterface* getPlayer() = 0;
     virtual void testConfig() = 0;
 
+    virtual void activate() = 0;
+    virtual void deactivate() = 0;
+
 signals:
     void testSucceeded();
     void testFailed(QString message);
+    void pluginReady();
 };
 
 #endif // PLUGININTERFACE_H

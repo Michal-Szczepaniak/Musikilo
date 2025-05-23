@@ -41,30 +41,25 @@ public:
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
 
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
-
-    Qt::ItemFlags flags(const QModelIndex &index) const;
-
     void reset();
     void play(int index);
     void addSong(QString song);
+    void playSong(QString song);
 
 protected:
     QHash<int, QByteArray> roleNames() const;
 
-signals:
-    void songChanged(QString path);
-
 public slots:
     void addFilesToPlaylist();
+    void playFiles();
+    void onStateChanged();
 
 private:
     QWebdav* _webdav;
     WebDavPlayer *_player;
     QList<QWebdavItem> _entries;
-    QWebdavDirParser _parser;
-
-public slots:
-//    void onRowsInserted();
+    QWebdavDirParser _parser, _playParser;
+    int _lastIndex = -1;
 };
 
 #endif // WEBDAVPLAYLISTMODEL_H

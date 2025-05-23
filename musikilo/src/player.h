@@ -17,6 +17,11 @@ class Player : public QObject
     Q_PROPERTY(QString artist READ getArtist NOTIFY metadataChanged)
     Q_PROPERTY(QString album READ getAlbum NOTIFY metadataChanged)
     Q_PROPERTY(QString bitrate READ getBitrate NOTIFY metadataChanged)
+    Q_PROPERTY(bool repeat READ getRepeat WRITE setRepeat NOTIFY repeatChanged)
+    Q_PROPERTY(bool single READ getSingle WRITE setSingle NOTIFY singleChanged)
+    Q_PROPERTY(bool shuffle READ getShuffle WRITE setShuffle NOTIFY shuffleChanged)
+    Q_PROPERTY(bool consume READ getConsume WRITE setConsume NOTIFY consumeChanged)
+    Q_PROPERTY(QVariantMap pluginControls READ getPluginControls WRITE setPluginControls NOTIFY pluginControlsChanged)
 public:
     explicit Player(SettingsManager *settingsManager, QObject *parent = nullptr);
 
@@ -35,6 +40,18 @@ public:
     QString getAlbum();
     QString getBitrate();
 
+    bool getRepeat() const;
+    void setRepeat(bool repeat);
+    bool getSingle() const;
+    void setSingle(bool single);
+    bool getShuffle() const;
+    void setShuffle(bool shuffle);
+    bool getConsume() const;
+    void setConsume(bool consume);
+
+    QVariantMap getPluginControls() const;
+    void setPluginControls(QVariantMap controls);
+
 signals:
     void errorOccured(QString error);
     void pluginChanged();
@@ -42,6 +59,11 @@ signals:
     void durationChanged();
     void positionChanged();
     void metadataChanged();
+    void pluginControlsChanged();
+    void repeatChanged();
+    void singleChanged();
+    void shuffleChanged();
+    void consumeChanged();
 
 public slots:
     void onPluginChange();
@@ -54,6 +76,11 @@ private:
     QMetaObject::Connection _durationSignal;
     QMetaObject::Connection _positionSignal;
     QMetaObject::Connection _metadataSignal;
+    QMetaObject::Connection _controlsSignal;
+    QMetaObject::Connection _repeatSignal;
+    QMetaObject::Connection _singleSignal;
+    QMetaObject::Connection _shuffleSignal;
+    QMetaObject::Connection _consumeSignal;
 };
 
 #endif // PLAYER_H

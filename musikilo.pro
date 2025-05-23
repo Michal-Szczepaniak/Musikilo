@@ -1,9 +1,10 @@
 TEMPLATE = subdirs
 
-musikilo.depends = qwebdavlib/qwebdavlib
+musikilo.depends = qwebdavlib/qwebdavlib smpc
 
 SUBDIRS += \
     musikilo \
-    qwebdavlib/qwebdavlib
+    qwebdavlib/qwebdavlib \
+    smpc
 
 OTHER_FILES += rpm/musikilo.spec

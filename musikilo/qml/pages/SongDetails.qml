@@ -59,7 +59,6 @@ Item {
         }
 
         onPositionChanged: {
-            progressSlider.maximumValue = player.duration
             progressSlider.value = player.position
         }
 
@@ -90,12 +89,18 @@ Item {
 
         onReleased: {
             draggable.x = 0
-            if (draggable.x < -(Theme.itemSizeHuge/2) && playlistModel.currentIndex + 1 < playlistElementsCount) {
-                playlistModel.currentIndex++
+            if (draggable.x < -(Theme.itemSizeHuge/2)) {
+                if (playlistModel.currentIndex + 1 < playlistElementsCount) {
+                    playlistModel.currentIndex++
+                } else if (player.repeat) {
+                    playlistModel.currentIndex = 0
+                }
             }
 
-            if (draggable.x > Theme.itemSizeHuge/2 && playlistModel.currentIndex > 0) {
-                playlistModel.currentIndex--
+            if (draggable.x > Theme.itemSizeHuge/2) {
+                if (playlistModel.currentIndex > 0) {
+                    playlistModel.currentIndex--
+                }
             }
         }
 
@@ -158,6 +163,7 @@ Item {
                     anchors.centerIn: parent
                 }
             }
+
 
             OpacityRampEffect {
                 sourceItem: prevBackground
@@ -230,6 +236,7 @@ Item {
             font.pixelSize: Theme.fontSizeLarge
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
+            color: Theme.highlightColor
         }
 
         Item {}
@@ -241,6 +248,8 @@ Item {
             text: qsTr("Album: %1").arg(player.album)
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
+            color: Theme.secondaryHighlightColor
+
         }
 
         Label {
@@ -249,23 +258,19 @@ Item {
             visible: player.bitrate !== ""
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
+            color: Theme.secondaryHighlightColor
         }
-    }
 
-    Label {
-        id: progress
-        anchors.left: parent.left
-        anchors.bottom: progressSlider.bottom
-        anchors.margins: Theme.paddingLarge
-        text: Format.formatDuration(Math.round(player.position/1000), ((player.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))
-    }
+        Item {}
 
-    Label {
-        id: duration
-        anchors.right: parent.right
-        anchors.bottom: progressSlider.bottom
-        anchors.margins: Theme.paddingLarge
-        text: Format.formatDuration(Math.round(player.duration/1000), ((player.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))
+        Label {
+            id: currentTrack
+            text: qsTr("Song %1/%2").arg(playlistModel.currentIndex + 1).arg(playlistElementsCount)
+            visible: playlistElementsCount > 0 && landscape
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Text.AlignHCenter
+            color: Theme.secondaryColor
+        }
     }
 
     Slider {
@@ -273,14 +278,15 @@ Item {
         value: player.position
         valueText: down ? Format.formatDuration(Math.round(value/1000), ((value/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort)) : ""
         minimumValue: 0
-        maximumValue: player.duration !== 0 ? player.duration : 1
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: playlistTracks.top
-        anchors.leftMargin: Theme.paddingLarge
-        anchors.rightMargin: Theme.paddingLarge
+        maximumValue: Math.max(player.duration, 1)
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: landscape ? parent.bottom : playlistTracks.top
+        width: parent.width
+        label: (Format.formatDuration(Math.round(player.position/1000), ((player.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))) + " / " +
+               Format.formatDuration(Math.round(player.duration/1000), ((player.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))
 
         onReleased: {
+            console.log("hey")
             stylusAnimation.stop()
             stylusAnimation.from = ((progressSlider.value/progressSlider.maximumValue) * 23) - 8
             stylusAnimation.duration = progressSlider.maximumValue - progressSlider.value
@@ -293,9 +299,10 @@ Item {
     Label {
         id: playlistTracks
         text: qsTr("Song %1/%2").arg(playlistModel.currentIndex + 1).arg(playlistElementsCount)
-        visible: playlistElementsCount > 0
+        visible: playlistElementsCount > 0 && !landscape
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: Theme.paddingLarge
+        color: Theme.secondaryColor
     }
 }

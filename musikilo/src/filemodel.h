@@ -47,7 +47,6 @@ public:
 
 signals:
     void errorOccured(QString error);
-    void pluginChanged();
 
 public slots:
     void onPluginChange();
