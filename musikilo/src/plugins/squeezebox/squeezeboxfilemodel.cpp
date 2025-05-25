@@ -22,7 +22,6 @@ QVariant SqueezeBoxFileModel::data(const QModelIndex &index, int role) const
 
 void SqueezeBoxFileModel::getFilesList(QString path)
 {
-    _jcon->callAsync("musicfolder", 0, -1);
 }
 
 QHash<int, QByteArray> SqueezeBoxFileModel::roleNames() const

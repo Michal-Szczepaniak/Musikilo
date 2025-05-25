@@ -4,6 +4,3 @@
 [submodule "smpc"]
 	path = smpc
 	url = git@github.com:Michal-Szczepaniak/smpc.git
-[submodule "jcon-cpp"]
-	path = jcon-cpp
-	url = git@github.com:Michal-Szczepaniak/jcon-cpp.git
