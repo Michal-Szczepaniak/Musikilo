@@ -68,6 +68,7 @@ Dialog {
                                             case "spotify":
                                                 break;
                                             case "squeezebox":
+                                                settingsLoader.sourceComponent = squeezeBoxSettingsDialog
                                                 break;
                                             case "mpd":
                                                 settingsLoader.sourceComponent = mpdSettingsDialog
@@ -118,6 +119,14 @@ Dialog {
         id: mpdSettingsDialog
 
         MPDSettingsDialog {
+
+        }
+    }
+
+    Component {
+        id: squeezeBoxSettingsDialog
+
+        SqueezeBoxSettingsDialog {
 
         }
     }

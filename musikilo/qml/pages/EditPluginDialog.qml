@@ -62,10 +62,9 @@ Dialog {
                         case "spotify":
                             break;
                         case "squeezebox":
-                            break;
+                            return squeezeBoxSettingsDialog;
                         case "mpd":
                             return mpdSettingsDialog;
-                            break;
                     }
                 onLoaded: item.setData(pluginData)
             }
@@ -84,6 +83,14 @@ Dialog {
         id: mpdSettingsDialog
 
         MPDSettingsDialog {
+
+        }
+    }
+
+    Component {
+        id: squeezeBoxSettingsDialog
+
+        SqueezeBoxSettingsDialog {
 
         }
     }

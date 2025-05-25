@@ -11,6 +11,7 @@ MPDPlugin::MPDPlugin(QObject *parent) : PluginInterface(parent), _mpdThread(new 
             emit testSucceeded();
             _testPending = false;
             emit disconnectFromHost();
+            return;
         }
 
         emit pluginReady();
@@ -44,7 +45,7 @@ void MPDPlugin::updateConig(QVariantMap settings)
     QString password = settings.value("password").toString();
     int port = settings.value("port").toString().toInt();
 
-    qDebug() << "Nextcloud settings: ";
+    qDebug() << "MPD settings: ";
     qDebug() << "Hostname: " << hostname;
     qDebug() << "Port: " << port;
 

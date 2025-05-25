@@ -23,12 +23,16 @@ public:
     void play(int index);
     void addSong(QString song);
     void playSong(QString song);
+    void nextSong();
+    void prevSong();
 
 signals:
     void mpdPlay(int index);
     void mpdClearPlaylist();
     void mpdPlaySong(QString path);
     void mpdAddSong(QString path);
+    void mpdNext();
+    void mpdPrev();
 
 public slots:
     void onPlaylistReady(QList<MpdTrack*> *playlist);

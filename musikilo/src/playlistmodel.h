@@ -49,6 +49,8 @@ public:
 
     Q_INVOKABLE void addSong(QString path);
     Q_INVOKABLE void playSong(QString path);
+    Q_INVOKABLE void nextSong();
+    Q_INVOKABLE void prevSong();
 
 protected:
     QHash<int, QByteArray> roleNames() const;

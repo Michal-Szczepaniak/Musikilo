@@ -16,6 +16,10 @@ SOURCES += \
     src/plugins/mpd/mpdplayer.cpp \
     src/plugins/mpd/mpdplaylistmodel.cpp \
     src/plugins/mpd/mpdplugin.cpp \
+    src/plugins/squeezebox/squeezeboxfilemodel.cpp \
+    src/plugins/squeezebox/squeezeboxplayer.cpp \
+    src/plugins/squeezebox/squeezeboxplaylistmodel.cpp \
+    src/plugins/squeezebox/squeezeboxplugin.cpp \
     src/plugins/webdav/webdavfilemodel.cpp \
     src/plugins/webdav/webdavplayer.cpp \
     src/plugins/webdav/webdavplaylistmodel.cpp \
@@ -35,6 +39,10 @@ HEADERS += \
     src/plugins/mpd/mpdplayer.h \
     src/plugins/mpd/mpdplaylistmodel.h \
     src/plugins/mpd/mpdplugin.h \
+    src/plugins/squeezebox/squeezeboxfilemodel.h \
+    src/plugins/squeezebox/squeezeboxplayer.h \
+    src/plugins/squeezebox/squeezeboxplaylistmodel.h \
+    src/plugins/squeezebox/squeezeboxplugin.h \
     src/plugins/webdav/webdavfilemodel.h \
     src/plugins/webdav/webdavplayer.h \
     src/plugins/webdav/webdavplaylistmodel.h \
@@ -58,6 +66,7 @@ DISTFILES += \
     qml/pages/plugins/MPDControls.qml \
     qml/dialogs/NextcloudSettingsDialog.qml \
     qml/dialogs/MPDSettingsDialog.qml \
+    qml/dialogs/SqueezeBoxSettingsDialog.qml \
     translations/*.ts
 
 RESOURCES += \
@@ -82,3 +91,8 @@ LIBS += -L$$OUT_PWD/../qwebdavlib/qwebdavlib/ -lqwebdav
 PRE_TARGETDEPS += $$OUT_PWD/../smpc/libsmpc.a
 INCLUDEPATH += ../smpc/src
 LIBS += -L$$OUT_PWD/../smpc/ -lsmpc
+
+# jcon
+PRE_TARGETDEPS += $$OUT_PWD/../jcon-cpp/src/jcon/libjcon.a
+INCLUDEPATH += ../jcon-cpp/src/
+LIBS += -L$$OUT_PWD/../jcon-cpp/src/jcon/ -ljcon

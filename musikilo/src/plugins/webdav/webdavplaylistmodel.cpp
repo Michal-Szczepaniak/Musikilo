@@ -70,6 +70,40 @@ void WebDavPlaylistModel::playSong(QString song)
     }
 }
 
+void WebDavPlaylistModel::nextSong()
+{
+    if (_player->getConsume()) {
+        beginRemoveRows(QModelIndex(), _lastIndex, _lastIndex);
+        _entries.removeAt(_lastIndex);
+        endRemoveRows();
+    }
+
+    if (_player->getShuffle()) {
+        play(qrand() % rowCount());
+    } else if (_player->getConsume() && _lastIndex < rowCount()) {
+        play(_lastIndex);
+    } else if (_lastIndex+1 < rowCount()) {
+        play(_lastIndex+1);
+    } else if (_player->getRepeat()) {
+        play(0);
+    }
+}
+
+void WebDavPlaylistModel::prevSong()
+{
+    if (_player->getConsume()) {
+        beginRemoveRows(QModelIndex(), _lastIndex, _lastIndex);
+        _entries.removeAt(_lastIndex);
+        endRemoveRows();
+    }
+
+    if (_player->getShuffle()) {
+        play(qrand() % rowCount());
+    } else if (_lastIndex - 1 >= 0) {
+        play(_lastIndex - 1);
+    }
+}
+
 int WebDavPlaylistModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
@@ -141,29 +175,22 @@ void WebDavPlaylistModel::playFiles()
 void WebDavPlaylistModel::onStateChanged()
 {
     if ((_player->getState() == QMediaPlayer::StoppedState) && (_player->getPosition() >= _player->getDuration()-10) && (_player->getDuration() > 0)) {
-        qDebug() << "Hi " << _player->getSingle();
         if (_player->getConsume()) {
-            qDebug() << "consume";
             beginRemoveRows(QModelIndex(), _lastIndex, _lastIndex);
             _entries.removeAt(_lastIndex);
             endRemoveRows();
         } else if (_player->getSingle()) {
-            qDebug() << "play";
             _player->play();
             return;
         }
 
         if (_player->getShuffle()) {
-            qDebug() << "shuffle";
             play(qrand() % rowCount());
         } else if (_player->getConsume() && _lastIndex < rowCount()) {
-            qDebug() << "consume play";
             play(_lastIndex);
         } else if (_lastIndex+1 < rowCount()) {
-            qDebug() << "next";
             play(_lastIndex+1);
         } else if (_player->getRepeat()) {
-            qDebug() << "repeat";
             play(0);
         }
     }

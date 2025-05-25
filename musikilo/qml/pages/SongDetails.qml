@@ -90,17 +90,11 @@ Item {
         onReleased: {
             draggable.x = 0
             if (draggable.x < -(Theme.itemSizeHuge/2)) {
-                if (playlistModel.currentIndex + 1 < playlistElementsCount) {
-                    playlistModel.currentIndex++
-                } else if (player.repeat) {
-                    playlistModel.currentIndex = 0
-                }
+                playlistModel.nextSong()
             }
 
             if (draggable.x > Theme.itemSizeHuge/2) {
-                if (playlistModel.currentIndex > 0) {
-                    playlistModel.currentIndex--
-                }
+                playlistModel.prevSong();
             }
         }
 
@@ -285,14 +279,15 @@ Item {
         label: (Format.formatDuration(Math.round(player.position/1000), ((player.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))) + " / " +
                Format.formatDuration(Math.round(player.duration/1000), ((player.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))
 
-        onReleased: {
-            console.log("hey")
-            stylusAnimation.stop()
-            stylusAnimation.from = ((progressSlider.value/progressSlider.maximumValue) * 23) - 8
-            stylusAnimation.duration = progressSlider.maximumValue - progressSlider.value
-            stylusAnimation.to = 15
-            stylusAnimation.start()
-            player.position = progressSlider.value
+        onValueChanged: {
+            if (down) {
+                stylusAnimation.stop()
+                stylusAnimation.from = ((progressSlider.value/progressSlider.maximumValue) * 23) - 8
+                stylusAnimation.duration = progressSlider.maximumValue - progressSlider.value
+                stylusAnimation.to = 15
+                stylusAnimation.start()
+                player.position = progressSlider.value
+            }
         }
     }
 

@@ -8,6 +8,8 @@ MPDPlaylistModel::MPDPlaylistModel(NetworkAccess *mpd, MPDPlayer *player , QObje
     connect(this, &MPDPlaylistModel::mpdClearPlaylist, _mpd, &NetworkAccess::clearPlaylist);
     connect(this, &MPDPlaylistModel::mpdAddSong, _mpd, &NetworkAccess::addTrackToPlaylist);
     connect(this, &MPDPlaylistModel::mpdPlaySong, _mpd, &NetworkAccess::playTrack);
+    connect(this, &MPDPlaylistModel::mpdNext, _mpd, &NetworkAccess::next);
+    connect(this, &MPDPlaylistModel::mpdPrev, _mpd, &NetworkAccess::previous);
     connect(_mpd, &NetworkAccess::connectionEstablished, [&](){
         emit currentIndexChanged(_mpdStatus->getID());
     });
@@ -59,6 +61,16 @@ void MPDPlaylistModel::playSong(QString song)
 {
     if (song.startsWith('/')) song = song.mid(1);
     emit mpdPlaySong(song);
+}
+
+void MPDPlaylistModel::nextSong()
+{
+    emit mpdNext();
+}
+
+void MPDPlaylistModel::prevSong()
+{
+    emit mpdPrev();
 }
 
 void MPDPlaylistModel::onPlaylistReady(QList<MpdTrack*> *playlist)

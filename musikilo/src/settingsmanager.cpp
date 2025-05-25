@@ -1,6 +1,7 @@
 #include "settingsmanager.h"
 #include <QDebug>
 #include <src/plugins/mpd/mpdplugin.h>
+#include <src/plugins/squeezebox/squeezeboxplugin.h>
 #include <src/plugins/webdav/webdavplugin.h>
 
 SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
@@ -134,6 +135,8 @@ void SettingsManager::createPlugin(QString code)
         plugin = new WebDavPlugin;
     } else if (type == "spotify") {
 
+    } else if (type == "squeezebox") {
+        plugin = new SqueezeBoxPlugin;
     } else if (type == "mpd") {
         plugin = new MPDPlugin;
     }

@@ -1,15 +1,9 @@
 [submodule "qwebdavlib"]
 	path = qwebdavlib
 	url = https://github.com/Michal-Szczepaniak/qwebdavlib
-[submodule "libqofonoext"]
-	path = libqofonoext
-	url = git@github.com:Michal-Szczepaniak/libqofonoext.git
-[submodule "qtmpris"]
-	path = qtmpris
-	url = git@github.com:Michal-Szczepaniak/qtmpris.git
-[submodule "qtdbusextended"]
-	path = qtdbusextended
-	url = git@github.com:Michal-Szczepaniak/qtdbusextended.git
 [submodule "smpc"]
 	path = smpc
-	url = https://github.com/Michal-Szczepaniak/smpc
+	url = git@github.com:Michal-Szczepaniak/smpc.git
+[submodule "jcon-cpp"]
+	path = jcon-cpp
+	url = git@github.com:Michal-Szczepaniak/jcon-cpp.git

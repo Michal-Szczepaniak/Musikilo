@@ -19,6 +19,8 @@ public:
     virtual void play(int index) = 0;
     virtual void addSong(QString song) = 0;
     virtual void playSong(QString song) = 0;
+    virtual void nextSong() = 0;
+    virtual void prevSong() = 0;
 
 signals:
     void errorOccured(QString error);

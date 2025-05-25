@@ -218,4 +218,15 @@
         <translation>移除</translation>
     </message>
 </context>
+<context>
+    <name>SqueezeBoxSettingsDialog</name>
+    <message>
+        <source>Hostname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

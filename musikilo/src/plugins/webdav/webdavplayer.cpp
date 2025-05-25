@@ -60,7 +60,12 @@ QString WebDavPlayer::getTitle()
 
 QString WebDavPlayer::getArtist()
 {
-    return _mediaPlayer.metaData("AlbumArtist").toString();
+    if (_mediaPlayer.availableMetaData().contains("AlbumArtist"))
+        return _mediaPlayer.metaData("AlbumArtist").toString();
+    else if (_mediaPlayer.availableMetaData().contains("ContributingArtist"))
+        return _mediaPlayer.metaData("ContributingArtist").toString();
+
+    return QString();
 }
 
 QString WebDavPlayer::getAlbum()

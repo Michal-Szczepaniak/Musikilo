@@ -85,6 +85,20 @@ void PlaylistModel::playSong(QString path)
     _playlistModel->playSong(path);
 }
 
+void PlaylistModel::nextSong()
+{
+    if (_playlistModel == nullptr) return;
+
+    _playlistModel->nextSong();
+}
+
+void PlaylistModel::prevSong()
+{
+    if (_playlistModel == nullptr) return;
+
+    _playlistModel->prevSong();
+}
+
 void PlaylistModel::onPluginChange()
 {
     auto plugin = _settingsManager->getCurrentPlugin();
