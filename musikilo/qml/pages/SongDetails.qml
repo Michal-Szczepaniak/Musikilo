@@ -48,22 +48,32 @@ Item {
 
     Connections {
         target: player
-        onDurationChanged: {
-            if (player.duration > 0) {
-                stylus.rotation = -8
-                stylusAnimation.from = -8
-                stylusAnimation.to = 15
-                stylusAnimation.duration = player.duration
-                stylusAnimation.restart()
-            }
-        }
 
         onPositionChanged: {
             progressSlider.value = player.position
+
+            if (player.state === MediaPlayer.StoppedState) {
+                stylusAnimation.stop()
+                stylus.rotation = -20
+                return;
+            }
+
+            stylus.rotation = -8
+            stylusAnimation.stop()
+            stylusAnimation.from = ((player.position/player.duration) * 23) - 8
+            stylusAnimation.duration = player.duration - player.position
+            stylusAnimation.to = 15
+            stylusAnimation.start()
+
+            if (player.state === MediaPlayer.PausedState) {
+                stylusAnimation.pause()
+            }
+
         }
 
         onStateChanged: {
             if (player.state === MediaPlayer.StoppedState) {
+                stylusAnimation.stop()
                 stylus.rotation = -20
             } else if (player.state === MediaPlayer.PausedState) {
                 stylusAnimation.pause()
@@ -214,36 +224,46 @@ Item {
 
         Label {
             id: title
-            width: parent.width
+            width: parent.width - Theme.horizontalPageMargin*2
             wrapMode: "WrapAtWordBoundaryOrAnywhere"
-            text: player.title
+            text: player.title === "" ? qsTr("Unknown") : player.title
             font.pixelSize: Theme.fontSizeLarge
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
+            maximumLineCount: 3
+            elide: TruncationMode.Elide
         }
 
         Label {
             id: author
-            width: parent.width
+            width: parent.width - Theme.horizontalPageMargin*2
             wrapMode: "WrapAtWordBoundaryOrAnywhere"
-            text: player.artist
+            text: player.artist === "" ? qsTr("Unknown") : player.artist
             font.pixelSize: Theme.fontSizeLarge
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
             color: Theme.highlightColor
+            Binding on maximumLineCount {
+                value: title.lineCount == 3 ? 2 : 3
+            }
+
+            elide: TruncationMode.Elide
         }
 
         Item {}
 
         Label {
             id: album
-            width: parent.width
+            width: parent.width - Theme.horizontalPageMargin*2
             wrapMode: "WrapAtWordBoundaryOrAnywhere"
-            text: qsTr("Album: %1").arg(player.album)
+            text: qsTr("Album: %1").arg(player.album === "" ? qsTr("Unknown") : player.album)
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
             color: Theme.secondaryHighlightColor
-
+            Binding on maximumLineCount {
+                value: 6 - title.lineCount - author.lineCount
+            }
+            elide: TruncationMode.Elide
         }
 
         Label {
@@ -254,17 +274,6 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             color: Theme.secondaryHighlightColor
         }
-
-        Item {}
-
-        Label {
-            id: currentTrack
-            text: qsTr("Song %1/%2").arg(playlistModel.currentIndex + 1).arg(playlistElementsCount)
-            visible: playlistElementsCount > 0 && landscape
-            anchors.horizontalCenter: parent.horizontalCenter
-            horizontalAlignment: Text.AlignHCenter
-            color: Theme.secondaryColor
-        }
     }
 
     Slider {
@@ -274,30 +283,44 @@ Item {
         minimumValue: 0
         maximumValue: Math.max(player.duration, 1)
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: landscape ? parent.bottom : playlistTracks.top
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Theme.paddingLarge
         width: parent.width
-        label: (Format.formatDuration(Math.round(player.position/1000), ((player.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))) + " / " +
-               Format.formatDuration(Math.round(player.duration/1000), ((player.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))
 
         onValueChanged: {
             if (down) {
-                stylusAnimation.stop()
-                stylusAnimation.from = ((progressSlider.value/progressSlider.maximumValue) * 23) - 8
-                stylusAnimation.duration = progressSlider.maximumValue - progressSlider.value
-                stylusAnimation.to = 15
-                stylusAnimation.start()
-                player.position = progressSlider.value
+                stylus.rotation = ((progressSlider.value/progressSlider.maximumValue) * 23) - 8
             }
         }
+
+        onReleased: player.position = progressSlider.value
+    }
+
+    Label {
+        id: positionLabel
+        text: Format.formatDuration(Math.round(player.position/1000), ((player.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))
+        anchors.bottom: progressSlider.bottom
+        x: (parent.width - (progressSlider._grooveWidth))/2
+        color: Theme.secondaryColor
+        font.pixelSize: Theme.fontSizeExtraSmall
+    }
+
+    Label {
+        id: durationLabel
+        text: Format.formatDuration(Math.round(player.duration/1000), ((player.duration/1000) > 3600 ? Formatter.DurationLong : Formatter.DurationShort))
+        anchors.bottom: progressSlider.bottom
+        x: parent.width - (parent.width - (progressSlider._grooveWidth))/2 - durationLabel.width
+        color: Theme.secondaryColor
+        font.pixelSize: Theme.fontSizeExtraSmall
     }
 
     Label {
         id: playlistTracks
         text: qsTr("Song %1/%2").arg(playlistModel.currentIndex + 1).arg(playlistElementsCount)
-        visible: playlistElementsCount > 0 && !landscape
+        visible: playlistElementsCount > 0
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: Theme.paddingLarge
+        anchors.bottom: progressSlider.bottom
+        anchors.bottomMargin: durationLabel.height - height
         color: Theme.secondaryColor
     }
 }

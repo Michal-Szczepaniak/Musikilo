@@ -55,6 +55,11 @@ void WebDavPlayer::setPosition(qint64 position)
 
 QString WebDavPlayer::getTitle()
 {
+    if (_mediaPlayer.metaData("Title").toString().isEmpty() && !_mediaPlayer.currentMedia().isNull()) {
+        QFileInfo path = _mediaPlayer.currentMedia().canonicalUrl().toString();
+        return path.baseName();
+    }
+
     return _mediaPlayer.metaData("Title").toString();
 }
 

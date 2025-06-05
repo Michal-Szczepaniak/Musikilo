@@ -35,6 +35,14 @@
         <source>dashinfantry for Chinese translation.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>gregguh for awesome icons.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fsan and Mir Inza for being awesome testers.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FilesList</name>
@@ -59,6 +67,20 @@
     </message>
     <message>
         <source>Outputs</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MPDPlaylistModel</name>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MPDPlugin</name>
+    <message>
+        <source>Couldn&apos;t connect</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -122,10 +144,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Spotify</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>SqueezeBox</source>
         <translation type="unfinished"></translation>
     </message>
@@ -176,10 +194,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Spotify</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>SqueezeBox</source>
         <translation type="unfinished"></translation>
     </message>
@@ -206,6 +220,10 @@
         <source>Bit rate: %1 kb/s</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SongsList</name>
@@ -216,6 +234,29 @@
     <message>
         <source>Remove</source>
         <translation>移除</translation>
+    </message>
+</context>
+<context>
+    <name>SqueezeBoxControls</name>
+    <message>
+        <source>SqueezeBox controls</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume: %1%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

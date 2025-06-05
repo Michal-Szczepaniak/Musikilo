@@ -59,8 +59,6 @@ Dialog {
                     switch(pluginData.plugin) {
                         case "nextcloud":
                             return nextcloudSettingsDialog;
-                        case "spotify":
-                            break;
                         case "squeezebox":
                             return squeezeBoxSettingsDialog;
                         case "mpd":

@@ -17,6 +17,7 @@ SOURCES += \
     src/plugins/mpd/mpdplaylistmodel.cpp \
     src/plugins/mpd/mpdplugin.cpp \
     src/plugins/squeezebox/squeezeboxfilemodel.cpp \
+    src/plugins/squeezebox/squeezeboxmanager.cpp \
     src/plugins/squeezebox/squeezeboxplayer.cpp \
     src/plugins/squeezebox/squeezeboxplaylistmodel.cpp \
     src/plugins/squeezebox/squeezeboxplugin.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     src/plugins/mpd/mpdplaylistmodel.h \
     src/plugins/mpd/mpdplugin.h \
     src/plugins/squeezebox/squeezeboxfilemodel.h \
+    src/plugins/squeezebox/squeezeboxmanager.h \
     src/plugins/squeezebox/squeezeboxplayer.h \
     src/plugins/squeezebox/squeezeboxplaylistmodel.h \
     src/plugins/squeezebox/squeezeboxplugin.h \
@@ -64,6 +66,7 @@ DISTFILES += \
     qml/pages/NewPluginDialog.qml \
     qml/pages/EditPluginDialog.qml \
     qml/pages/plugins/MPDControls.qml \
+    qml/pages/plugins/SqueezeBoxControls.qml \
     qml/dialogs/NextcloudSettingsDialog.qml \
     qml/dialogs/MPDSettingsDialog.qml \
     qml/dialogs/SqueezeBoxSettingsDialog.qml \
@@ -91,8 +94,3 @@ LIBS += -L$$OUT_PWD/../qwebdavlib/qwebdavlib/ -lqwebdav
 PRE_TARGETDEPS += $$OUT_PWD/../smpc/libsmpc.a
 INCLUDEPATH += ../smpc/src
 LIBS += -L$$OUT_PWD/../smpc/ -lsmpc
-
-# jcon
-PRE_TARGETDEPS += $$OUT_PWD/../jcon-cpp/src/jcon/libjcon.a
-INCLUDEPATH += ../jcon-cpp/src/
-LIBS += -L$$OUT_PWD/../jcon-cpp/src/jcon/ -ljcon

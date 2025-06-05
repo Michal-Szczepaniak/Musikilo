@@ -1,9 +1,9 @@
 #ifndef SQUEEZEBOXFILEMODEL_H
 #define SQUEEZEBOXFILEMODEL_H
 
-#include <QObject>
+#include "squeezeboxmanager.h"
 
-#include <jcon/json_rpc_tcp_client.h>
+#include <QObject>
 
 #include <src/filemodelinterface.h>
 
@@ -11,7 +11,7 @@ class SqueezeBoxFileModel : public FileModelInterface
 {
     Q_OBJECT
 public:
-    explicit SqueezeBoxFileModel(jcon::JsonRpcTcpClient *jcon, QObject *parent = nullptr);
+    explicit SqueezeBoxFileModel(SqueezeBoxManager *manager, QObject *parent = nullptr);
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
 
@@ -22,8 +22,16 @@ public:
 protected:
     QHash<int, QByteArray> roleNames() const;
 
+public slots:
+    void onGotMusicFolder(QVector<SqueezeBoxManager::File> folder);
+    void onGotTopMusicFolder(SqueezeBoxManager::File folder);
+
 private:
-    jcon::JsonRpcTcpClient *_jcon;
+    SqueezeBoxManager *_manager;
+    QVector<SqueezeBoxManager::File> _entries;
+    QString _topPath{};
+
+    QString getPreviousPath(SqueezeBoxManager::File file);
 };
 
 #endif // SQUEEZEBOXFILEMODEL_H

@@ -37,6 +37,7 @@ private:
     QThread *_mpdThread;
     NetworkAccess _mpd;
     bool _testPending;
+    QTimer _timeoutTimer;
 };
 
 #endif // MPDPLUGIN_H

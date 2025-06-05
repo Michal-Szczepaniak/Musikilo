@@ -2,15 +2,16 @@
 #define SQUEEZEBOXPLUGIN_H
 
 #include "squeezeboxfilemodel.h"
+#include "squeezeboxmanager.h"
 #include "squeezeboxplayer.h"
 #include "squeezeboxplaylistmodel.h"
 
 #include <QObject>
 #include <QSettings>
+#include <QTimer>
 #include <memory>
 
 #include <src/plugininterface.h>
-#include <jcon/json_rpc_tcp_client.h>
 
 class SqueezeBoxPlugin : public PluginInterface
 {
@@ -33,9 +34,9 @@ private:
     std::unique_ptr<SqueezeBoxFileModel> _fileModel;
     std::unique_ptr<SqueezeBoxPlaylistModel> _playlistModel;
     std::unique_ptr<SqueezeBoxPlayer> _player;
-    jcon::JsonRpcTcpClient _jcon;
-    QString _host;
-    int _port;
+    SqueezeBoxManager _manager;
+    QTimer _readyTimer;
+    QTimer _updateTimer;
     bool _testPending = false;
 };
 

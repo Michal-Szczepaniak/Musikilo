@@ -1,12 +1,15 @@
 #include "squeezeboxplugin.h"
 
-SqueezeBoxPlugin::SqueezeBoxPlugin(QObject *parent) : PluginInterface(parent), _jcon(parent)
+SqueezeBoxPlugin::SqueezeBoxPlugin(QObject *parent) : PluginInterface(parent), _manager(parent)
 {
-    connect(&_jcon, &jcon::JsonRpcTcpClient::socketConnected, [&](){
+    _readyTimer.setInterval(10);
+    _readyTimer.setSingleShot(true);
+    connect(&_readyTimer, &QTimer::timeout, [&](){ emit pluginReady(); });
+
+    connect(&_manager, &SqueezeBoxManager::gotVersion, [&](){
         if (_testPending) {
             emit testSucceeded();
             _testPending = false;
-            _jcon.disconnectFromServer();
 
             return;
         }
@@ -14,28 +17,34 @@ SqueezeBoxPlugin::SqueezeBoxPlugin(QObject *parent) : PluginInterface(parent), _
         emit pluginReady();
     });
 
-    connect(&_jcon, &jcon::JsonRpcTcpClient::socketError, [&](QObject* socket, QAbstractSocket::SocketError){
+    connect(&_manager, &SqueezeBoxManager::errorOccured, [&](QString message){
         if (_testPending) {
-            emit testFailed(((QAbstractSocket*)socket)->errorString());
+            emit testFailed(message);
             _testPending = false;
-            _jcon.disconnectFromServer();
         }
+
+        _updateTimer.stop();
     });
+
+    _updateTimer.setInterval(1000);
+    connect(&_updateTimer, &QTimer::timeout, &_manager, &SqueezeBoxManager::update);
 }
 
 void SqueezeBoxPlugin::initialize(QVariantMap settings)
 {
     updateConig(settings);
 
-    _fileModel = std::make_unique<SqueezeBoxFileModel>(&_jcon, this);
-    _player = std::make_unique<SqueezeBoxPlayer>(&_jcon, this);
-    _playlistModel = std::make_unique<SqueezeBoxPlaylistModel>(&_jcon, _player.get(), this);
+    _fileModel = std::make_unique<SqueezeBoxFileModel>(&_manager, this);
+    _player = std::make_unique<SqueezeBoxPlayer>(&_manager, this);
+    _playlistModel = std::make_unique<SqueezeBoxPlaylistModel>(&_manager, _player.get(), this);
 }
 
 void SqueezeBoxPlugin::updateConig(QVariantMap settings)
 {
-    _host = settings.value("hostname").toString();
-    _port = settings.value("port").toString().toInt();
+    QString host = settings.value("hostname").toString();
+    int port = settings.value("port").toString().toInt();
+
+    _manager.setConnectionSettings(host, port);
 }
 
 PlaylistModelInterface *SqueezeBoxPlugin::getPlaylistModel()
@@ -57,15 +66,16 @@ void SqueezeBoxPlugin::testConfig()
 {
     _testPending = true;
 
-    _jcon.connectToServerAsync(_host, _port);
+    _manager.getVersion();
 }
 
 void SqueezeBoxPlugin::activate()
 {
-    _jcon.connectToServerAsync(_host, _port);
+    _manager.getVersion();
+    _updateTimer.start();
 }
 
 void SqueezeBoxPlugin::deactivate()
 {
-    _jcon.disconnectFromServer();
+    _updateTimer.stop();
 }

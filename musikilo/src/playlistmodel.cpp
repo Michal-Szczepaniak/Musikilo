@@ -99,6 +99,13 @@ void PlaylistModel::prevSong()
     _playlistModel->prevSong();
 }
 
+void PlaylistModel::remove(int index)
+{
+    if (_playlistModel == nullptr) return;
+
+    _playlistModel->remove(index);
+}
+
 void PlaylistModel::onPluginChange()
 {
     auto plugin = _settingsManager->getCurrentPlugin();

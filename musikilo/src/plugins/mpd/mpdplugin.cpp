@@ -16,6 +16,7 @@ MPDPlugin::MPDPlugin(QObject *parent) : PluginInterface(parent), _mpdThread(new 
 
         emit pluginReady();
     });
+
     connect(&_mpd, &NetworkAccess::connectionError, [&](QString message){
         if (_testPending) {
             emit testFailed(message);
@@ -27,7 +28,15 @@ MPDPlugin::MPDPlugin(QObject *parent) : PluginInterface(parent), _mpdThread(new 
     connect(this, &MPDPlugin::connectToHost, &_mpd, static_cast<void (NetworkAccess::*)()>(&NetworkAccess::connectToHost));
     connect(this, &MPDPlugin::disconnectFromHost, &_mpd, &NetworkAccess::disconnectFromServer);
 
-//    connect(&_mpd, &NetworkAccess::)
+    _timeoutTimer.setInterval(1000);
+    _timeoutTimer.setSingleShot(true);
+    connect(&_timeoutTimer, &QTimer::timeout, [&](){
+        if (_testPending) {
+            emit testFailed(tr("Couldn't connect"));
+            _testPending = false;
+            emit disconnectFromHost();
+        }
+    });
 }
 
 void MPDPlugin::initialize(QVariantMap settings)
@@ -71,6 +80,7 @@ void MPDPlugin::testConfig()
 {
     _testPending = true;
     emit connectToHost();
+    _timeoutTimer.start();
 }
 
 void MPDPlugin::activate()

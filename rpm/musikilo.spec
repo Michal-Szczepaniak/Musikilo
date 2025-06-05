@@ -1,8 +1,8 @@
 Name:       musikilo
 
-Summary:    WebDav music player
+Summary:    Music player
 Version:    2.0.0
-Release:    5
+Release:    1
 Group:      Qt/Qt
 License:    GPLv3
 URL:        http://verdanditeam.com/
@@ -19,7 +19,7 @@ BuildRequires: pkgconfig(Qt5Test)
 BuildRequires: desktop-file-utils
 
 %description
-WebDav music player
+Music player
 
 %prep
 %setup -q -n %{name}-%{version}

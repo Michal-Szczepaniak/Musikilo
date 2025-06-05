@@ -99,27 +99,45 @@ Item {
                 Row {
                     width: parent.width
                     height: parent.height
+                    spacing: Theme.paddingMedium
 
-                    Icon {
-                        width: Theme.iconSizeExtraSmall
-                        height: Theme.iconSizeExtraSmall
-                        anchors.verticalCenter: parent.verticalCenter
-                        source: "qrc:/icons/" + listItem.data.plugin + ".png"
+                    Rectangle {
+                        color: "transparent"
+                        height: 1
+                        width: Theme.paddingMedium
                     }
 
-                    DetailItem {
-                        label: listItem.data.name
+                    Icon {
+                        width: Theme.iconSizeMedium
+                        height: Theme.iconSizeMedium
                         anchors.verticalCenter: parent.verticalCenter
-                        value: getPrettyName(listItem.data.plugin)
-                        palette.secondaryHighlightColor: settingsManager.currentPlugin === modelData ? Theme.secondaryHighlightColor : Theme.secondaryColor
-                        palette.highlightColor: settingsManager.currentPlugin === modelData ? Theme.highlightColor : Theme.primaryColor
+                        source: "qrc:///images/icon-m-" + listItem.data.plugin + ".svg"
+                        color: settingsManager.currentPlugin === modelData ? Theme.highlightColor : Theme.primaryColor
+                    }
+
+                    Text {
+                        id: valueText
+                        color: settingsManager.currentPlugin === modelData ? Theme.highlightColor : Theme.primaryColor
+                        font.pixelSize: Theme.fontSizeSmall
+                        textFormat: Text.PlainText
+                        wrapMode: Text.Wrap
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: listItem.data.name
+                    }
+
+                    Text {
+                        id: labelText
+                        color: settingsManager.currentPlugin === modelData ? Theme.secondaryHighlightColor : Theme.secondaryColor
+                        font.pixelSize: Theme.fontSizeSmall
+                        textFormat: Text.PlainText
+                        wrapMode: Text.Wrap
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: getPrettyName(listItem.data.plugin)
 
                         function getPrettyName(name) {
                             switch (name) {
                             case "nextcloud":
                                 return qsTr("Nextcloud");
-                            case "spotify":
-                                return qsTr("Spotify");
                             case "squeezebox":
                                 return qsTr("SqueezeBox");
                             case "mpd":

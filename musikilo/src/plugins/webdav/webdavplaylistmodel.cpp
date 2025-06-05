@@ -104,6 +104,25 @@ void WebDavPlaylistModel::prevSong()
     }
 }
 
+void WebDavPlaylistModel::remove(int index)
+{
+    beginRemoveRows(QModelIndex(), index, index);
+    _entries.removeAt(index);
+    endRemoveRows();
+
+    if (_lastIndex == index) {
+        if (_lastIndex < rowCount()) {
+            play(_lastIndex);
+        } else {
+            _player->stop();
+        }
+    } else if (_lastIndex > index) {
+        _lastIndex--;
+
+        emit currentIndexChanged(_lastIndex);
+    }
+}
+
 int WebDavPlaylistModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);

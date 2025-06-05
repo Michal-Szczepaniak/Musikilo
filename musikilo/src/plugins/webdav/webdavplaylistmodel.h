@@ -47,6 +47,7 @@ public:
     void playSong(QString song);
     void nextSong();
     void prevSong();
+    void remove(int index);
 
 protected:
     QHash<int, QByteArray> roleNames() const;

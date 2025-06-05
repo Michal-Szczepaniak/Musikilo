@@ -5,10 +5,8 @@ MPDPlayer::MPDPlayer(NetworkAccess *mpd, QObject *parent) : PlayerInterface(pare
     connect(_mpdStatus, &MPDPlaybackStatus::playbackStatusChanged, [&](MPD_PLAYBACK_STATE){ emit stateChanged(); });
     connect(_mpdStatus, &MPDPlaybackStatus::currentTimeChanged, this, &PlayerInterface::positionChanged);
     connect(_mpdStatus, &MPDPlaybackStatus::lengthChanged, this, &PlayerInterface::durationChanged);
-    connect(_mpdStatus, &MPDPlaybackStatus::titleChanged, this, &PlayerInterface::metadataChanged);
-    connect(_mpdStatus, &MPDPlaybackStatus::albumChanged, this, &PlayerInterface::metadataChanged);
-    connect(_mpdStatus, &MPDPlaybackStatus::artistChanged, this, &PlayerInterface::metadataChanged);
     connect(_mpdStatus, &MPDPlaybackStatus::bitrateChanged, this, &PlayerInterface::metadataChanged);
+    connect(_mpdStatus, &MPDPlaybackStatus::uriChanged, this, &PlayerInterface::metadataChanged);
     connect(_mpdStatus, &MPDPlaybackStatus::volumeChanged, this, &MPDPlayer::onVolumeChanged);
     connect(_mpdStatus, &MPDPlaybackStatus::repeatChanged, this, &MPDPlayer::repeatChanged);
     connect(_mpdStatus, &MPDPlaybackStatus::singleChanged, this, &MPDPlayer::singleChanged);
@@ -50,11 +48,6 @@ QMediaPlayer::State MPDPlayer::getState()
     }
 }
 
-void MPDPlayer::play(QString path)
-{
-    emit playTrack(path);
-}
-
 void MPDPlayer::play()
 {
     if (getState() == QMediaPlayer::PausedState) {
@@ -86,11 +79,15 @@ qint64 MPDPlayer::getPosition() const
 
 void MPDPlayer::setPosition(qint64 position)
 {
-    emit seek(position);
+    emit seek(position/1000);
 }
 
 QString MPDPlayer::getTitle()
 {
+    if (_mpdStatus->getTitle().isEmpty()) {
+        QFileInfo path = _mpdStatus->getURI();
+        return path.baseName();
+    }
     return _mpdStatus->getTitle();
 }
 

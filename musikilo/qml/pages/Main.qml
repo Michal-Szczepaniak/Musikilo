@@ -41,16 +41,19 @@ Page {
         anchors.right: parent.right
         height: parent.height - mainFlickable.height - mainFlickable.contentY
 
+        Component.onCompleted: currentIndex = 4
+
         model: VisualItemModel {
             FilesList { }
             SongsList { }
             Loader {
                 active: true
                 sourceComponent: {
-                    console.log(settingsManager.currentPluginType)
                     switch (settingsManager.currentPluginType) {
                     case "mpd":
                         return mpdControls;
+                    case "squeezebox":
+                        return squeezeBoxControls;
                     default:
                         return noControls;
                     }
@@ -143,11 +146,11 @@ Page {
         }
 
         onNextRequested: {
-            if (playlistModel.currentIndex + 1 < playlistModel.rowCount()) playlistModel.currentIndex++
+            playlistModel.nextSong()
         }
 
         onPreviousRequested: {
-            if (playlistModel.currentIndex > 0) playlistModel.currentIndex--
+            playlistModel.prevSong()
         }
 
         onSeekRequested: {
@@ -164,7 +167,7 @@ Page {
 
         CoverAction {
             iconSource: "image://theme/icon-cover-next-song"
-            onTriggered: if (playlistModel.currentIndex + 1 < playlistModel.rowCount()) playlistModel.currentIndex++
+            onTriggered: playlistModel.nextSong()
         }
     }
 
@@ -172,6 +175,12 @@ Page {
         id: mpdControls
 
         MPDControls {}
+    }
+
+    Component {
+        id: squeezeBoxControls
+
+        SqueezeBoxControls {}
     }
 
     Component {

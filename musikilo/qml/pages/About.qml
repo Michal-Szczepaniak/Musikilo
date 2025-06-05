@@ -43,14 +43,14 @@ Page {
             width: parent.width
 
             Image {
-                source: "/usr/share/icons/hicolor/172x172/apps/Musikilo.png"
+                source: "/usr/share/icons/hicolor/172x172/apps/musikilo.png"
                 width: 2/3 * parent.width
                 fillMode: Image.PreserveAspectFit
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
             Label {
-                text: "Musikilo 1.1.2"
+                text: "Musikilo 2.0"
                 font.pixelSize: Theme.fontSizeExtraLarge
                 anchors.horizontalCenter: parent.horizontalCenter
                 wrapMode: Text.WordWrap
@@ -116,6 +116,21 @@ Page {
             Label {
                 text: qsTr("Thanks to")
                 font.pixelSize: Theme.fontSizeLarge
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Label {
+                text: qsTr("gregguh for awesome icons.")
+                font.pixelSize: Theme.fontSizeSmall
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Label {
+                text: qsTr("fsan and Mir Inza for being awesome testers.")
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: Theme.fontSizeSmall
+                width: parent.width - Theme.horizontalPageMargin*2
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 

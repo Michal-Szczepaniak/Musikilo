@@ -42,7 +42,7 @@ ApplicationWindow
         onErrorOccured: {
             testNotification.body = qsTr("Error occured: %1").arg(error);
             testNotification.publish();
-            pageStack.push(errorDialog,  { error: error })
+            pageStack.push(errorDialog,  { message: error })
         }
     }
 
@@ -51,7 +51,7 @@ ApplicationWindow
         onErrorOccured: {
             testNotification.body = qsTr("Error occured: %1").arg(error);
             testNotification.publish();
-            pageStack.push(errorDialog,  { error: error })
+            pageStack.push(errorDialog,  { message: error })
         }
     }
 
@@ -73,7 +73,7 @@ ApplicationWindow
         onErrorOccured: {
             testNotification.body = qsTr("Error occured: %1").arg(error);
             testNotification.publish();
-            pageStack.push(errorDialog,  { error: error })
+            pageStack.push(errorDialog,  { message: error })
         }
 
         onStateChanged: {
@@ -83,11 +83,9 @@ ApplicationWindow
         }
     }
 
-    Component {
-        id: errorDialog
-
         Dialog {
-            property string error
+            id: errorDialog
+            property string message
             canAccept: false
 
             Column {
@@ -100,7 +98,7 @@ ApplicationWindow
 
                 Label {
                     id: nameField
-                    text: errorDialog.error
+                    text: errorDialog.message
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.leftMargin: Theme.pad
@@ -110,5 +108,4 @@ ApplicationWindow
                 }
             }
         }
-    }
 }

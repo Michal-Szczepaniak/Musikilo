@@ -88,12 +88,13 @@ Item {
                 height: width
                 contentItem.color: player.consume ? Theme.rgba(Theme.secondaryHighlightColor, Theme.highlightBackgroundOpacity) : "transparent"
                 onClicked: player.consume = !player.consume
+                visible: settingsManager.currentPluginType === "nextcloud" || settingsManager.currentPluginType === "mpd"
 
                 Icon {
                     anchors.centerIn: parent
                     width: Theme.iconSizeMedium
                     height: width
-                    source: "image://theme/icon-m-remove"
+                    source: "qrc:///images/icon-m-pacman.svg"
                 }
             }
         }
@@ -105,6 +106,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
+            clip: true
             delegate: ListItem {
                 id: playlistDelegate
 

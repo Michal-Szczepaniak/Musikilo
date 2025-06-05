@@ -43,7 +43,7 @@ Item {
 
             Slider {
                 width: parent.width
-                value: typeof player.pluginControls === "undefined" ? 0 : player.pluginControls.volume
+                Binding on value { value: player.pluginControls.volume }
                 stepSize: 1
                 minimumValue: 0
                 maximumValue: 100
@@ -51,7 +51,6 @@ Item {
                     var controls = player.pluginControls
                     controls.volume = parseInt(value)
                     player.pluginControls = controls
-                    value = player.pluginControls.volume
                 }
                 label: qsTr("Volume: %1%").arg(value);
             }

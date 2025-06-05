@@ -10,6 +10,7 @@ MPDPlaylistModel::MPDPlaylistModel(NetworkAccess *mpd, MPDPlayer *player , QObje
     connect(this, &MPDPlaylistModel::mpdPlaySong, _mpd, &NetworkAccess::playTrack);
     connect(this, &MPDPlaylistModel::mpdNext, _mpd, &NetworkAccess::next);
     connect(this, &MPDPlaylistModel::mpdPrev, _mpd, &NetworkAccess::previous);
+    connect(this, &MPDPlaylistModel::mpdRemove, _mpd, &NetworkAccess::deleteTrackByNumber);
     connect(_mpd, &NetworkAccess::connectionEstablished, [&](){
         emit currentIndexChanged(_mpdStatus->getID());
     });
@@ -27,10 +28,20 @@ QVariant MPDPlaylistModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     const MpdTrack *file = _entries[index.row()];
-    if (role == Name)
-        return file->getFileName();
-    else if (role == Path)
+    if (role == Name) {
+        QString second;
+        if (file->getTitle().isEmpty()) {
+            QFileInfo info = file->getFileUri();
+            second = info.baseName();
+        } else {
+            QString artist = !file->getArtist().isEmpty() ? file->getArtist() : !file->getAlbumArtist().isEmpty() ? file->getAlbumArtist() : tr("Unknown");
+            second = file->getTitle() + " - " + artist;
+        }
+
+        return (file->getTrackNr() > 0 ? (QString::number(file->getTrackNr()).rightJustified(2, '0') + ". ") : "") + second;
+    } else if (role == Path) {
         return file->getFileUri();
+    }
 
     return QVariant();
 }
@@ -71,6 +82,11 @@ void MPDPlaylistModel::nextSong()
 void MPDPlaylistModel::prevSong()
 {
     emit mpdPrev();
+}
+
+void MPDPlaylistModel::remove(int index)
+{
+    emit mpdRemove(index);
 }
 
 void MPDPlaylistModel::onPlaylistReady(QList<MpdTrack*> *playlist)

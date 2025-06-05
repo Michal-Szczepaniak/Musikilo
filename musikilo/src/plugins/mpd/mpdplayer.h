@@ -15,7 +15,6 @@ public:
 
     QMediaPlayer::State getState();
 
-    void play(QString path);
     void play();
     void pause();
     void stop();

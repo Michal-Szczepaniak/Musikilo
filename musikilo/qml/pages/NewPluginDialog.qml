@@ -52,10 +52,9 @@ Dialog {
             ComboBox {
                 id: pluginTypeBox
                 anchors.horizontalCenter: parent.horizontalCenter
-                property var pluginCodes: ["nextcloud", "spotify", "squeezebox", "mpd"]
+                property var pluginCodes: ["nextcloud", "squeezebox", "mpd"]
                 menu: ContextMenu {
                     MenuItem { text: qsTr("Nextcloud") }
-                    MenuItem { text: qsTr("Spotify") }
                     MenuItem { text: qsTr("SqueezeBox") }
                     MenuItem { text: qsTr("MPD") }
                 }
@@ -64,8 +63,6 @@ Dialog {
                                         switch(pluginCodes[currentIndex]) {
                                             case "nextcloud":
                                                 settingsLoader.sourceComponent = nextcloudSettingsDialog
-                                                break;
-                                            case "spotify":
                                                 break;
                                             case "squeezebox":
                                                 settingsLoader.sourceComponent = squeezeBoxSettingsDialog

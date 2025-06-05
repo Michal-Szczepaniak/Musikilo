@@ -38,15 +38,19 @@ CoverBackground {
             id: title
             width: parent.width
             text: player.title
+            maximumLineCount: 2
             wrapMode: "WrapAtWordBoundaryOrAnywhere"
             font.bold: Font.Bold
             horizontalAlignment: Text.AlignHCenter
+            elide: TruncationMode.Fade
         }
 
         Label {
             id: author
             width: parent.width
             text: player.artist
+            maximumLineCount: 2
+            elide: TruncationMode.Elide
             font.bold: Font.Bold
             horizontalAlignment: Text.AlignHCenter
             wrapMode: "WrapAtWordBoundaryOrAnywhere"

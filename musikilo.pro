@@ -1,11 +1,10 @@
 TEMPLATE = subdirs
 
-musikilo.depends = qwebdavlib/qwebdavlib smpc jcon-cpp/src/jcon
+musikilo.depends = qwebdavlib/qwebdavlib smpc
 
 SUBDIRS += \
     musikilo \
     qwebdavlib/qwebdavlib \
-    smpc \
-    jcon-cpp/src/jcon
+    smpc
 
 OTHER_FILES += rpm/musikilo.spec

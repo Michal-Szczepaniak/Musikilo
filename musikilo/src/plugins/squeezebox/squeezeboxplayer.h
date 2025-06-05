@@ -1,21 +1,22 @@
 #ifndef SQUEEZEBOXPLAYER_H
 #define SQUEEZEBOXPLAYER_H
 
+#include "squeezeboxmanager.h"
+
 #include <QObject>
 
-#include <jcon/json_rpc_tcp_client.h>
-
 #include <src/playerinterface.h>
+
+using Status = SqueezeBoxManager::Status;
 
 class SqueezeBoxPlayer : public PlayerInterface
 {
     Q_OBJECT
 public:
-    explicit SqueezeBoxPlayer(jcon::JsonRpcTcpClient *jcon, QObject *parent = nullptr);
+    explicit SqueezeBoxPlayer(SqueezeBoxManager *manager, QObject *parent = nullptr);
 
     QMediaPlayer::State getState();
 
-    void play(QString path);
     void play();
     void pause();
     void stop();
@@ -41,10 +42,20 @@ public:
     QVariantMap getControls();
     void setControls(QVariantMap controls);
 
+public slots:
+    void onGotStatus(Status status);
+    void onGotPlayers(QVector<SqueezeBoxManager::Player> players);
+    void onGotSyncPlayers(QStringList players);
+
 signals:
 
 private:
-    jcon::JsonRpcTcpClient *_jcon;
+    SqueezeBoxManager *_manager;
+    QVector<SqueezeBoxManager::Player> _players{};
+    QHash<QString, int> _playerIds{};
+    int _activePlayer = -1;
+    Status _status{};
+    QStringList _syncPlayers{};
 };
 
 #endif // SQUEEZEBOXPLAYER_H

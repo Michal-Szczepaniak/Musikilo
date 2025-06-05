@@ -3,5 +3,9 @@
         <file>images/record.png</file>
         <file>images/stylus.png</file>
         <file>images/icon-m-playlists.svg</file>
+        <file>images/icon-m-mpd.svg</file>
+        <file>images/icon-m-nextcloud.svg</file>
+        <file>images/icon-m-squeezebox.svg</file>
+        <file>images/icon-m-pacman.svg</file>
     </qresource>
 </RCC>
