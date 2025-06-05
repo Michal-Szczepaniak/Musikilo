@@ -43,6 +43,10 @@
         <source>fsan and Mir Inza for being awesome testers.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>legacychimera247 for Italian translation.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FilesList</name>

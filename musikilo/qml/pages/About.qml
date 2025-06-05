@@ -146,6 +146,12 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
+            Label {
+                text: qsTr("legacychimera247 for Italian translation.")
+                font.pixelSize: Theme.fontSizeSmall
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
             Separator {
                 width: parent.width
                 color: Theme.primaryColor

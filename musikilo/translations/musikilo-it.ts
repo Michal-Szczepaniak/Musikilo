@@ -43,6 +43,10 @@
         <source>fsan and Mir Inza for being awesome testers.</source>
         <translation>fsan e Mir inza per essere stati tester fantastici.</translation>
     </message>
+    <message>
+        <source>legacychimera247 for Italian translation.</source>
+        <translation>legacychimera247 per la traduzione italiana.</translation>
+    </message>
 </context>
 <context>
     <name>FilesList</name>
