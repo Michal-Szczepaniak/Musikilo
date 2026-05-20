@@ -54,6 +54,10 @@ Page {
                         return mpdControls;
                     case "squeezebox":
                         return squeezeBoxControls;
+                    case "tauon":
+                        return tauonControls;
+                    case "kodi":
+                        return kodiControls;
                     default:
                         return noControls;
                     }
@@ -181,6 +185,18 @@ Page {
         id: squeezeBoxControls
 
         SqueezeBoxControls {}
+    }
+
+    Component {
+        id: tauonControls
+
+        TauonControls {}
+    }
+
+    Component {
+        id: kodiControls
+
+        KodiControls {}
     }
 
     Component {

@@ -129,6 +129,8 @@ void PlaylistModel::onPluginChange()
 
 void PlaylistModel::onCurrentIndexChanged(int index)
 {
+    if (_currentIndex == index) return;
+
     _currentIndex = index;
 
     emit currentIndexChanged(index);

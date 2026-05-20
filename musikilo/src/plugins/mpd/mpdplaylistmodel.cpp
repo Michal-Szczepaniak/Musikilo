@@ -3,7 +3,7 @@
 MPDPlaylistModel::MPDPlaylistModel(NetworkAccess *mpd, MPDPlayer *player , QObject *parent) : PlaylistModelInterface(parent), _mpd(mpd), _player(player), _mpdStatus(_mpd->getMPDPlaybackStatus())
 {
     connect(_mpd, &NetworkAccess::currentPlaylistReady, this, &MPDPlaylistModel::onPlaylistReady);
-    connect(_mpdStatus, &MPDPlaybackStatus::idChanged, this, &PlaylistModelInterface::currentIndexChanged);
+    connect(_mpdStatus, &MPDPlaybackStatus::idChanged, this, &MPDPlaylistModel::onCurrentIndexChanged);
     connect(this, &MPDPlaylistModel::mpdPlay, _mpd, &NetworkAccess::playTrackByNumber);
     connect(this, &MPDPlaylistModel::mpdClearPlaylist, _mpd, &NetworkAccess::clearPlaylist);
     connect(this, &MPDPlaylistModel::mpdAddSong, _mpd, &NetworkAccess::addTrackToPlaylist);
@@ -107,7 +107,7 @@ void MPDPlaylistModel::onPlaylistReady(QList<MpdTrack*> *playlist)
 
 void MPDPlaylistModel::onCurrentIndexChanged(int index)
 {
-    emit currentIndexChanged(index - 1);
+    emit currentIndexChanged(index);
 }
 
 QHash<int, QByteArray> MPDPlaylistModel::roleNames() const

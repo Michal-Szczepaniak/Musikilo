@@ -1,19 +1,19 @@
-#ifndef SQUEEZEBOXPLAYER_H
-#define SQUEEZEBOXPLAYER_H
+#ifndef KODIPLAYER_H
+#define KODIPLAYER_H
 
-#include "squeezeboxmanager.h"
+#include "kodimanager.h"
 
 #include <QObject>
 
 #include <src/playerinterface.h>
 
-class SqueezeBoxPlayer : public PlayerInterface
+class KodiPlayer : public PlayerInterface
 {
-    using Status = SqueezeBoxManager::Status;
+    using Status = KodiManager::Status;
 
     Q_OBJECT
 public:
-    explicit SqueezeBoxPlayer(SqueezeBoxManager *manager, QObject *parent = nullptr);
+    explicit KodiPlayer(KodiManager *manager, QObject *parent = nullptr);
 
     QMediaPlayer::State getState();
 
@@ -44,18 +44,14 @@ public:
 
 public slots:
     void onGotStatus(Status status);
-    void onGotPlayers(QVector<SqueezeBoxManager::Player> players);
-    void onGotSyncPlayers(QStringList players);
 
 signals:
 
 private:
-    SqueezeBoxManager *_manager;
-    QVector<SqueezeBoxManager::Player> _players{};
-    QHash<QString, int> _playerIds{};
-    int _activePlayer = -1;
+    KodiManager *_manager;
+    int _activePlaylist = -1;
     Status _status{};
     QStringList _syncPlayers{};
 };
 
-#endif // SQUEEZEBOXPLAYER_H
+#endif // KODIPLAYER_H

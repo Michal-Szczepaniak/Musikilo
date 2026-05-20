@@ -1,19 +1,19 @@
-#ifndef SQUEEZEBOXPLAYER_H
-#define SQUEEZEBOXPLAYER_H
+#ifndef TAUONPLAYER_H
+#define TAUONPLAYER_H
 
-#include "squeezeboxmanager.h"
+#include "tauonmanager.h"
 
 #include <QObject>
 
 #include <src/playerinterface.h>
 
-class SqueezeBoxPlayer : public PlayerInterface
+class TauonPlayer : public PlayerInterface
 {
-    using Status = SqueezeBoxManager::Status;
+    using Status = TauonManager::Status;
 
     Q_OBJECT
 public:
-    explicit SqueezeBoxPlayer(SqueezeBoxManager *manager, QObject *parent = nullptr);
+    explicit TauonPlayer(TauonManager *manager, QObject *parent = nullptr);
 
     QMediaPlayer::State getState();
 
@@ -32,8 +32,8 @@ public:
 
     bool getRepeat() const;
     void setRepeat(bool repeat);
-    bool getSingle() const;
-    void setSingle(bool single);
+    bool getSingle() const { return false; };
+    void setSingle(bool) {};
     bool getShuffle() const;
     void setShuffle(bool shuffle);
     bool getConsume() const;
@@ -44,18 +44,16 @@ public:
 
 public slots:
     void onGotStatus(Status status);
-    void onGotPlayers(QVector<SqueezeBoxManager::Player> players);
-    void onGotSyncPlayers(QStringList players);
+    void onGotPlaylists(QVector<TauonManager::Playlist> playlists);
 
 signals:
 
 private:
-    SqueezeBoxManager *_manager;
-    QVector<SqueezeBoxManager::Player> _players{};
-    QHash<QString, int> _playerIds{};
-    int _activePlayer = -1;
+    TauonManager *_manager;
+    QVector<TauonManager::Playlist> _playlists{};
+    int _activePlaylist = -1;
     Status _status{};
     QStringList _syncPlayers{};
 };
 
-#endif // SQUEEZEBOXPLAYER_H
+#endif // TAUONPLAYER_H

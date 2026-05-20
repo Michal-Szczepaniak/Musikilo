@@ -52,11 +52,13 @@ Dialog {
             ComboBox {
                 id: pluginTypeBox
                 anchors.horizontalCenter: parent.horizontalCenter
-                property var pluginCodes: ["nextcloud", "squeezebox", "mpd"]
+                property var pluginCodes: ["nextcloud", "squeezebox", "mpd", "tauon", "kodi"]
                 menu: ContextMenu {
                     MenuItem { text: qsTr("Nextcloud") }
                     MenuItem { text: qsTr("SqueezeBox") }
                     MenuItem { text: qsTr("MPD") }
+                    MenuItem { text: qsTr("Tauon") }
+                    MenuItem { text: qsTr("Kodi") }
                 }
                 on_MenuOpenChanged: if (!_menuOpen) {
                                         settingsLoader.active = false
@@ -69,6 +71,12 @@ Dialog {
                                                 break;
                                             case "mpd":
                                                 settingsLoader.sourceComponent = mpdSettingsDialog
+                                                break;
+                                            case "tauon":
+                                                settingsLoader.sourceComponent = tauonSettingsDialog
+                                                break;
+                                            case "kodi":
+                                                settingsLoader.sourceComponent = kodiSettingsDialog
                                                 break;
                                         }
                                         settingsLoader.active = true
@@ -124,6 +132,22 @@ Dialog {
         id: squeezeBoxSettingsDialog
 
         SqueezeBoxSettingsDialog {
+
+        }
+    }
+
+    Component {
+        id: tauonSettingsDialog
+
+        TauonSettingsDialog {
+
+        }
+    }
+
+    Component {
+        id: kodiSettingsDialog
+
+        KodiSettingsDialog {
 
         }
     }

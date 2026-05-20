@@ -7,5 +7,7 @@
         <file>images/icon-m-nextcloud.svg</file>
         <file>images/icon-m-squeezebox.svg</file>
         <file>images/icon-m-pacman.svg</file>
+        <file>images/icon-m-kodi.svg</file>
+        <file>images/icon-m-tauon.svg</file>
     </qresource>
 </RCC>

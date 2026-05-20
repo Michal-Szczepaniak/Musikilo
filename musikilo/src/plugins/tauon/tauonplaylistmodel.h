@@ -1,31 +1,31 @@
-#ifndef SQUEEZEBOXPLAYLISTMODEL_H
-#define SQUEEZEBOXPLAYLISTMODEL_H
+#ifndef TAUONPLAYLISTMODEL_H
+#define TAUONPLAYLISTMODEL_H
 
-#include "squeezeboxplayer.h"
+#include "tauonplayer.h"
 
 #include <QObject>
 
 #include <src/playlistmodelinterface.h>
 
-class SqueezeBoxPlaylistModel : public PlaylistModelInterface
+class TauonPlaylistModel : public PlaylistModelInterface
 {
-    using Song = SqueezeBoxManager::Song;
-    using Status = SqueezeBoxManager::Status;
+    using Song = TauonManager::Song;
+    using Status = TauonManager::Status;
 
     Q_OBJECT
 public:
-    explicit SqueezeBoxPlaylistModel(SqueezeBoxManager *manager, SqueezeBoxPlayer *player, QObject *parent = nullptr);
+    explicit TauonPlaylistModel(TauonManager *manager, TauonPlayer *player, QObject *parent = nullptr);
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
 
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
-    void reset();
+    void reset() {};
     void play(int index);
     void addSong(QString song);
     void playSong(QString song);
     void nextSong();
     void prevSong();
-    void remove(int index);
+    void remove(int) {};
 
 protected:
     QHash<int, QByteArray> roleNames() const;
@@ -37,9 +37,9 @@ public slots:
     void onGotPlaylist(QVector<Song> playlist);
 
 private:
-    SqueezeBoxManager *_manager;
-    SqueezeBoxPlayer *_player;
+    TauonManager *_manager;
+    TauonPlayer *_player;
     QVector<Song> _playlist{};
 };
 
-#endif // SQUEEZEBOXPLAYLISTMODEL_H
+#endif // TAUONPLAYLISTMODEL_H

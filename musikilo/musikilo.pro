@@ -25,6 +25,16 @@ SOURCES += \
     src/plugins/webdav/webdavplayer.cpp \
     src/plugins/webdav/webdavplaylistmodel.cpp \
     src/plugins/webdav/webdavplugin.cpp \
+    src/plugins/tauon/tauonfilemodel.cpp \
+    src/plugins/tauon/tauonmanager.cpp \
+    src/plugins/tauon/tauonplayer.cpp \
+    src/plugins/tauon/tauonplaylistmodel.cpp \
+    src/plugins/tauon/tauonplugin.cpp \
+    src/plugins/kodi/kodifilemodel.cpp \
+    src/plugins/kodi/kodimanager.cpp \
+    src/plugins/kodi/kodiplayer.cpp \
+    src/plugins/kodi/kodiplaylistmodel.cpp \
+    src/plugins/kodi/kodiplugin.cpp \
     src/settingsmanager.cpp \
     src/simplecrypt.cpp
 
@@ -49,6 +59,16 @@ HEADERS += \
     src/plugins/webdav/webdavplayer.h \
     src/plugins/webdav/webdavplaylistmodel.h \
     src/plugins/webdav/webdavplugin.h \
+    src/plugins/tauon/tauonfilemodel.h \
+    src/plugins/tauon/tauonmanager.h \
+    src/plugins/tauon/tauonplayer.h \
+    src/plugins/tauon/tauonplaylistmodel.h \
+    src/plugins/tauon/tauonplugin.h \
+    src/plugins/kodi/kodifilemodel.h \
+    src/plugins/kodi/kodimanager.h \
+    src/plugins/kodi/kodiplayer.h \
+    src/plugins/kodi/kodiplaylistmodel.h \
+    src/plugins/kodi/kodiplugin.h \
     src/settingsmanager.h \
     src/simplecrypt.h
 
@@ -67,9 +87,13 @@ DISTFILES += \
     qml/pages/EditPluginDialog.qml \
     qml/pages/plugins/MPDControls.qml \
     qml/pages/plugins/SqueezeBoxControls.qml \
+    qml/pages/plugins/TauonControls.qml \
+    qml/pages/plugins/KodiControls.qml \
     qml/dialogs/NextcloudSettingsDialog.qml \
     qml/dialogs/MPDSettingsDialog.qml \
     qml/dialogs/SqueezeBoxSettingsDialog.qml \
+    qml/dialogs/TauonSettingsDialog.qml \
+    qml/dialogs/KodiSettingsDialog.qml \
     translations/*.ts
 
 RESOURCES += \

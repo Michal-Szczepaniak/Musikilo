@@ -63,6 +63,10 @@ Dialog {
                             return squeezeBoxSettingsDialog;
                         case "mpd":
                             return mpdSettingsDialog;
+                        case "tauon":
+                            return tauonSettingsDialog;
+                        case "kodi":
+                            return kodiSettingsDialog;
                     }
                 onLoaded: item.setData(pluginData)
             }
@@ -89,6 +93,22 @@ Dialog {
         id: squeezeBoxSettingsDialog
 
         SqueezeBoxSettingsDialog {
+
+        }
+    }
+
+    Component {
+        id: tauonSettingsDialog
+
+        TauonSettingsDialog {
+
+        }
+    }
+
+    Component {
+        id: kodiSettingsDialog
+
+        KodiSettingsDialog {
 
         }
     }

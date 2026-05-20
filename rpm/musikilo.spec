@@ -1,7 +1,7 @@
 Name:       musikilo
 
 Summary:    Music player
-Version:    2.0.1
+Version:    2.2.0
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3
@@ -9,6 +9,7 @@ URL:        http://verdanditeam.com/
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   libqofonoext-declarative
+Requires:   mpris-qt5-qml-plugin
 Obsoletes:  harbour-musikilo < 2.0.0
 BuildRequires: pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires: pkgconfig(Qt5Core)

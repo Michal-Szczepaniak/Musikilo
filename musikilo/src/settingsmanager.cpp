@@ -1,7 +1,9 @@
 #include "settingsmanager.h"
 #include <QDebug>
+#include <src/plugins/kodi/kodiplugin.h>
 #include <src/plugins/mpd/mpdplugin.h>
 #include <src/plugins/squeezebox/squeezeboxplugin.h>
+#include <src/plugins/tauon/tauonplugin.h>
 #include <src/plugins/webdav/webdavplugin.h>
 
 SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
@@ -74,11 +76,14 @@ void SettingsManager::removePlugin(QString pluginCode)
     _settings.remove("plugin-" + pluginCode);
     delete _plugins[pluginCode];
     _plugins.remove(pluginCode);
+    _settings.setValue("plugins", _pluginList);
 
     if (_currentPlugin == pluginCode) {
         _currentPlugin = nullptr;
         emit currentPluginChanged();
     }
+
+    emit pluginsChanged();
 }
 
 QString SettingsManager::getCurrentPluginName()
@@ -139,6 +144,10 @@ void SettingsManager::createPlugin(QString code)
         plugin = new SqueezeBoxPlugin;
     } else if (type == "mpd") {
         plugin = new MPDPlugin;
+    } else if (type == "tauon") {
+        plugin = new TauonPlugin;
+    } else if (type == "kodi") {
+        plugin = new KodiPlugin;
     }
 
     if (plugin == nullptr) {

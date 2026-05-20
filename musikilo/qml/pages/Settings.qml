@@ -73,6 +73,12 @@ Item {
                 width: pluginList.width
                 property var data: settingsManager.getPluginSettings(modelData)
 
+                function removePlugin(name) {
+                    remorseAction("Deleting", function() {
+                        settingsManager.removePlugin(name);
+                    })
+                }
+
                 menu: contextMenuComponent
 
                 Component {
@@ -91,7 +97,7 @@ Item {
 
                         MenuItem {
                             text: "Remove"
-                            onClicked: remorseAction("Deleting", function() { settingsManager.removePlugin(modelData) })
+                            onClicked: removePlugin(modelData)
                         }
                     }
                 }
@@ -142,6 +148,10 @@ Item {
                                 return qsTr("SqueezeBox");
                             case "mpd":
                                 return qsTr("MPD");
+                            case "tauon":
+                                return qsTr("Tauon");
+                            case "kodi":
+                                return qsTr("Kodi");
                             }
                         }
                     }

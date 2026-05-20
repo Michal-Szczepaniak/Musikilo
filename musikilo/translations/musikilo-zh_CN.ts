@@ -56,6 +56,32 @@
     </message>
 </context>
 <context>
+    <name>KodiControls</name>
+    <message>
+        <source>Volume: %1%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Kodi controls</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>KodiSettingsDialog</name>
+    <message>
+        <source>Hostname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MPDControls</name>
     <message>
         <source>MPD controls</source>
@@ -159,6 +185,14 @@
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tauon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Kodi</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NextcloudSettingsDialog</name>
@@ -207,6 +241,14 @@
     </message>
     <message>
         <source>Add plugin from pull-down menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tauon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Kodi</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -265,6 +307,28 @@
 </context>
 <context>
     <name>SqueezeBoxSettingsDialog</name>
+    <message>
+        <source>Hostname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TauonControls</name>
+    <message>
+        <source>Tauon controls</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume: %1%</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TauonSettingsDialog</name>
     <message>
         <source>Hostname</source>
         <translation type="unfinished"></translation>

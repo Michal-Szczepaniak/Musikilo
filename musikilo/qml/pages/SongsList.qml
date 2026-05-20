@@ -26,6 +26,13 @@ Item {
 
     implicitHeight: swipeView.height; implicitWidth: swipeView.width
 
+    Connections {
+        target: playlistModel
+        onCurrentIndexChanged: {
+            songsList.positionViewAtIndex(playlistModel.currentIndex, ListView.Center)
+        }
+    }
+
     SilicaFlickable {
         id: songsFlickable
         anchors.fill: parent

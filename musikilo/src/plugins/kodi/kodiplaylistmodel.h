@@ -1,20 +1,20 @@
-#ifndef SQUEEZEBOXPLAYLISTMODEL_H
-#define SQUEEZEBOXPLAYLISTMODEL_H
+#ifndef KODIPLAYLISTMODEL_H
+#define KODIPLAYLISTMODEL_H
 
-#include "squeezeboxplayer.h"
+#include "kodiplayer.h"
 
 #include <QObject>
 
 #include <src/playlistmodelinterface.h>
 
-class SqueezeBoxPlaylistModel : public PlaylistModelInterface
+class KodiPlaylistModel : public PlaylistModelInterface
 {
-    using Song = SqueezeBoxManager::Song;
-    using Status = SqueezeBoxManager::Status;
+    using PlaylistItem = KodiManager::PlaylistItem;
+    using Status = KodiManager::Status;
 
     Q_OBJECT
 public:
-    explicit SqueezeBoxPlaylistModel(SqueezeBoxManager *manager, SqueezeBoxPlayer *player, QObject *parent = nullptr);
+    explicit KodiPlaylistModel(KodiManager *manager, KodiPlayer *player, QObject *parent = nullptr);
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
 
@@ -34,12 +34,12 @@ signals:
 
 public slots:
     void onGotStatus(Status status);
-    void onGotPlaylist(QVector<Song> playlist);
+    void onGotPlaylist(QVector<PlaylistItem> playlist);
 
 private:
-    SqueezeBoxManager *_manager;
-    SqueezeBoxPlayer *_player;
-    QVector<Song> _playlist{};
+    KodiManager *_manager;
+    KodiPlayer *_player;
+    QVector<PlaylistItem> _playlist{};
 };
 
-#endif // SQUEEZEBOXPLAYLISTMODEL_H
+#endif // KODIPLAYLISTMODEL_H
