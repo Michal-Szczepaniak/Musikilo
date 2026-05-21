@@ -59,26 +59,26 @@
     <name>KodiControls</name>
     <message>
         <source>Volume: %1%</source>
-        <translation type="unfinished">Volume: %1%</translation>
+        <translation>Volume: %1%</translation>
     </message>
     <message>
         <source>Kodi controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlli Kodi</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Ferma</translation>
     </message>
 </context>
 <context>
     <name>KodiSettingsDialog</name>
     <message>
         <source>Hostname</source>
-        <translation type="unfinished">Nome host</translation>
+        <translation>Nome host</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation type="unfinished">Porta</translation>
+        <translation>Porta</translation>
     </message>
 </context>
 <context>
@@ -187,11 +187,11 @@
     </message>
     <message>
         <source>Tauon</source>
-        <translation type="unfinished"></translation>
+        <translation>Tauon</translation>
     </message>
     <message>
         <source>Kodi</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodi</translation>
     </message>
 </context>
 <context>
@@ -245,11 +245,11 @@
     </message>
     <message>
         <source>Tauon</source>
-        <translation type="unfinished"></translation>
+        <translation>Tauon</translation>
     </message>
     <message>
         <source>Kodi</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodi</translation>
     </message>
 </context>
 <context>
@@ -320,22 +320,22 @@
     <name>TauonControls</name>
     <message>
         <source>Tauon controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlli Tauon</translation>
     </message>
     <message>
         <source>Volume: %1%</source>
-        <translation type="unfinished">Volume: %1%</translation>
+        <translation>Volume: %1%</translation>
     </message>
 </context>
 <context>
     <name>TauonSettingsDialog</name>
     <message>
         <source>Hostname</source>
-        <translation type="unfinished">Nome host</translation>
+        <translation>Nome host</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation type="unfinished">Porta</translation>
+        <translation>Porta</translation>
     </message>
 </context>
 </TS>
