@@ -47,6 +47,10 @@
         <source>legacychimera247 for Italian translation.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>carmenfdezb for spanish translation.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FilesList</name>

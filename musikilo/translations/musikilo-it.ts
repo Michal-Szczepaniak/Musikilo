@@ -47,6 +47,10 @@
         <source>legacychimera247 for Italian translation.</source>
         <translation>legacychimera247 per la traduzione italiana.</translation>
     </message>
+    <message>
+        <source>carmenfdezb for spanish translation.</source>
+        <translation>carmenfdezb per la traduzione italiana.</translation>
+    </message>
 </context>
 <context>
     <name>FilesList</name>

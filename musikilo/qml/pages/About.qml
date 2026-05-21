@@ -152,6 +152,12 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
+            Label {
+                text: qsTr("carmenfdezb for spanish translation.")
+                font.pixelSize: Theme.fontSizeSmall
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
             Separator {
                 width: parent.width
                 color: Theme.primaryColor
