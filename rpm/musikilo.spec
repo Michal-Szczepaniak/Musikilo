@@ -1,7 +1,7 @@
 Name:       musikilo
 
 Summary:    Music player
-Version:    2.2.0
+Version:    2.3.0
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3

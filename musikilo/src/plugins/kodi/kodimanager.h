@@ -37,6 +37,15 @@ public:
         AUDIO_STREAM,
         VIDEO_STREAM,
         SUBTITLE,
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN,
+        MENU,
+        HOME,
+        BACK,
+        SELECT,
+        EXECUTE_ACTION,
     };
 
     struct Request {
@@ -108,6 +117,16 @@ public:
     void setVideoStream(int index);
     void setSubtitle(int index);
     void ping();
+    void left();
+    void right();
+    void up();
+    void down();
+    void menu();
+    void home();
+    void back();
+    void select();
+    void prevChapter();
+    void nextChapter();
 
 signals:
     void errorOccured(QString error);

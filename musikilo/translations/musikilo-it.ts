@@ -66,8 +66,60 @@
         <translation>Controlli Kodi</translation>
     </message>
     <message>
+        <source>Audio streams</source>
+        <translation>Flusso audio</translation>
+    </message>
+    <message>
+        <source>Video streams</source>
+        <translation>Flusso video</translation>
+    </message>
+    <message>
+        <source>Subtitles</source>
+        <translation>Sottotitoli</translation>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation>Menu</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <translation>Sopra</translation>
+    </message>
+    <message>
+        <source>Home</source>
+        <translation>Home</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>Sinistra</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation>Destra</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Indietro</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <translation>Sotto</translation>
+    </message>
+    <message>
         <source>Stop</source>
         <translation>Ferma</translation>
+    </message>
+    <message>
+        <source>Previous chapter</source>
+        <translation>Capitolo precedente</translation>
+    </message>
+    <message>
+        <source>Next chapter</source>
+        <translation>Capitolo successivo</translation>
     </message>
 </context>
 <context>
@@ -139,6 +191,10 @@
         <source>Plugin controls</source>
         <translation>Impostazioni plugin</translation>
     </message>
+    <message>
+        <source>No controls available for this plugin</source>
+        <translation>Non ci sono controlli disponibili per questo plugin</translation>
+    </message>
 </context>
 <context>
     <name>Musikilo</name>
@@ -192,6 +248,10 @@
     <message>
         <source>Kodi</source>
         <translation>Kodi</translation>
+    </message>
+    <message>
+        <source>Subsonic</source>
+        <translation>Subsonic</translation>
     </message>
 </context>
 <context>
@@ -251,6 +311,10 @@
         <source>Kodi</source>
         <translation>Kodi</translation>
     </message>
+    <message>
+        <source>Subsonic</source>
+        <translation>Subsonic</translation>
+    </message>
 </context>
 <context>
     <name>SongDetails</name>
@@ -263,8 +327,8 @@
         <translation>Album: %1</translation>
     </message>
     <message>
-        <source>Bit rate: %1 kb/s</source>
-        <translation>Bit rate: %1 kb/s</translation>
+        <source>Bit rate: %1 Kb/s</source>
+        <translation>Bit rate: %1 Kb/s</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -310,6 +374,25 @@
     <message>
         <source>Hostname</source>
         <translation>Nome host</translation>
+    </message>
+    <message>
+        <source>Port</source>
+        <translation>Porta</translation>
+    </message>
+</context>
+<context>
+    <name>SubsonicSettingsDialog</name>
+    <message>
+        <source>Hostname</source>
+        <translation>Nome host</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Nome utente</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Password</translation>
     </message>
     <message>
         <source>Port</source>

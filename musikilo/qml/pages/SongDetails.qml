@@ -268,7 +268,7 @@ Item {
 
         Label {
             id: bitrate
-            text: qsTr("Bit rate: %1 kb/s").arg(player.bitrate)
+            text: qsTr("Bit rate: %1 Kb/s").arg(player.bitrate)
             visible: player.bitrate !== ""
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter

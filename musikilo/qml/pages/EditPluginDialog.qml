@@ -67,6 +67,8 @@ Dialog {
                             return tauonSettingsDialog;
                         case "kodi":
                             return kodiSettingsDialog;
+                        case "subsonic":
+                            return subsonicSettingsDialog;
                     }
                 onLoaded: item.setData(pluginData)
             }
@@ -109,6 +111,14 @@ Dialog {
         id: kodiSettingsDialog
 
         KodiSettingsDialog {
+
+        }
+    }
+
+    Component {
+        id: subsonicSettingsDialog
+
+        SubsonicSettingsDialog {
 
         }
     }

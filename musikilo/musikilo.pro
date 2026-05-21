@@ -35,6 +35,11 @@ SOURCES += \
     src/plugins/kodi/kodiplayer.cpp \
     src/plugins/kodi/kodiplaylistmodel.cpp \
     src/plugins/kodi/kodiplugin.cpp \
+    src/plugins/subsonic/subsonicfilemodel.cpp \
+    src/plugins/subsonic/subsonicmanager.cpp \
+    src/plugins/subsonic/subsonicplayer.cpp \
+    src/plugins/subsonic/subsonicplaylistmodel.cpp \
+    src/plugins/subsonic/subsonicplugin.cpp \
     src/settingsmanager.cpp \
     src/simplecrypt.cpp
 
@@ -69,6 +74,11 @@ HEADERS += \
     src/plugins/kodi/kodiplayer.h \
     src/plugins/kodi/kodiplaylistmodel.h \
     src/plugins/kodi/kodiplugin.h \
+    src/plugins/subsonic/subsonicfilemodel.h \
+    src/plugins/subsonic/subsonicmanager.h \
+    src/plugins/subsonic/subsonicplayer.h \
+    src/plugins/subsonic/subsonicplaylistmodel.h \
+    src/plugins/subsonic/subsonicplugin.h \
     src/settingsmanager.h \
     src/simplecrypt.h
 
@@ -89,11 +99,13 @@ DISTFILES += \
     qml/pages/plugins/SqueezeBoxControls.qml \
     qml/pages/plugins/TauonControls.qml \
     qml/pages/plugins/KodiControls.qml \
+    qml/pages/plugins/SubsonicControls.qml \
     qml/dialogs/NextcloudSettingsDialog.qml \
     qml/dialogs/MPDSettingsDialog.qml \
     qml/dialogs/SqueezeBoxSettingsDialog.qml \
     qml/dialogs/TauonSettingsDialog.qml \
-    qml/dialogs/KodiSettingsDialog.qml \
+    qml/dialogs/KodiSettingsDialog.qml \\
+    qml/dialogs/SubsonicSettingsDialog.qml \
     translations/*.ts
 
 RESOURCES += \
@@ -105,9 +117,7 @@ SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 # following CONFIG line
 CONFIG += sailfishapp_i18n
 
-TRANSLATIONS += translations/musikilo-de.ts \
-                translations/musikilo-zh_CN.ts \
-                translations/musikilo-it.ts
+TRANSLATIONS += translations/musikilo-*.ts
 
 # qwebdavlib
 DEFINES += QWEBDAVITEM_EXTENDED_PROPERTIES

@@ -3,6 +3,7 @@
 #include <src/plugins/kodi/kodiplugin.h>
 #include <src/plugins/mpd/mpdplugin.h>
 #include <src/plugins/squeezebox/squeezeboxplugin.h>
+#include <src/plugins/subsonic/subsonicplugin.h>
 #include <src/plugins/tauon/tauonplugin.h>
 #include <src/plugins/webdav/webdavplugin.h>
 
@@ -148,6 +149,8 @@ void SettingsManager::createPlugin(QString code)
         plugin = new TauonPlugin;
     } else if (type == "kodi") {
         plugin = new KodiPlugin;
+    } else if (type == "subsonic") {
+        plugin = new SubsonicPlugin;
     }
 
     if (plugin == nullptr) {

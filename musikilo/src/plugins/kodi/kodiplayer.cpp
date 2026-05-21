@@ -135,6 +135,46 @@ void KodiPlayer::setControls(QVariantMap controls)
         _manager->stop();
     }
 
+    if (controls["left"].toBool()) {
+        _manager->left();
+    }
+
+    if (controls["right"].toBool()) {
+        _manager->right();
+    }
+
+    if (controls["up"].toBool()) {
+        _manager->up();
+    }
+
+    if (controls["down"].toBool()) {
+        _manager->down();
+    }
+
+    if (controls["menu"].toBool()) {
+        _manager->menu();
+    }
+
+    if (controls["home"].toBool()) {
+        _manager->home();
+    }
+
+    if (controls["back"].toBool()) {
+        _manager->back();
+    }
+
+    if (controls["select"].toBool()) {
+        _manager->select();
+    }
+
+    if (controls["prevChapter"].toBool()) {
+        _manager->prevChapter();
+    }
+
+    if (controls["nextChapter"].toBool()) {
+        _manager->nextChapter();
+    }
+
     if (controls["currentAudioStream"].toInt() != _status.currentAudioStream) {
         _manager->setAudioStream(controls["currentAudioStream"].toInt());
     }

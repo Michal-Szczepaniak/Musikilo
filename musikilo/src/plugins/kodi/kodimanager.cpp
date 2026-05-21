@@ -145,6 +145,56 @@ void KodiManager::ping()
     makeRequest(PING);
 }
 
+void KodiManager::left()
+{
+    makeRequest(LEFT);
+}
+
+void KodiManager::right()
+{
+    makeRequest(RIGHT);
+}
+
+void KodiManager::up()
+{
+    makeRequest(UP);
+}
+
+void KodiManager::down()
+{
+    makeRequest(DOWN);
+}
+
+void KodiManager::menu()
+{
+    makeRequest(MENU);
+}
+
+void KodiManager::home()
+{
+    makeRequest(HOME);
+}
+
+void KodiManager::back()
+{
+    makeRequest(BACK);
+}
+
+void KodiManager::select()
+{
+    makeRequest(SELECT);
+}
+
+void KodiManager::prevChapter()
+{
+    makeRequest(EXECUTE_ACTION, {{"action", "chapterorbigstepback"}});
+}
+
+void KodiManager::nextChapter()
+{
+    makeRequest(EXECUTE_ACTION, {{"action", "chapterorbigstepforward"}});
+}
+
 void KodiManager::onRequestFinished(QNetworkReply *reply)
 {
     if (reply->error() != QNetworkReply::NoError) {
@@ -292,6 +342,24 @@ QString KodiManager::getCommand(Command command)
         return "Player.SetVideoStream";
     case SUBTITLE:
         return "Player.SetSubtitle";
+    case LEFT:
+        return "Input.Left";
+    case RIGHT:
+        return "Input.Right";
+    case UP:
+        return "Input.Up";
+    case DOWN:
+        return "Input.Down";
+    case MENU:
+        return "Input.ContextMenu";
+    case HOME:
+        return "Input.Home";
+    case BACK:
+        return "Input.Back";
+    case SELECT:
+        return "Input.Select";
+    case EXECUTE_ACTION:
+        return "Input.ExecuteAction";
     }
 
     return {};

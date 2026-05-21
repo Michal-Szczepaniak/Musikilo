@@ -212,11 +212,9 @@ Page {
                     title: qsTr("Plugin controls")
                 }
 
-                Label {
-                    text: 'No controls available for this plugin'
-                    anchors.centerIn: parent
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    color: Theme.secondaryHighlightColor
+                ViewPlaceholder {
+                    enabled: true
+                    text: qsTr("No controls available for this plugin")
                 }
             }
         }

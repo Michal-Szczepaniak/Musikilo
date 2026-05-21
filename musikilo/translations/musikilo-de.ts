@@ -66,7 +66,59 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Audio streams</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video streams</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subtitles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Home</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous chapter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next chapter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -139,6 +191,10 @@
         <source>Plugin controls</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No controls available for this plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Musikilo</name>
@@ -191,6 +247,10 @@
     </message>
     <message>
         <source>Kodi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subsonic</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -251,6 +311,10 @@
         <source>Kodi</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Subsonic</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SongDetails</name>
@@ -263,7 +327,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Bit rate: %1 kb/s</source>
+        <source>Bit rate: %1 Kb/s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -309,6 +373,25 @@
     <name>SqueezeBoxSettingsDialog</name>
     <message>
         <source>Hostname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SubsonicSettingsDialog</name>
+    <message>
+        <source>Hostname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

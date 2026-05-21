@@ -52,35 +52,39 @@ Dialog {
             ComboBox {
                 id: pluginTypeBox
                 anchors.horizontalCenter: parent.horizontalCenter
-                property var pluginCodes: ["nextcloud", "squeezebox", "mpd", "tauon", "kodi"]
+                property var pluginCodes: ["nextcloud", "squeezebox", "mpd", "tauon", "kodi", "subsonic"]
                 menu: ContextMenu {
                     MenuItem { text: qsTr("Nextcloud") }
                     MenuItem { text: qsTr("SqueezeBox") }
                     MenuItem { text: qsTr("MPD") }
                     MenuItem { text: qsTr("Tauon") }
                     MenuItem { text: qsTr("Kodi") }
+                    MenuItem { text: qsTr("Subsonic") }
                 }
-                on_MenuOpenChanged: if (!_menuOpen) {
-                                        settingsLoader.active = false
-                                        switch(pluginCodes[currentIndex]) {
-                                            case "nextcloud":
-                                                settingsLoader.sourceComponent = nextcloudSettingsDialog
-                                                break;
-                                            case "squeezebox":
-                                                settingsLoader.sourceComponent = squeezeBoxSettingsDialog
-                                                break;
-                                            case "mpd":
-                                                settingsLoader.sourceComponent = mpdSettingsDialog
-                                                break;
-                                            case "tauon":
-                                                settingsLoader.sourceComponent = tauonSettingsDialog
-                                                break;
-                                            case "kodi":
-                                                settingsLoader.sourceComponent = kodiSettingsDialog
-                                                break;
-                                        }
-                                        settingsLoader.active = true
-                                    }
+                onValueChanged: {
+                    settingsLoader.active = false
+                    switch(pluginCodes[currentIndex]) {
+                        case "nextcloud":
+                            settingsLoader.sourceComponent = nextcloudSettingsDialog
+                            break;
+                        case "squeezebox":
+                            settingsLoader.sourceComponent = squeezeBoxSettingsDialog
+                            break;
+                        case "mpd":
+                            settingsLoader.sourceComponent = mpdSettingsDialog
+                            break;
+                        case "tauon":
+                            settingsLoader.sourceComponent = tauonSettingsDialog
+                            break;
+                        case "kodi":
+                            settingsLoader.sourceComponent = kodiSettingsDialog
+                            break;
+                        case "subsonic":
+                            settingsLoader.sourceComponent = subsonicSettingsDialog
+                            break;
+                    }
+                    settingsLoader.active = true
+                }
             }
 
             TextField {
@@ -148,6 +152,14 @@ Dialog {
         id: kodiSettingsDialog
 
         KodiSettingsDialog {
+
+        }
+    }
+
+    Component {
+        id: subsonicSettingsDialog
+
+        SubsonicSettingsDialog {
 
         }
     }

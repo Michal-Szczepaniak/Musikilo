@@ -1,424 +1,424 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="es_ES">
 <context>
     <name>About</name>
     <message>
         <source>About</source>
-        <translation>关于</translation>
+        <translation>Acerca de</translation>
     </message>
     <message>
         <source>Made by Michał Szczepaniak.</source>
-        <translation>由 Michał Szczepaniak 开发。</translation>
+        <translation>Realizado por Michał Szczepaniak.</translation>
     </message>
     <message>
         <source>Licensed under GPLv3</source>
-        <translation>采用 GPLv3 许可协议</translation>
+        <translation>Bajo licencia GPLv3</translation>
     </message>
     <message>
         <source>Links</source>
-        <translation>链接</translation>
+        <translation>Enlaces</translation>
     </message>
     <message>
         <source>Thanks to</source>
-        <translation>感谢</translation>
+        <translation>Gracias a</translation>
     </message>
     <message>
         <source>jgibbon for help.</source>
-        <translation>感谢 jgibbon 的帮助。</translation>
+        <translation>jgibbon por su ayuda.</translation>
     </message>
     <message>
         <source>Donate</source>
-        <translation>捐赠</translation>
+        <translation>Donar</translation>
     </message>
     <message>
         <source>dashinfantry for Chinese translation.</source>
-        <translation type="unfinished"></translation>
+        <translation>dashinfantry por la traducción al chino.</translation>
     </message>
     <message>
         <source>gregguh for awesome icons.</source>
-        <translation type="unfinished"></translation>
+        <translation>gregguh por los increíbles iconos.</translation>
     </message>
     <message>
         <source>fsan and Mir Inza for being awesome testers.</source>
-        <translation type="unfinished"></translation>
+        <translation>fsan y Mir Inza por ser unos testeadores fantásticos.</translation>
     </message>
     <message>
         <source>legacychimera247 for Italian translation.</source>
-        <translation type="unfinished"></translation>
+        <translation>legacychimera247 por la traducción al italiano.</translation>
     </message>
 </context>
 <context>
     <name>FilesList</name>
     <message>
         <source>Files list</source>
-        <translation>文件列表</translation>
+        <translation>Lista de archivos</translation>
     </message>
 </context>
 <context>
     <name>KodiControls</name>
     <message>
         <source>Volume: %1%</source>
-        <translation type="unfinished"></translation>
+        <translation>Volumen: %1%</translation>
     </message>
     <message>
         <source>Kodi controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Controles de Kodi</translation>
     </message>
     <message>
         <source>Audio streams</source>
-        <translation type="unfinished"></translation>
+        <translation>Transmisión de audio</translation>
     </message>
     <message>
         <source>Video streams</source>
-        <translation type="unfinished"></translation>
+        <translation>Transmisión de vídeo</translation>
     </message>
     <message>
         <source>Subtitles</source>
-        <translation type="unfinished"></translation>
+        <translation>Subtítulos</translation>
     </message>
     <message>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menú</translation>
     </message>
     <message>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Arriba</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Inicio</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Izquierda</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Derecha</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Volver</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Abajo</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Parar</translation>
     </message>
     <message>
         <source>Previous chapter</source>
-        <translation type="unfinished"></translation>
+        <translation>Capítulo anterior</translation>
     </message>
     <message>
         <source>Next chapter</source>
-        <translation type="unfinished"></translation>
+        <translation>Siguiente capítulo</translation>
     </message>
 </context>
 <context>
     <name>KodiSettingsDialog</name>
     <message>
         <source>Hostname</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de dispositivo</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Puerto</translation>
     </message>
 </context>
 <context>
     <name>MPDControls</name>
     <message>
         <source>MPD controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Controles de MPD</translation>
     </message>
     <message>
         <source>Volume: %1%</source>
-        <translation type="unfinished"></translation>
+        <translation>Volumen: %1%</translation>
     </message>
     <message>
         <source>Refresh database</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar base de datos</translation>
     </message>
     <message>
         <source>Outputs</source>
-        <translation type="unfinished"></translation>
+        <translation>Salidas</translation>
     </message>
 </context>
 <context>
     <name>MPDPlaylistModel</name>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Desconocido</translation>
     </message>
 </context>
 <context>
     <name>MPDPlugin</name>
     <message>
         <source>Couldn&apos;t connect</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo conectar</translation>
     </message>
 </context>
 <context>
     <name>MPDSettingsDialog</name>
     <message>
         <source>Hostname</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de dispositivo</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Puerto</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Contraseña</translation>
     </message>
 </context>
 <context>
     <name>Main</name>
     <message>
         <source>About</source>
-        <translation>关于</translation>
+        <translation>Acerca de</translation>
     </message>
     <message>
         <source>Plugin controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Controles del complemento</translation>
     </message>
     <message>
         <source>No controls available for this plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay controles para este complemento</translation>
     </message>
 </context>
 <context>
     <name>Musikilo</name>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Okay</source>
-        <translation type="unfinished"></translation>
+        <translation>Correcto</translation>
     </message>
     <message>
         <source>Musikilo</source>
-        <translation type="unfinished"></translation>
+        <translation>Musikilo</translation>
     </message>
     <message>
         <source>Test successful</source>
-        <translation type="unfinished"></translation>
+        <translation>Prueba correcta</translation>
     </message>
     <message>
         <source>Test failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Prueba fallida: %1</translation>
     </message>
     <message>
         <source>Error occured: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocurrió un error: %1</translation>
     </message>
 </context>
 <context>
     <name>NewPluginDialog</name>
     <message>
         <source>Nextcloud</source>
-        <translation type="unfinished"></translation>
+        <translation>Nextcloud</translation>
     </message>
     <message>
         <source>SqueezeBox</source>
-        <translation type="unfinished"></translation>
+        <translation>SqueezeBox</translation>
     </message>
     <message>
         <source>MPD</source>
-        <translation type="unfinished"></translation>
+        <translation>MPD</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Tauon</source>
-        <translation type="unfinished"></translation>
+        <translation>Tauon</translation>
     </message>
     <message>
         <source>Kodi</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodi</translation>
     </message>
     <message>
         <source>Subsonic</source>
-        <translation type="unfinished"></translation>
+        <translation>Subsonic</translation>
     </message>
 </context>
 <context>
     <name>NextcloudSettingsDialog</name>
     <message>
         <source>Hostname</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de dispositivo</translation>
     </message>
     <message>
         <source>Root path</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruta raíz</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de usuario</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Contraseña</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Puerto</translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
         <source>Settings</source>
-        <translation>设置</translation>
+        <translation>Ajustes</translation>
     </message>
     <message>
         <source>Add new plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir nuevo complemento</translation>
     </message>
     <message>
         <source>Nextcloud</source>
-        <translation type="unfinished"></translation>
+        <translation>Nextcloud</translation>
     </message>
     <message>
         <source>SqueezeBox</source>
-        <translation type="unfinished"></translation>
+        <translation>SqueezeBox</translation>
     </message>
     <message>
         <source>MPD</source>
-        <translation type="unfinished"></translation>
+        <translation>MPD</translation>
     </message>
     <message>
         <source>Add plugin from pull-down menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir complemento desde el menú deslizante</translation>
     </message>
     <message>
         <source>Tauon</source>
-        <translation type="unfinished"></translation>
+        <translation>Tauon</translation>
     </message>
     <message>
         <source>Kodi</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodi</translation>
     </message>
     <message>
         <source>Subsonic</source>
-        <translation type="unfinished"></translation>
+        <translation>Subsonic</translation>
     </message>
 </context>
 <context>
     <name>SongDetails</name>
     <message>
         <source>Song %1/%2</source>
-        <translation>音乐 %1/%2</translation>
+        <translation>Canción %1/%2</translation>
     </message>
     <message>
         <source>Album: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bit rate: %1 Kb/s</source>
-        <translation type="unfinished"></translation>
+        <translation>Álbum: %1</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Desconocido</translation>
+    </message>
+    <message>
+        <source>Bit rate: %1 Kb/s</source>
+        <translation>Tasa de bits: %1 Kb/s</translation>
     </message>
 </context>
 <context>
     <name>SongsList</name>
     <message>
         <source>Playlist</source>
-        <translation>播放列表</translation>
+        <translation>Lista de reproducción</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>移除</translation>
+        <translation>Quitar</translation>
     </message>
 </context>
 <context>
     <name>SqueezeBoxControls</name>
     <message>
         <source>SqueezeBox controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Controles de Squeeze</translation>
     </message>
     <message>
         <source>Volume: %1%</source>
-        <translation type="unfinished"></translation>
+        <translation>Volumen: %1%</translation>
     </message>
     <message>
         <source>Refresh database</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar base de datos</translation>
     </message>
     <message>
         <source>Sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Sincronizar</translation>
     </message>
     <message>
         <source>Sync settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes de sincronización</translation>
     </message>
 </context>
 <context>
     <name>SqueezeBoxSettingsDialog</name>
     <message>
         <source>Hostname</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de dispositivo</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Puerto</translation>
     </message>
 </context>
 <context>
     <name>SubsonicSettingsDialog</name>
     <message>
         <source>Hostname</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de dispositivo</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de usuario</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Contraseña</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Puerto</translation>
     </message>
 </context>
 <context>
     <name>TauonControls</name>
     <message>
         <source>Tauon controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Controles de Tauon</translation>
     </message>
     <message>
         <source>Volume: %1%</source>
-        <translation type="unfinished"></translation>
+        <translation>Volumen: %1%</translation>
     </message>
 </context>
 <context>
     <name>TauonSettingsDialog</name>
     <message>
         <source>Hostname</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de dispositivo</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Puerto</translation>
     </message>
 </context>
 </TS>

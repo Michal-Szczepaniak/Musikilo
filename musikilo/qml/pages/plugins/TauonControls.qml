@@ -29,6 +29,7 @@ Item {
         id: filesFlickable
         anchors.fill: parent
         flickableDirection: Flickable.VerticalFlick
+        contentHeight: header.height + col.height
 
         PageHeader {
             id: header
@@ -36,6 +37,7 @@ Item {
         }
 
         Column {
+            id: col
             anchors.top: header.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width

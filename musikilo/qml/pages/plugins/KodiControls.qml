@@ -29,6 +29,7 @@ Item {
         id: filesFlickable
         anchors.fill: parent
         flickableDirection: Flickable.VerticalFlick
+        contentHeight: header.height + col.height
 
         PageHeader {
             id: header
@@ -36,6 +37,7 @@ Item {
         }
 
         Column {
+            id: col
             anchors.top: header.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width
@@ -55,20 +57,9 @@ Item {
                 label: qsTr("Volume: %1%").arg(value);
             }
 
-
-            Button {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Stop")
-                onClicked: {
-                    var controls = player.pluginControls
-                    controls.stop = true
-                    player.pluginControls = controls
-                }
-            }
-
             ComboBox {
                 width: parent.width
-                label: "Audio streams"
+                label: qsTr("Audio streams")
                 Binding on currentIndex {
                     value: player.pluginControls.currentAudioStream
                 }
@@ -93,7 +84,7 @@ Item {
 
             ComboBox {
                 width: parent.width
-                label: "Video streams"
+                label: qsTr("Video streams")
                 Binding on currentIndex {
                     value: player.pluginControls.currentVideoStream
                 }
@@ -118,7 +109,7 @@ Item {
 
             ComboBox {
                 width: parent.width
-                label: "Subtitles"
+                label: qsTr("Subtitles")
                 Binding on currentIndex {
                     value: player.pluginControls.currentSubtitle
                 }
@@ -137,6 +128,233 @@ Item {
                         var controls = player.pluginControls
                         controls.currentSubtitle = currentIndex
                         player.pluginControls = controls
+                    }
+                }
+            }
+
+            Grid {
+                id: remoteGrid
+                columns: 3
+                spacing: Theme.paddingLarge
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Item {
+                    width: col.width/3 - Theme.paddingLarge
+                    height: col.width/3 - Theme.paddingLarge
+
+                    Button {
+                        anchors.centerIn: parent
+                        text: qsTr("Menu")
+                        width: Theme.itemSizeExtraLarge
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            var controls = player.pluginControls
+                            controls.menu = true
+                            player.pluginControls = controls
+                        }
+                    }
+                }
+
+                Item {
+                    width: col.width/3 - Theme.paddingLarge
+                    height: col.width/3 - Theme.paddingLarge
+
+                    Button {
+                        anchors.centerIn: parent
+                        text: qsTr("Up")
+                        width: Theme.itemSizeExtraLarge
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            var controls = player.pluginControls
+                            controls.up = true
+                            player.pluginControls = controls
+                        }
+                    }
+                }
+
+                Item {
+                    width: col.width/3 - Theme.paddingLarge
+                    height: col.width/3 - Theme.paddingLarge
+
+                    Button {
+                        anchors.centerIn: parent
+                        text: qsTr("Home")
+                        width: Theme.itemSizeExtraLarge
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            var controls = player.pluginControls
+                            controls.home = true
+                            player.pluginControls = controls
+                        }
+                    }
+                }
+
+                Item {
+                    width: col.width/3 - Theme.paddingLarge
+                    height: col.width/3 - Theme.paddingLarge
+
+                    Button {
+                        anchors.centerIn: parent
+                        text: qsTr("Left")
+                        width: Theme.itemSizeExtraLarge
+                    }
+
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            var controls = player.pluginControls
+                            controls.left = true
+                            player.pluginControls = controls
+                        }
+                    }
+                }
+
+                Item {
+                    width: col.width/3 - Theme.paddingLarge
+                    height: col.width/3 - Theme.paddingLarge
+
+                    Button {
+                        anchors.centerIn: parent
+                        text: qsTr("OK")
+                        width: Theme.itemSizeExtraLarge
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            var controls = player.pluginControls
+                            controls.select = true
+                            player.pluginControls = controls
+                        }
+                    }
+                }
+
+                Item {
+                    width: col.width/3 - Theme.paddingLarge
+                    height: col.width/3 - Theme.paddingLarge
+
+                    Button {
+                        anchors.centerIn: parent
+                        text: qsTr("Right")
+                        width: Theme.itemSizeExtraLarge
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            var controls = player.pluginControls
+                            controls.right = true
+                            player.pluginControls = controls
+                        }
+                    }
+                }
+
+                Item {
+                    width: col.width/3 - Theme.paddingLarge
+                    height: col.width/3 - Theme.paddingLarge
+
+                    Button {
+                        anchors.centerIn: parent
+                        text: qsTr("Back")
+                        width: Theme.itemSizeExtraLarge
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            var controls = player.pluginControls
+                            controls.back = true
+                            player.pluginControls = controls
+                        }
+                    }
+                }
+
+                Item {
+                    width: col.width/3 - Theme.paddingLarge
+                    height: col.width/3 - Theme.paddingLarge
+
+                    Button {
+                        anchors.centerIn: parent
+                        text: qsTr("Down")
+                        width: Theme.itemSizeExtraLarge
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            var controls = player.pluginControls
+                            controls.down = true
+                            player.pluginControls = controls
+                        }
+                    }
+                }
+
+                Item {
+                    width: col.width/3 - Theme.paddingLarge
+                    height: col.width/3 - Theme.paddingLarge
+
+                    Button {
+                        anchors.centerIn: parent
+                        text: qsTr("Stop")
+                        width: Theme.itemSizeExtraLarge
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            var controls = player.pluginControls
+                            controls.stop = true
+                            player.pluginControls = controls
+                        }
+                    }
+                }
+
+                Item {
+                    width: col.width/3 - Theme.paddingLarge
+                    height: Theme.itemSizeExtraLarge
+
+                    Button {
+                        anchors.left: parent.left
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: qsTr("Previous chapter")
+                        width: col.width/2 - Theme.paddingLarge
+                        onClicked: {
+                            var controls = player.pluginControls
+                            controls.prevChapter = true
+                            player.pluginControls = controls
+                        }
+                    }
+                }
+
+                Item {
+                    width: col.width/3 - Theme.paddingLarge
+                    height: Theme.itemSizeExtraLarge
+                }
+
+                Item {
+                    width: col.width/3 - Theme.paddingLarge
+                    height: Theme.itemSizeExtraLarge
+
+                    Button {
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: qsTr("Next chapter")
+                        width: col.width/2 - Theme.paddingLarge
+                        onClicked: {
+                            var controls = player.pluginControls
+                            controls.nextChapter = true
+                            player.pluginControls = controls
+                        }
                     }
                 }
             }

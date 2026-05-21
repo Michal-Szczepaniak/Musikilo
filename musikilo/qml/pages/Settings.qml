@@ -152,6 +152,8 @@ Item {
                                 return qsTr("Tauon");
                             case "kodi":
                                 return qsTr("Kodi");
+                            case "subsonic":
+                                return qsTr("Subsonic");
                             }
                         }
                     }
