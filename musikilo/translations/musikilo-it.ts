@@ -324,7 +324,7 @@
     <name>SongDetails</name>
     <message>
         <source>Song %1/%2</source>
-        <translation>Canzone %1/%2</translation>
+        <translation>Traccia %1/%2</translation>
     </message>
     <message>
         <source>Album: %1</source>
