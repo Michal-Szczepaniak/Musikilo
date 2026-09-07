@@ -156,6 +156,8 @@ void WebDavPlaylistModel::addFilesToPlaylist()
     QList<QWebdavItem> list = _parser.getList();
     QList<QWebdavItem> playlistFiles{};
 
+    std::sort(list.begin(), list.end(), &WebDavPlaylistModel::sortFiles);
+
     QWebdavItem item;
     foreach(item, list) {
         if (item.mimeType().startsWith("audio")) {
@@ -173,6 +175,8 @@ void WebDavPlaylistModel::playFiles()
 {
     QList<QWebdavItem> list = _playParser.getList();
     QList<QWebdavItem> playlistFiles{};
+
+    std::sort(list.begin(), list.end(), &WebDavPlaylistModel::sortFiles);
 
     QWebdavItem item;
     foreach(item, list) {
@@ -212,5 +216,34 @@ void WebDavPlaylistModel::onStateChanged()
         } else if (_player->getRepeat()) {
             play(0);
         }
+    }
+}
+
+bool WebDavPlaylistModel::sortFiles(const QWebdavItem &a, const QWebdavItem &b)
+{
+    QStringList pa = a.path().split('/', QString::SkipEmptyParts);
+    QStringList pb = b.path().split('/', QString::SkipEmptyParts);
+    QString aName = pa.back();
+    QString bName = pb.back();
+    pa.pop_back();
+    pb.pop_back();
+
+
+    int n = qMin(pa.size(), pb.size());
+
+    for (int i = 0; i < n; ++i) {
+        int cmp = QString::localeAwareCompare(pa[i], pb[i]);
+
+        if (cmp < 0)
+            return true;
+
+        if (cmp > 0)
+            return false;
+    }
+
+    if (pa.size() != pb.size()) {
+        return pa.size() > pb.size();
+    } else {
+        return QString::localeAwareCompare(aName, bName) < 0;
     }
 }

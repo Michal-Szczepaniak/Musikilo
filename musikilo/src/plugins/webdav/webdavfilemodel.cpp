@@ -84,6 +84,16 @@ void WebDavFileModel::addFilesToList()
     QList<QWebdavItem> list = _parser.getList();
     if(list.size() == 0) return;
 
+    std::sort(list.begin(), list.end(),
+        [](const QWebdavItem &a, const QWebdavItem &b)
+        {
+            if (a.isDir() != b.isDir())
+                return a.isDir();
+
+            return QString::localeAwareCompare(a.name(), b.name()) < 0;
+        }
+    );
+
     _filesList.clear();
 
     beginResetModel();
@@ -123,6 +133,6 @@ void WebDavFileModel::replySkipRead()
 void WebDavFileModel::getMediaContent(QString path)
 {
     QNetworkRequest r = _webdav->getRequest(path);
-    r.setRawHeader("Authorization", "Basic " + QString(_webdav->username() + ":" + _webdav->password()).toUtf8().toBase64());
+//    r.setRawHeader("Authorization", "Basic " + QString(_webdav->username() + ":" + _webdav->password()).toUtf8().toBase64());
     emit gotMediaContent(QMediaContent(r));
 }

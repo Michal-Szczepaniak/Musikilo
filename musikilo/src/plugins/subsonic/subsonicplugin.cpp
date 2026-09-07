@@ -37,12 +37,13 @@ void SubsonicPlugin::initialize(QVariantMap settings)
 void SubsonicPlugin::updateConig(QVariantMap settings)
 {
     QString host = settings.value("hostname").toString();
+    QString path = settings.value("path").toString();
     int port = settings.value("port").toString().toInt();
     QString username = settings.value("username").toString();
     QString password = settings.value("password").toString();
     int connectionType = settings.value("connectionType").toInt();
 
-    _manager.setConnectionSettings(host, port, username, password, connectionType);
+    _manager.setConnectionSettings(host, path, port, username, password, connectionType);
 }
 
 PlaylistModelInterface *SubsonicPlugin::getPlaylistModel()

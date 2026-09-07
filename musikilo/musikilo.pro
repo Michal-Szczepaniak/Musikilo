@@ -40,6 +40,15 @@ SOURCES += \
     src/plugins/subsonic/subsonicplayer.cpp \
     src/plugins/subsonic/subsonicplaylistmodel.cpp \
     src/plugins/subsonic/subsonicplugin.cpp \
+    src/plugins/file/filefilemodel.cpp \
+    src/plugins/file/fileplayer.cpp \
+    src/plugins/file/fileplaylistmodel.cpp \
+    src/plugins/file/fileplugin.cpp \
+    src/plugins/http/httpfilemodel.cpp \
+    src/plugins/http/httpplayer.cpp \
+    src/plugins/http/httpplaylistmodel.cpp \
+    src/plugins/http/httpplugin.cpp \
+    src/albumartfetcher.cpp \
     src/settingsmanager.cpp \
     src/simplecrypt.cpp
 
@@ -79,6 +88,15 @@ HEADERS += \
     src/plugins/subsonic/subsonicplayer.h \
     src/plugins/subsonic/subsonicplaylistmodel.h \
     src/plugins/subsonic/subsonicplugin.h \
+    src/plugins/file/filefilemodel.h \
+    src/plugins/file/fileplayer.h \
+    src/plugins/file/fileplaylistmodel.h \
+    src/plugins/file/fileplugin.h \
+    src/plugins/http/httpfilemodel.h \
+    src/plugins/http/httpplayer.h \
+    src/plugins/http/httpplaylistmodel.h \
+    src/plugins/http/httpplugin.h \
+    src/albumartfetcher.h \
     src/settingsmanager.h \
     src/simplecrypt.h
 
@@ -106,6 +124,8 @@ DISTFILES += \
     qml/dialogs/TauonSettingsDialog.qml \
     qml/dialogs/KodiSettingsDialog.qml \\
     qml/dialogs/SubsonicSettingsDialog.qml \
+    qml/dialogs/FileSettingsDialog.qml \
+    qml/dialogs/HttpSettingsDialog.qml \
     translations/*.ts
 
 RESOURCES += \

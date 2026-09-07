@@ -242,6 +242,9 @@ void KodiManager::onRequestFinished(QNetworkReply *reply)
     case FILELIST:
         onGotFileList(root);
         break;
+    case FILE_DETAILS:
+        onGotFileDetails(root);
+        break;
     case PLAY_FILE:
         play(0);
         break;
@@ -360,6 +363,8 @@ QString KodiManager::getCommand(Command command)
         return "Input.Select";
     case EXECUTE_ACTION:
         return "Input.ExecuteAction";
+    case FILE_DETAILS:
+        return "Files.GetFileDetails";
     }
 
     return {};
@@ -503,4 +508,9 @@ void KodiManager::onGotFileList(QJsonObject result)
     }
 
     emit gotFileList(files);
+}
+
+void KodiManager::onGotFileDetails(QJsonObject result)
+{
+
 }

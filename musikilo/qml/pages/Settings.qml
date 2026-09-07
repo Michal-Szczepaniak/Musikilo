@@ -117,7 +117,7 @@ Item {
                         width: Theme.iconSizeMedium
                         height: Theme.iconSizeMedium
                         anchors.verticalCenter: parent.verticalCenter
-                        source: "qrc:///images/icon-m-" + listItem.data.plugin + ".svg"
+                        source: listItem.data.plugin === "file" ? "image://theme/icon-m-file-document-dark" : ("qrc:///images/icon-m-" + listItem.data.plugin + ".svg")
                         color: settingsManager.currentPlugin === modelData ? Theme.highlightColor : Theme.primaryColor
                     }
 
@@ -142,6 +142,8 @@ Item {
 
                         function getPrettyName(name) {
                             switch (name) {
+                            case "file":
+                                return qsTr("File");
                             case "nextcloud":
                                 return qsTr("Nextcloud");
                             case "squeezebox":
@@ -154,6 +156,8 @@ Item {
                                 return qsTr("Kodi");
                             case "subsonic":
                                 return qsTr("Subsonic");
+                            case "http":
+                                return qsTr("Internet radio");
                             }
                         }
                     }

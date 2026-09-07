@@ -53,10 +53,31 @@
     </message>
 </context>
 <context>
+    <name>FileSettingsDialog</name>
+    <message>
+        <source>Path to music directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FilesList</name>
     <message>
         <source>Files list</source>
         <translation>文件列表</translation>
+    </message>
+</context>
+<context>
+    <name>HttpPlaylistModel</name>
+    <message>
+        <source>Internet Radio Stream</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>HttpSettingsDialog</name>
+    <message>
+        <source>Path to internet radio stream</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -257,6 +278,14 @@
         <source>Subsonic</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Http</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NextcloudSettingsDialog</name>
@@ -319,12 +348,20 @@
         <source>Subsonic</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internet radio</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SongDetails</name>
     <message>
-        <source>Song %1/%2</source>
-        <translation>音乐 %1/%2</translation>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Album: %1</source>
@@ -335,7 +372,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unknown</source>
+        <source>Song %1/%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -400,6 +437,10 @@
     </message>
     <message>
         <source>Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -22,8 +22,6 @@
 
 #include <QObject>
 #include <QMediaPlayer>
-#include <qwebdav.h>
-#include <qwebdavitem.h>
 #include <src/playlistmodelinterface.h>
 #include <src/settingsmanager.h>
 #include <src/player.h>

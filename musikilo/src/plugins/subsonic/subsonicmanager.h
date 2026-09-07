@@ -46,7 +46,7 @@ public:
 
     explicit SubsonicManager(QObject *parent = nullptr);
 
-    void setConnectionSettings(QString host, int port, QString username, QString password, int connectionType);
+    void setConnectionSettings(QString host, QString path, int port, QString username, QString password, int connectionType);
 
     void getFilesList(QString path);
     void listDirectory(QString path);
@@ -67,6 +67,7 @@ protected slots:
 private:
     int _requestId = 1;
     QString _host;
+    QString _path;
     int _port;
     QString _username;
     QString _password;

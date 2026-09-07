@@ -52,8 +52,10 @@ Dialog {
             ComboBox {
                 id: pluginTypeBox
                 anchors.horizontalCenter: parent.horizontalCenter
-                property var pluginCodes: ["nextcloud", "squeezebox", "mpd", "tauon", "kodi", "subsonic"]
+                property var pluginCodes: ["file", "http", "nextcloud", "squeezebox", "mpd", "tauon", "kodi", "subsonic"]
                 menu: ContextMenu {
+                    MenuItem { text: qsTr("File") }
+                    MenuItem { text: qsTr("Http") }
                     MenuItem { text: qsTr("Nextcloud") }
                     MenuItem { text: qsTr("SqueezeBox") }
                     MenuItem { text: qsTr("MPD") }
@@ -81,6 +83,12 @@ Dialog {
                             break;
                         case "subsonic":
                             settingsLoader.sourceComponent = subsonicSettingsDialog
+                            break;
+                        case "file":
+                            settingsLoader.sourceComponent = fileSettingsDialog
+                            break;
+                        case "http":
+                            settingsLoader.sourceComponent = httpSettingsDialog
                             break;
                     }
                     settingsLoader.active = true
@@ -160,6 +168,22 @@ Dialog {
         id: subsonicSettingsDialog
 
         SubsonicSettingsDialog {
+
+        }
+    }
+
+    Component {
+        id: fileSettingsDialog
+
+        FileSettingsDialog {
+
+        }
+    }
+
+    Component {
+        id: httpSettingsDialog
+
+        HttpSettingsDialog {
 
         }
     }

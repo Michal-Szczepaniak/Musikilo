@@ -46,6 +46,7 @@ public:
         BACK,
         SELECT,
         EXECUTE_ACTION,
+        FILE_DETAILS,
     };
 
     struct Request {
@@ -161,6 +162,7 @@ private:
     void onGotPlaylist(QJsonObject result);
     void onGotSources(QJsonObject result);
     void onGotFileList(QJsonObject result);
+    void onGotFileDetails(QJsonObject result);
 };
 
 #endif // KODIMANAGER_H

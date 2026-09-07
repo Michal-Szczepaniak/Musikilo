@@ -1,5 +1,7 @@
 #include "settingsmanager.h"
 #include <QDebug>
+#include <src/plugins/file/fileplugin.h>
+#include <src/plugins/http/httpplugin.h>
 #include <src/plugins/kodi/kodiplugin.h>
 #include <src/plugins/mpd/mpdplugin.h>
 #include <src/plugins/squeezebox/squeezeboxplugin.h>
@@ -151,6 +153,10 @@ void SettingsManager::createPlugin(QString code)
         plugin = new KodiPlugin;
     } else if (type == "subsonic") {
         plugin = new SubsonicPlugin;
+    } else if (type == "file") {
+        plugin = new FilePlugin;
+    } else if (type == "http") {
+        plugin = new HttpPlugin;
     }
 
     if (plugin == nullptr) {

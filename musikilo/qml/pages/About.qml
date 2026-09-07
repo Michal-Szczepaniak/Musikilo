@@ -50,7 +50,7 @@ Page {
             }
 
             Label {
-                text: "Musikilo 2.1"
+                text: "Musikilo 2.6"
                 font.pixelSize: Theme.fontSizeExtraLarge
                 anchors.horizontalCenter: parent.horizontalCenter
                 wrapMode: Text.WordWrap

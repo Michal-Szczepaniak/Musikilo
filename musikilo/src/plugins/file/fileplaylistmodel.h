@@ -17,26 +17,24 @@
     along with Musikilo. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef WEBDAVPLAYLISTMODEL_H
-#define WEBDAVPLAYLISTMODEL_H
-
-#include "webdavplayer.h"
+#ifndef FILEPLAYLISTMODEL_H
+#define FILEPLAYLISTMODEL_H
 
 #include <QObject>
 
-#include <qwebdav.h>
-#include <qwebdavdirparser.h>
-#include <qwebdavitem.h>
-
 #include <src/playlistmodel.h>
 #include <src/playlistmodelinterface.h>
+#include "filefilemodel.h"
+#include "fileplayer.h"
 
-class WebDavPlaylistModel : public PlaylistModelInterface
+class FilePlaylistModel : public PlaylistModelInterface
 {
+    using File = FileFileModel::File;
+
     Q_OBJECT
 public:
 
-    explicit WebDavPlaylistModel(QWebdav *webdav, WebDavPlayer *player, QObject *parent = nullptr);
+    explicit FilePlaylistModel(FilePlayer *player, FileFileModel *fileModel, QObject *parent = nullptr);
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
 
@@ -53,19 +51,13 @@ protected:
     QHash<int, QByteArray> roleNames() const;
 
 public slots:
-    void addFilesToPlaylist();
-    void playFiles();
     void onStateChanged();
 
 private:
-    static bool sortFiles(const QWebdavItem &a, const QWebdavItem &b);
-
-private:
-    QWebdav* _webdav;
-    WebDavPlayer *_player;
-    QList<QWebdavItem> _entries;
-    QWebdavDirParser _parser, _playParser;
+    FilePlayer *_player;
+    FileFileModel *_fileModel;
+    QList<File> _entries;
     int _lastIndex = -1;
 };
 
-#endif // WEBDAVPLAYLISTMODEL_H
+#endif // FILEPLAYLISTMODEL_H

@@ -69,6 +69,10 @@ Dialog {
                             return kodiSettingsDialog;
                         case "subsonic":
                             return subsonicSettingsDialog;
+                        case "file":
+                            return fileSettingsDialog;
+                        case "http":
+                            return httpSettingsDialog;
                     }
                 onLoaded: item.setData(pluginData)
             }
@@ -119,6 +123,22 @@ Dialog {
         id: subsonicSettingsDialog
 
         SubsonicSettingsDialog {
+
+        }
+    }
+
+    Component {
+        id: fileSettingsDialog
+
+        FileSettingsDialog {
+
+        }
+    }
+
+    Component {
+        id: httpSettingsDialog
+
+        HttpSettingsDialog {
 
         }
     }

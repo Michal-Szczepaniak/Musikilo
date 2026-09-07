@@ -11,9 +11,10 @@ SubsonicManager::SubsonicManager(QObject *parent) : QObject(parent), _manager(th
     connect(&_manager, &QNetworkAccessManager::finished, this, &SubsonicManager::onRequestFinished);
 }
 
-void SubsonicManager::setConnectionSettings(QString host, int port, QString username, QString password, int connectionType)
+void SubsonicManager::setConnectionSettings(QString host, QString path, int port, QString username, QString password, int connectionType)
 {
     _host = host;
+    _path = path;
     _port = port;
     _username = username;
     _password = password;
@@ -99,6 +100,7 @@ void SubsonicManager::onRequestFinished(QNetworkReply *reply)
     if (!error.isEmpty()) {
         emit errorOccured(error);
         qDebug() << "Error: " << error;
+        qDebug() << xml;
         return;
     }
 
@@ -140,7 +142,7 @@ void SubsonicManager::onRequestFinished(QNetworkReply *reply)
 
 void SubsonicManager::makeRequest(Command command, QUrlQuery parameters)
 {
-    QString path = "/rest/" + getCommandPath(command);
+    QString path = _path + "/rest/" + getCommandPath(command);
 
     parameters.addQueryItem("u", _username);
     QString salt = QUuid::createUuid().toString().remove('{').remove('}').left(8);

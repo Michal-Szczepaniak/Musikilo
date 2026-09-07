@@ -17,55 +17,52 @@
     along with Musikilo. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef WEBDAVPLAYLISTMODEL_H
-#define WEBDAVPLAYLISTMODEL_H
-
-#include "webdavplayer.h"
+#ifndef FILEFILEMODEL_H
+#define FILEFILEMODEL_H
 
 #include <QObject>
 
-#include <qwebdav.h>
-#include <qwebdavdirparser.h>
-#include <qwebdavitem.h>
+#include <QMediaContent>
+#include <src/filemodelinterface.h>
 
-#include <src/playlistmodel.h>
-#include <src/playlistmodelinterface.h>
-
-class WebDavPlaylistModel : public PlaylistModelInterface
+class FileFileModel : public FileModelInterface
 {
     Q_OBJECT
 public:
+    explicit FileFileModel(QObject *parent = nullptr);
 
-    explicit WebDavPlaylistModel(QWebdav *webdav, WebDavPlayer *player, QObject *parent = nullptr);
+    enum FileType {
+        Folder,
+        Track,
+        Unknown,
+    };
+
+    struct File {
+        QString name;
+        QString path;
+        FileType type;
+    };
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
 
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
-    void reset();
-    void play(int index);
-    void addSong(QString song);
-    void playSong(QString song);
-    void nextSong();
-    void prevSong();
-    void remove(int index);
+
+    void getFilesList(QString path);
+    QList<File> getFiles(QString path);
+    File getFile(QString path);
+    void setPath(QString path);
 
 protected:
     QHash<int, QByteArray> roleNames() const;
 
-public slots:
-    void addFilesToPlaylist();
-    void playFiles();
-    void onStateChanged();
+signals:
+    void gotFilesList();
 
 private:
-    static bool sortFiles(const QWebdavItem &a, const QWebdavItem &b);
+    QString _path;
+    QList<File> _filesList;
 
-private:
-    QWebdav* _webdav;
-    WebDavPlayer *_player;
-    QList<QWebdavItem> _entries;
-    QWebdavDirParser _parser, _playParser;
-    int _lastIndex = -1;
+    QString getPreviousPath(QString path);
 };
 
-#endif // WEBDAVPLAYLISTMODEL_H
+#endif // FILEFILEMODEL_H

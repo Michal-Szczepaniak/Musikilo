@@ -9,5 +9,7 @@
         <file>images/icon-m-pacman.svg</file>
         <file>images/icon-m-kodi.svg</file>
         <file>images/icon-m-tauon.svg</file>
+        <file>images/icon-m-subsonic.svg</file>
+        <file>images/icon-m-http.svg</file>
     </qresource>
 </RCC>

@@ -17,9 +17,10 @@
     along with Musikilo. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.0
+import QtQuick 2.5
 import Sailfish.Silica 1.0
 import QtMultimedia 5.6
+import com.verdanditeam.musikilo 1.0
 
 Item {
     id: settingsPage
@@ -80,6 +81,20 @@ Item {
             } else {
                 stylusAnimation.resume()
             }
+        }
+
+        onMetadataChanged: {
+            albumArtTimer.restart()
+        }
+    }
+
+    Timer {
+        id: albumArtTimer
+        interval: 1000
+        repeat: false
+
+        onTriggered: {
+            albumArtFetcher.searchAlbumArt(player.title, player.artist, player.album)
         }
     }
 
@@ -178,6 +193,14 @@ Item {
         }
     }
 
+    AlbumArtFetcher {
+        id: albumArtFetcher
+
+        onGotAlbumArt: {
+            albumImage.source = url
+        }
+    }
+
     Image {
         id: record
         width: Screen.width/2
@@ -196,6 +219,50 @@ Item {
             to: record.rotation+360
             running: player.state === MediaPlayer.PlayingState && Qt.application.state === Qt.ApplicationActive
             duration: 10000
+        }
+
+        Item {
+            id: albumArtContainer
+
+            visible: albumImage.status === Image.Ready
+
+            anchors.centerIn: record
+            width: record.width * 0.8
+            height: width
+
+            Image {
+                id: albumImage
+                anchors.fill: parent
+                source: ""
+                fillMode: Image.PreserveAspectCrop
+                visible: false
+            }
+
+            ShaderEffect {
+                anchors.fill: parent
+
+                property variant source: albumImage
+
+                fragmentShader: "
+                    varying highp vec2 qt_TexCoord0;
+                    uniform sampler2D source;
+                    uniform lowp float qt_Opacity;
+
+                    void main()
+                    {
+                        highp vec2 p = qt_TexCoord0 - vec2(0.5);
+                        highp float d = length(p);
+
+                        if (d > 0.5)
+                            discard;
+
+                        if (d < 0.12)
+                            discard;
+
+                        gl_FragColor = texture2D(source, qt_TexCoord0) * qt_Opacity;
+                    }
+                "
+            }
         }
     }
 

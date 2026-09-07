@@ -412,6 +412,8 @@ QNetworkRequest QWebdav::getRequest(const QString& path)
     QNetworkRequest req;
 
     QUrl reqUrl(m_baseUrl);
+    reqUrl.setUserName(username());
+    reqUrl.setPassword(password());
     reqUrl.setPath(absolutePath(path));
 
 #ifdef DEBUG_WEBDAV

@@ -20,6 +20,7 @@
 #include <QtQuick>
 
 #include <sailfishapp.h>
+#include "albumartfetcher.h"
 #include "filemodel.h"
 #include "player.h"
 #include "playlistmodel.h"
@@ -44,6 +45,7 @@ int main(int argc, char *argv[])
     view->rootContext()->setContextProperty("playlistModel", &playlistModel);
     view->rootContext()->setContextProperty("player", &player);
     view->rootContext()->setContextProperty("simpleCrypt", &simpleCrypt);
+    qmlRegisterType<AlbumArtFetcher>("com.verdanditeam.musikilo", 1, 0, "AlbumArtFetcher");
 
     view->setSource(SailfishApp::pathTo("qml/Musikilo.qml"));
     view->show();

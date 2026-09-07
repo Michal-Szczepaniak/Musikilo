@@ -26,6 +26,7 @@ Column {
     function setData(data) {
         connectionType.currentIndex = data.connectionType;
         hostnameValue.text = data.hostname;
+        pathValue.text = data.path;
         usernameValue.text = data.username;
         passwordValue.text = data.password;
         portValue.text = data.port;
@@ -36,6 +37,7 @@ Column {
             plugin: "subsonic",
             connectionType: connectionType.currentIndex,
             hostname: hostnameValue.text,
+            path: pathValue.text,
             username: usernameValue.text,
             password: passwordValue.text,
             port: portValue.text
@@ -60,6 +62,14 @@ Column {
     TextField {
        id: hostnameValue
        label: qsTr("Hostname")
+       labelVisible: true
+       placeholderText: label
+       width: parent.width
+    }
+
+    TextField {
+       id: pathValue
+       label: qsTr("Path")
        labelVisible: true
        placeholderText: label
        width: parent.width
