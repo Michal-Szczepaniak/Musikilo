@@ -133,6 +133,5 @@ void WebDavFileModel::replySkipRead()
 void WebDavFileModel::getMediaContent(QString path)
 {
     QNetworkRequest r = _webdav->getRequest(path);
-//    r.setRawHeader("Authorization", "Basic " + QString(_webdav->username() + ":" + _webdav->password()).toUtf8().toBase64());
     emit gotMediaContent(QMediaContent(r));
 }
